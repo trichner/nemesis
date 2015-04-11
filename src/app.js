@@ -1,5 +1,7 @@
 var express = require('express');
 var path = require('path');
+var minions = require('./minions/Minions');
+
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
@@ -25,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(eveHeader);
 //app.use(cookieParser());
 app.use(session({
-  secret: 'QeQB6C0I4rd0odAHYQxi',
+  secret: minions.randomAlphanumericString(16), // Random for dev purposes, should be persisted
   store: new FileStore()
 }))
 app.use(express.static(path.join(__dirname, 'public')));
