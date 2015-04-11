@@ -41,7 +41,12 @@ module.exports = {
             }
         }
         return secret;
+    },
+    deleteSessionSecret : function(){
+        try{
+            fs.unlinkSync(SECRET_FILE);
+        }catch(e){
+            console.log('Unable to delete session secret');
+        }
     }
 }
-
-console.log('Secret: ' + module.exports.getSessionSecret());
