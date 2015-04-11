@@ -6,58 +6,116 @@
 
 // Or you can simply use a connection uri
 var Sequelize = require('sequelize');
+var Q = require('q');
+
 var sequelize = new Sequelize('sqlite://nemesis.sqlite');
 
 var Corp = sequelize.define('corp', {
-    corpId: {
+    id: {
         type: Sequelize.STRING
     },
-    corpName: {
+    name: {
         type: Sequelize.STRING
     }
-}, {
-    freezeTableName: true
-});
+}, {});
 
 var Alliance = sequelize.define('alliance', {
-    allianceId: {
+    id: {
         type: Sequelize.STRING
     },
-    allianceName: {
+    name: {
         type: Sequelize.STRING
     }
-}, {
-    freezeTableName: true // Model tableName will be the same as the model name
-});
+}, {});
 
-Alliance.hasOne(Corp)
-
-var Character = sequelize.define('alliance', {
-    characterId: {
+var Pilot = sequelize.define('pilot', {
+    id: {
         type: Sequelize.STRING
     },
-    characterName: {
+    name: {
         type: Sequelize.STRING
     }
-}, {
-    freezeTableName: true // Model tableName will be the same as the model name
-});
+},{});
 
-Corp.hasOne(Character)
 
-var WaitlistItem = sequelize.define('user', {
-    firstName: {
-        type: Sequelize.STRING,
-        field: 'first_name' // Will result in an attribute that is firstName when user facing but first_name in
-                            // the database
+var WaitlistItem = sequelize.define('waitlistItem', {
+    order: {
+        type: Sequelize.INTEGER
     },
-    lastName: {
+    fitting: {
         type: Sequelize.STRING
     }
-}, {
-    freezeTableName: true // Model tableName will be the same as the model name
-});
+}, {});
 
-sequelize.sync().done(function () {
 
-})
+Corp.belongsTo(Alliance);
+Pilot.belongsTo(Corp);
+WaitlistItem.belongsTo(Pilot);
+
+
+
+/*
+ pilot:
+ {
+ name: 'Thomion',
+ characterID: '698922015',
+ corporationName: 'Deep Core Mining Inc.',
+ corporationID: '1000006',
+ allianceID: '0',
+ allianceName: '',
+ factionID: '0',
+ factionName: ''
+ }
+ */
+
+module.exports = {
+    connect : function () {
+        return sequelize.sync();
+    },
+    findOrCreatePilot : function(pilot){
+        // not all pilots have alliances!
+        var promises = [];
+        promises.push(Pilot.findOrCreate({ where: {id: pilot.characterID} ,defaults: {name: pilot.name}}));
+        promises.push(Corp.findOrCreate({ where: {id: pilot.corporationID} ,defaults: {name: pilot.corporationName}}));
+        if(pilot.allianceID && pilot.allianceID!='0') {
+            promises.push(Alliance.findOrCreate({where: {id: pilot.allianceID}, defaults: {name: pilot.allianceName}}));
+        }else{
+            promises.push(Q.fulfill(null));
+        }
+        return Q.all(promises).spread(function (pilot,corp,alliance) {
+            var promises = [];
+            pilot = pilot[0];
+            corp  = corp[0];
+            if(alliance){
+                alliance = alliance.shift();
+                promises.push(corp.setAlliance(alliance))
+            }
+            promises.push(pilot.setCorp(corp));
+            return Q.all(promises).then(function () {
+                return pilot;
+            })
+        })
+    },
+    findAllPilots : function() {
+        // EAGER
+        return Pilot.findAll({ include: [{ all: true, nested: true }]})
+    }
+}
+
+module.exports.connect()
+    .then(function () {
+        return module.exports.findOrCreatePilot({
+            name: 'Thomion',
+            characterID: '698922015',
+            corporationName: 'Deep Core Mining Inc.',
+            corporationID: '1000006',
+            allianceID: '0',
+            allianceName: '',
+            factionID: '0',
+            factionName: ''});
+    }).then(function () {
+        return module.exports.findAllPilots();
+    }).then(function (pilots) {
+        console.log('Pilots:' + JSON.stringify(pilots,null,2))
+        return pilots;
+    })
