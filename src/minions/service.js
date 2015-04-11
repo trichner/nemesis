@@ -1,12 +1,57 @@
 var dao = require('./dao');
 var api = require('./eveAPI');
 var Q = require('q');
+var Mapper = require('./mapper');
 
 module.exports = {
     verifyPilot : verifyPilot,
     addToList : addToList,
-    removeFromList : removeFromList
+    removeFromList : removeFromList,
+    createList : createList,
+    getList : getList,
+    getLists : getLists,
+    getAllLists : getAllLists,
+    findPilot : findPilot
 };
+
+//FIXME Hardcoded, WTF?
+var ADMINS = ['698922015'];
+
+function getAllLists(pilotId){
+    if(ADMINS.indexOf(pilotId)>=0){
+        return dao.findAllWaitlists()
+            .then(function (waitlists) {
+                return waitlists.map(function (list) {
+                    return Mapper.mapWaitlistDBVO(list);
+                })
+            });
+    }else{
+        return Q.reject(new Error('Not Authorized!'));
+    }
+}
+
+function getLists(pilotId){
+    return dao.findWaitlistByOwner(pilotId)
+        .then(function (waitlists) {
+            return waitlists.map(function (list) {
+                return Mapper.mapWaitlistDBVO(list);
+            })
+        });
+}
+
+function createList(pilotId){
+    return dao.createWaitlist(pilotId)
+        .then(function (waitlists) {
+            return Mapper.mapWaitlistDBVO(waitlists);
+        });
+}
+
+function getList(listId){
+    return dao.findWaitlistByExternalId(listId)
+        .then(function (waitlists) {
+            return Mapper.mapWaitlistDBVO(waitlists);
+        });
+}
 
 function verifyPilot(key,verificationCode,id){
     return api.getCharacter(key,verificationCode,id)
@@ -52,5 +97,12 @@ function isListOwner(pilotId,listId){
     return dao.findWaitlistByExternalId(listId)
         .then(function (waitlist) {
             return waitlist.ownerId==pilotId;
+        });
+}
+
+function findPilot(pilotId){
+    return dao.findPilotById(pilotId)
+        .then(function (pilot) {
+            return Mapper.mapPilotDBVO(pilot);
         });
 }

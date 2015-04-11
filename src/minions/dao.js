@@ -92,16 +92,20 @@ Waitlist.hasMany(WaitlistItem);
  */
 
 module.exports = {
-    connect : function () {
-        return sequelize.sync();
-    },
+    connect : connect,
     findOrCreatePilot : findOrCreatePilot,
     findAllPilots : findAllPilots,
     findPilotById : findPilotById,
     createWaitlist: createWaitlist,
-    findWaitlistByExternalId : findWaitlistByExternalId(),
+    findWaitlistByExternalId : findWaitlistByExternalId,
     addToWaitlist : addToWaitlist,
-    findItemByOrder : findItemByOrder
+    findItemByOrder : findItemByOrder,
+    findAllWaitlists : findAllWaitlists,
+    findWaitlistsByOwner : findWaitlistsByOwner
+}
+
+function connect(){
+    return sequelize.sync();
 }
 
 function findItemByOrder(order){
@@ -115,7 +119,6 @@ function addToWaitlist(pilotId,externalId,shipId,shipType,shipDNA,shipName){
     }
 
     return findPilotById(pilotId)
-        .then(assertObject)
         .then(function (pilot) {
             return Q.all([pilot,findWaitlistByExternalId(externalId).then(assertObject)]);
         })
@@ -143,6 +146,19 @@ function addToWaitlist(pilotId,externalId,shipId,shipType,shipDNA,shipName){
 // Eager load entire list
 function findWaitlistByExternalId(externalId){
     return Waitlist.find({ where: {externalId: externalId},
+        include: [{ model: WaitlistItem, as: 'items', include: [{model: Pilot}]},{ model: Pilot, as:'owner'}],
+        order: [ [ WaitlistItem, 'order' ] ]})
+        .then(assertObject);
+}
+
+// Eager load entire list
+function findWaitlistsByOwner(pilotId){
+    return Waitlist.findAll({ where: {owner: pilotId}});
+}
+
+// Eager load entire list
+function findAllWaitlists(){
+    return Waitlist.findAll({
         include: [{ model: WaitlistItem, as: 'items' }],
         order: [ [ WaitlistItem, 'order' ] ]})
         .then(assertObject);
@@ -150,7 +166,6 @@ function findWaitlistByExternalId(externalId){
 
 function createWaitlist(pilotId){
     return findPilotById(pilotId)
-        .then(assertObject)
         .then(function (pilot) {
             var externalId = minions.randomAlphanumericString(EXTERNAL_ID_LENGTH);
             var name = pilot.name + '`s waitlist';
@@ -159,7 +174,7 @@ function createWaitlist(pilotId){
         .spread(function (waitlist,pilot) {
             return waitlist.setOwner(pilot)
                 .then(function () {
-                    return waitlist;
+                    return findWaitlistByExternalId(waitlist.externalId);
                 })
         })
 }
@@ -169,7 +184,7 @@ function assertObject(obj){
 }
 
 function findPilotById(id){
-    return Pilot.find({ where: {id: id}})
+    return Pilot.find({ where: {id: id}, include: [{ all: true, nested: true }]})
         .then(assertObject);
 }
 
@@ -200,31 +215,3 @@ function findOrCreatePilot(pilot){
         })
     })
 }
-
-module.exports.connect()
-    .then(function () {
-        return findOrCreatePilot({
-            name: 'Thomion',
-            characterID: '698922015',
-            corporationName: 'Deep Core Mining Inc.',
-            corporationID: '1000006',
-            allianceID: '0',
-            allianceName: '',
-            factionID: '0',
-            factionName: ''});
-    })
-    .then(findAllPilots)
-    .then(function (pilots) {
-        console.log('Pilots:' + JSON.stringify(pilots,null,2))
-        return createWaitlist('698922015');
-    })
-    .then(function () {
-        return addToWaitlist('698922015','z5DapO3ksycMyMfj5Jm1impazAQHikBK','001','002','003','Dicke Berta')
-    })
-    .then(function (waitlist) {
-        console.log('List:' + JSON.stringify(waitlist,null,2))
-        return findWaitlistByExternalId('z5DapO3ksycMyMfj5Jm1impazAQHikBK');
-    })
-    .then(function (waitlist) {
-        console.log('List:' + JSON.stringify(waitlist,null,2))
-    })
