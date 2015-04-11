@@ -12,6 +12,24 @@ evewt.controller('wt-list',[ '$scope','$http','$location','$interval', function 
 
     $scope.shipDNA = "";
 
+    $scope.apiKey = '';
+    $scope.apiVCode = '';
+
+
+    $scope.postFit = function(){
+        $http.post('api/waitlist/'+$scope.waitlistVO.waitlistId,{shipString:$scope.shipDNA}).success(function(data){
+            $scope.refreshWL();
+        });
+    };
+
+    $scope.verifyPilot = function () {
+        $http.post('api/verify',{key:$scope.apiKey, vCode:$scope.apiVCode}).success(function(data){
+            $scope.refreshWL();
+        });
+    };
+
+
+
     //=== Functions
     $scope.updateWL = function(waitlistVO){
       $scope.waitlistVO = waitlistVO;
@@ -19,7 +37,7 @@ evewt.controller('wt-list',[ '$scope','$http','$location','$interval', function 
     };
 
     $scope.refreshWL = function(){
-      $http.get('rest/v1/wl/id/'+$scope.waitlistVO.waitlistId)
+      $http.get('api/waitlist/'+$scope.waitlistVO.waitlistId)
       .success(function(waitlistVO){
           $scope.updateWL(waitlistVO);
       });
@@ -41,8 +59,9 @@ evewt.controller('wt-list',[ '$scope','$http','$location','$interval', function 
         // hack since DELETE is a keyword
         $http({
             method: 'DELETE',
-            url: 'rest/v1/wl/id/'+$scope.waitlistVO.waitlistId,
-            data: item.itemId
+            url: 'api/waitlist/'+$scope.waitlistVO.waitlistId,
+            data: {itemId:item.itemId},
+            headers: {'content-type':'application/json'}
         }).
         success(function(data){
             $scope.refreshWL();
@@ -56,21 +75,21 @@ evewt.controller('wt-list',[ '$scope','$http','$location','$interval', function 
 
     //=== Fetch data
 
-    $http.get('rest/v1/character/me').success(function(data){
+    $http.get('api/me').success(function(data){
         $scope.me = data;
         var waitlistId = $location.search()['waitlistId'];
 
         if(!waitlistId || 0 === waitlistId.length){
-            $http.get('rest/v1/wl/me').success(function(waitlistVO){
+            $http.post('api/waitlist').success(function(waitlistVO){
                $scope.updateWL(waitlistVO);
             });
         }else{
-            $http.get('rest/v1/wl/id/'+waitlistId).success(function(waitlistVO){
+            $http.get('api/waitlist/'+waitlistId).success(function(waitlistVO){
                 $scope.updateWL(waitlistVO);
             }).
             error(function(data, status, headers, config) {
                 //if it failed fetch our own list
-                $http.get('rest/v1/wl/me').success(function(waitlistVO){
+                $http.get('api/waitlist').success(function(waitlistVO){
                     $scope.updateWL(waitlistVO);
                 });
             });
@@ -86,10 +105,4 @@ evewt.controller('wt-list',[ '$scope','$http','$location','$interval', function 
         $scope.refreshWL();
     }, 10000);
     //
-
-    $scope.postFit = function(){
-        $http.post('rest/v1/wl/id/'+$scope.waitlistVO.waitlistId,$scope.shipDNA).success(function(data){
-            $scope.refreshWL();
-        });
-    };
 }]);

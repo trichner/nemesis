@@ -7,16 +7,20 @@
     <script src="controllers.js"></script>
 	<link rel="stylesheet" type="text/css" href="style/index.css" />
 </head>
-<body onload='CCPEVE.requestTrust("http://k42.ch:8080/*")' ng-controller="wt-list">
+<body onload='CCPEVE.requestTrust(location.protocol + "//" + location.host + "/*")' ng-controller="wt-list">
 <h1>Hello {{me.characterName}}, welcome to Thomions' Waitlist Managing Tool!</h1>
 
 <p>Share your waitlist using this link:
     <a id="waitlist-link" onclick="prompt('', this.text);">http://k42.ch:8080/eve/index.html#?waitlistId={{waitlistVO.waitlistId}}</a>
 </p>
-
+<div>
+	<input type="text" name="api key" placeholder="Eve API Key" ng-model="apiKey" required>
+	<input type="text" name="vCode" placeholder="Eve API Verification Code" ng-model="apiVCode" required>
+	<button ng-click="verifyPilot()">verify</button>
+</div>
 <div>
     <input type="text" name="fitting" placeholder="paste ship fitting here" ng-model="shipDNA" required>
-    <button ng-click="postFit()">ready for fleet</button>
+    <button ng-click="postFit()">x up!</button>
 </div>
 <ol>
     <li ng-repeat="item in waitlistVO.waitlist">

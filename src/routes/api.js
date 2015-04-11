@@ -36,12 +36,42 @@ router.post('/waitlist/', function(req, res, next) {
       })
 });
 
+/* POST add entry to waitlist*/
+router.post('/waitlist/:id', function(req, res, next) {
+    //res.send('respond with a resource');
+    var externalId = req.params.id;
+    var pilotId = req.session.pilotId;
+    var shipString   = req.body.shipString;
+    service.addToList(pilotId,externalId,shipString)
+        .then(function (itemId) {
+            res.json({id: itemId});
+        })
+        .catch(function (e) {
+            next(e);
+        })
+});
+
 /* GET create new waitlist*/
 router.get('/me', function(req, res, next) {
     var pilotId = req.session.pilotId;
     service.findPilot(pilotId)
         .then(function (pilot) {
             res.json(pilot);
+        })
+        .catch(function (e) {
+            next(e);
+        })
+});
+
+/* POST add entry to waitlist*/
+router.delete('/waitlist/:id', function(req, res, next) {
+    //res.send('respond with a resource');
+    var externalId = req.params.id;
+    var pilotId = req.session.pilotId;
+    var order = req.body.itemId;
+    service.removeFromList(pilotId,externalId,order)
+        .then(function () {
+            res.status(204).end();
         })
         .catch(function (e) {
             next(e);
