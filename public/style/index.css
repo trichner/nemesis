@@ -1,0 +1,42 @@
+body {
+	margin: 20px;
+	background: #AAAAAA;
+}
+
+a#waitlist-link {
+	cursor: pointer;
+	color: #0000FF;
+	text-decoration: underline;
+}
+
+div#how {
+	position: relative;
+	margin-top: 50px;
+	font-family: monospace;
+	border: 1px solid #DDDDDD;
+	padding: 5px;
+}
+
+div#how-label {
+	position: absolute;
+	left: 10px;
+	top: -15px;
+	font-size: 160%;
+	font-weight: bold;
+	background: #AAAAAA;
+	border: 1px solid #DDDDDD;
+	padding: 0 5px;
+}
+
+div.h3 {
+	margin-top: 15px;
+	font-weight: bold;
+	font-size: 160%;
+	text-decoration: underline;
+}
+
+div.h4 {
+	margin-top: 10px;
+	font-weight: bold;
+	font-size: 130%;
+}
