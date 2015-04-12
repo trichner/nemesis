@@ -24,14 +24,32 @@
 </div>
 <ol>
     <li ng-repeat="item in waitlistVO.waitlist">
-        <div>
-            <img title="{{item.characterName}}" src="https://image.eveonline.com/Character/{{item.characterId}}_64.jpg" ng-click="showCharInfo(item)"/>
-            <img title="{{item.shipName}}" src="https://image.eveonline.com/Render/{{item.shipType}}_64.png" ng-click="showFitting(item)"/>
-            <img title="send fleetinvite" src="img/add-user.png" width="64" ng-click="fleetInvite(item)"/>
-            <img title="remove from list" src="img/close.png" width="64" ng-click="removeItem(item)"/>
+        <div id="wrapper" class="float-container">
+			<div>
+				<img title="{{item.characterName}}" src="https://image.eveonline.com/Character/{{item.characterId}}_64.jpg" ng-click="showCharInfo(item)"/>
+			</div>
+			<div>
+				<div>
+					<img title="{{item.shipName}}" src="https://image.eveonline.com/Corporation/1000006_32.png"
+						 ng-click="showFitting(item)"/>
+				</div>
+				<div>
+					<img title="{{item.shipName}}" src="https://image.eveonline.com/Alliance/824518128_32.png"
+						 ng-click="showFitting(item)"/>
+				</div>
+			</div>
 
-            <p>{{item.characterName}}</p>
+			<div>
+				<img title="{{item.shipName}}" src="https://image.eveonline.com/Render/{{item.shipType}}_64.png" ng-click="showFitting(item)"/>
+			</div>
+			<div>
+				<img title="send fleetinvite" src="img/add-user.png" width="64" ng-click="fleetInvite(item)"/>
+			</div>
+			<div>
+				<img title="remove from list" src="img/close.png" width="64" ng-click="removeItem(item)"/>
+			</div>
         </div>
+		<p>{{item.characterName}}</p>
     </li>
 </ol>
 <div id="how">

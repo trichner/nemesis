@@ -40,3 +40,35 @@ div.h4 {
 	font-weight: bold;
 	font-size: 130%;
 }
+
+
+#wrapper {
+	width: 500px;
+	border: 1px solid black;
+	overflow: hidden;  /* add this to contain floated children */
+}
+#first {
+	width: 300px;
+	float:left; /* add this */
+	border: 1px solid red;
+}
+#second {
+	border: 1px solid green;
+	float: left; /* add this */
+}
+
+div.floater {
+	border: 1px solid green;
+	float: left; /* add this */
+	margin: 0;
+	padding: 0;
+}
+
+div.float-container > div {
+	border: 1px solid green;
+	float: left; /* add this */
+	margin: 0;
+	padding: 0;
+}
+
+img{display:block;}
