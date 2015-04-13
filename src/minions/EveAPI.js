@@ -41,12 +41,12 @@ function extractFit(str){
     var matches = fittingPattern.exec(str);
     var shipDNA,shipName,shipType;
     if(matches){
-        shipDNA  = matches[0];
-        shipName = matches[1];
+        shipDNA  = matches[1];
+        shipName = matches[2];
     }
     var matches = shipTypePattern.exec(str);
     if(matches){
-        shipType  = matches[0];
+        shipType  = matches[1];
     }
     return {
         dna : shipDNA,

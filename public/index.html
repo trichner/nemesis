@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <title>My HTML File</title>
     <script src="js/angular.js"></script>
-    <script src="controllers.js"></script>
+    <script src="js/controllers.js"></script>
+	<script src="js/API.js"></script>
 	<link rel="stylesheet" type="text/css" href="style/index.css" />
 </head>
 <body onload='CCPEVE.requestTrust(location.protocol + "//" + location.host + "/*")' ng-controller="wt-list">
@@ -17,6 +18,8 @@
 	<input type="text" name="api key" placeholder="Eve API Key" ng-model="apiKey" required>
 	<input type="text" name="vCode" placeholder="Eve API Verification Code" ng-model="apiVCode" required>
 	<button ng-click="verifyPilot()">verify</button>
+	<input name="remember me" type="checkbox" ng-model="remeberMe">
+	<span>remeber me</span>
 </div>
 <div>
     <input type="text" name="fitting" placeholder="paste ship fitting here" ng-model="shipDNA" required>

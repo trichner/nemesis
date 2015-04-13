@@ -6,7 +6,7 @@ var router = express.Router();
 
 
 /* GET all owned lists*/
-router.get('/waitlist/', function(req, res, next) {
+router.get('/waitlist', function(req, res, next) {
   //res.send('respond with a resource');
   res.json({wait:'lists'})
 });
@@ -25,7 +25,7 @@ router.get('/waitlist/:id', function(req, res, next) {
 });
 
 /* GET create new waitlist*/
-router.post('/waitlist/', function(req, res, next) {
+router.post('/waitlist', function(req, res, next) {
   var pilotId = req.session.pilotId;
   service.createList(pilotId)
       .then(function (list) {
@@ -106,6 +106,13 @@ router.post('/verify', function(req, res, next) {
     next(err);
   }
 
+});
+
+/* DELETE verify pilots*/
+router.delete('/verify', function(req, res, next) {
+    if(req.session){
+        req.session.verified = false;
+    }
 });
 
 module.exports = router;

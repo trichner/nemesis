@@ -1,0 +1,142 @@
+/**
+ * Created by Thomas on 13.04.2015.
+ */
+app.factory('API', ['$q','$http',function($q,$http) {
+    var API = {};
+    var API_PREFIX = 'api'
+    var URL = {
+        VERIFY : API_PREFIX +'/verify',
+        WAITLIST : API_PREFIX +'/waitlist',
+        ME : API_PREFIX +'/me'
+    }
+
+    function breakPromise(){
+        return $q.reject(new Error('invalid arguments'));
+    }
+
+    API.getWaitlists = function(){
+        var deferred = $q.defer();
+        $http.get(URL.WAITLIST).
+            success(function(data, status, headers, config) {
+                deferred.resolve(data)
+            }).
+            error(function(data, status, headers, config) {
+                deferred.reject(data)
+            });
+        return deferred.promise;
+    }
+
+    API.getWaitlist = function(waitlistId){
+        if(!waitlistId){
+            return breakPromise();
+        }
+        var deferred = $q.defer();
+        $http.get(URL.WAITLIST+'/'+waitlistId).
+            success(function(data, status, headers, config) {
+                deferred.resolve(data)
+            }).
+            error(function(data, status, headers, config) {
+                deferred.reject(data)
+            });
+        return deferred.promise;
+    }
+
+    API.postFit = function(waitlistId,shipString){
+        if(!(waitlistId && shipString)){
+            return breakPromise();
+        }
+        var deferred = $q.defer();
+        $http.post(URL.WAITLIST+'/'+waitlistId,{
+                shipString : shipString
+            }).
+            success(function(data, status, headers, config) {
+                deferred.resolve(data)
+            }).
+            error(function(data, status, headers, config) {
+                deferred.reject(data)
+            });
+        return deferred.promise;
+    }
+
+    API.newWaitlist = function(){
+        var deferred = $q.defer();
+        $http.post(URL.WAITLIST).
+            success(function(data, status, headers, config) {
+                console.log(JSON.stringify(data));
+                deferred.resolve(data)
+            }).
+            error(function(data, status, headers, config) {
+                deferred.reject(data)
+            });
+        return deferred.promise;
+    }
+
+    API.verify = function(key,vCode,rememberMe){
+        if(!(key && vCode)){
+            return breakPromise();
+        }
+        var deferred = $q.defer();
+        $http.post(URL.VERIFY,{
+                key:key,
+                vCode:vCode,
+                rememberMe:rememberMe
+            }).
+            success(function(data, status, headers, config) {
+                deferred.resolve(data)
+            }).
+            error(function(data, status, headers, config) {
+                deferred.reject(data)
+            });
+        return deferred.promise;
+    }
+
+    API.logout = function(){
+        var deferred = $q.defer();
+        $http({
+                method: 'DELETE',
+                url: URL.VERIFY,
+                headers: {'content-type':'application/json'}
+            }).
+            success(function(data, status, headers, config){
+                deferred.resolve(data)
+            }).
+            error(function(data, status, headers, config) {
+                deferred.reject(data)
+            });
+        return deferred.promise;
+    }
+
+    API.removeFit = function(waitlistId,itemId){
+        if(!(waitlistId && itemId)){
+            return breakPromise();
+        }
+        var deferred = $q.defer();
+        $http({
+            method: 'DELETE',
+            url: URL.WAITLIST + '/' + waitlistId,
+            data: {itemId:itemId},
+            headers: {'content-type':'application/json'}
+            }).
+            success(function(data, status, headers, config){
+                deferred.resolve(data)
+            }).
+            error(function(data, status, headers, config) {
+                deferred.reject(data)
+            });
+        return deferred.promise;
+    }
+
+    API.getMe = function(){
+        var deferred = $q.defer();
+        $http.get(URL.ME).
+            success(function(data, status, headers, config) {
+                deferred.resolve(data)
+            }).
+            error(function(data, status, headers, config) {
+                deferred.reject(data)
+            });
+        return deferred.promise;
+    }
+
+    return API;
+}]);
