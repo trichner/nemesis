@@ -82,9 +82,6 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
                 return API.newWaitlist()
                     .then(function (waitlist) {
                         $scope.updateWL(waitlist);
-
-                        alert($location.absUrl())
-                        window.location.href = $location.absUrl();
                     })
             }else{
                 return API.getWaitlist(waitlistId)

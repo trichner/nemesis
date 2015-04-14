@@ -56,3 +56,15 @@ function extractFit(str){
 }
 
 
+var TYPE_ID = {
+    FEDERATION_NAVY_STASIS_WEBIFIER : 17559
+}
+
+function disassembleShipFit(shipDNA){
+    var slots = shipDNA.split(':')
+    var parts = [];
+    slots.forEach(function (slot) {
+        parts = parts.concat(slot.split(';'))
+    })
+}
+
