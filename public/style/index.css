@@ -69,6 +69,7 @@ div.float-container > div {
 	float: left; /* add this */
 	margin: 0;
 	padding: 0;
+	background-color: rgba(0, 0, 0, 0.69);
 }
 
 img{display:block;}

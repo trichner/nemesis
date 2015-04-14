@@ -9,10 +9,10 @@
 	<link rel="stylesheet" type="text/css" href="style/index.css" />
 </head>
 <body onload='CCPEVE.requestTrust(location.protocol + "//" + location.host + "/*")' ng-controller="wt-list">
-<h1>Hello {{me.characterName}}, welcome to Thomions' Waitlist Managing Tool!</h1>
+<h1>Hello {{me.characterName ? me.characterName : 'Pilot'}}, welcome to Thomions' Waitlist Managing Tool!</h1>
 
 <p>Share your waitlist using this link:
-    <a id="waitlist-link" onclick="prompt('', this.text);">http://k42.ch:8080/eve/index.html#?waitlistId={{waitlistVO.waitlistId}}</a>
+    <a id="waitlist-link" href="{{window.location.href}}">{{window.location.href}}</a>
 </p>
 <div>
 	<input type="text" name="api key" placeholder="Eve API Key" ng-model="apiKey" required>
@@ -33,12 +33,19 @@
 			</div>
 			<div>
 				<div>
-					<img title="{{item.shipName}}" src="https://image.eveonline.com/Corporation/1000006_32.png"
-						 ng-click="showFitting(item)"/>
+					<img title="{{item.corporationName}}"
+						 src="https://image.eveonline.com/Corporation/{{item.corporationId}}_32.png"
+						 ng-click="showCorporation(item)"/>
 				</div>
-				<div>
-					<img title="{{item.shipName}}" src="https://image.eveonline.com/Alliance/824518128_32.png"
-						 ng-click="showFitting(item)"/>
+				<div ng-switch on="item">
+					<div ng-switch-when="item.allianceId">
+						<img title="{{item.allianceName}}"
+							 src="https://image.eveonline.com/Alliance/{{item.allianceId}}_32.png"
+							 ng-click="showAlliance(item)"/>
+					</div>
+					<div ng-switch-default style="width: 32px;height: 32px">
+						<!-- DUMMY -->
+					</div>
 				</div>
 			</div>
 

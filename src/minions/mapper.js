@@ -1,3 +1,5 @@
+var Q = require('q');
+
 module.exports = {
     mapWaitlistDBVO : mapWaitlistDBVO,
     mapWaitlistItemDBVO : mapWaitlistItemDBVO,
@@ -30,8 +32,11 @@ function mapWaitlistDBVO(waitlist){
     mapped.ownerName = waitlist.owner ? waitlist.owner.name : '';
     mapped.waitlistName = waitlist.name;
     var items = waitlist.items ? waitlist.items.map(mapWaitlistItemDBVO) : [];
-    mapped.waitlist = items;
-    return mapped;
+    return Q.all(items)
+        .then(function (mappedItems) {
+            mapped.waitlist = mappedItems;
+            return mapped;
+        })
 }
 
 /*
@@ -56,14 +61,17 @@ function mapWaitlistDBVO(waitlist){
  }
  */
 function mapWaitlistItemDBVO(item){
-    var mapped = {};
-    mapped.characterId  = item.pilotId;
-    mapped.characterName    = item.pilot ? item.pilot.name : '';
-    mapped.shipDNA  = item.shipDNA;
-    mapped.shipName = item.shipName;
-    mapped.itemId   = item.order;
-    mapped.shipType = item.shipType;
-    return mapped;
+    return item.getPilot()
+        .then(function (pilot) {
+            return mapPilotDBVO(pilot)
+        })
+        .then(function (mapped) {
+            mapped.shipDNA  = item.shipDNA;
+            mapped.shipName = item.shipName;
+            mapped.itemId   = item.order;
+            mapped.shipType = item.shipType;
+            return mapped;
+        })
 }
 
 /*
@@ -96,17 +104,17 @@ function mapPilotDBVO(pilot){
     var mapped = {};
     mapped.characterId  = pilot.id;
     mapped.characterName    = pilot.name;
-    mapped.corporationId    = pilot.corpId;
-    mapped.corporationName  = pilot.corp.name;
-    mapped.allianceId   = pilot.corp.allianceId;
-    mapped.allianceName = pilot.alliance ? pilot.alliance.name : '';
-    return mapped;
-}
-
-function mapCorpDBVO(corp){
-
-}
-
-function mapCorpDBVO(corp){
-
+    return pilot.getCorp()
+        .then(function (corp) {
+            mapped.corporationId    = corp.id;
+            mapped.corporationName  = corp.name;
+            return corp.getAlliance();
+        })
+        .then(function (alliance) {
+            if(alliance){
+                mapped.allianceId   = alliance.id;
+                mapped.allianceName = alliance.name;
+            }
+            return mapped;
+        })
 }

@@ -21,9 +21,10 @@ function getAllLists(pilotId){
     if(ADMINS.indexOf(pilotId)>=0){
         return dao.findAllWaitlists()
             .then(function (waitlists) {
-                return waitlists.map(function (list) {
+                waitlists = waitlists.map(function (list) {
                     return Mapper.mapWaitlistDBVO(list);
                 })
+                return Q.all(waitlists);
             });
     }else{
         return Q.reject(new Error('Not Authorized!'));
@@ -33,9 +34,10 @@ function getAllLists(pilotId){
 function getLists(pilotId){
     return dao.findWaitlistByOwner(pilotId)
         .then(function (waitlists) {
-            return waitlists.map(function (list) {
+            waitlists = waitlists.map(function (list) {
                 return Mapper.mapWaitlistDBVO(list);
             })
+            return Q.all(waitlists);
         });
 }
 

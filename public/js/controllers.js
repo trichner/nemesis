@@ -1,5 +1,5 @@
 var app = angular.module('evewt', []);
-app.controller('wt-list',[ '$scope','$http','$location','$interval','API', function ($scope,$http,$location,$interval,API) {
+app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','API', function ($scope,$http,$location,$interval,$window,API) {
   if(typeof CCPEVE == 'undefined'){
     alert('CCPEVE not defined, please use the EVE Online in-game-browser.');
     return;
@@ -11,6 +11,8 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','API', funct
     $scope.apiKey = '';
     $scope.apiVCode = '';
     $scope.remeberMe = true;
+
+    $scope.window = $window;
 
     $scope.postFit = function(){
         API.postFit($scope.waitlistVO.waitlistId,$scope.shipDNA)
@@ -29,7 +31,7 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','API', funct
     //=== Functions
     $scope.updateWL = function(waitlistVO){
       $scope.waitlistVO = waitlistVO;
-      $location.search('waitlistId',waitlistVO.waitlistId);
+      $location.hash(waitlistVO.waitlistId);
     };
 
     $scope.refreshWL = function(){
@@ -45,6 +47,13 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','API', funct
 
     $scope.showFitting = function(item){
      CCPEVE.showFitting(item.shipDNA);
+    };
+
+    $scope.showCorporation = function(item){
+        CCPEVE.showInfo(2,item.corporationId);
+    };
+    $scope.showAlliance = function(item){
+        CCPEVE.showInfo(16159,item.allianceId);
     };
 
     $scope.fleetInvite = function(item){
@@ -67,12 +76,15 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','API', funct
     API.getMe()
         .then(function (data) {
             $scope.me = data;
-            var waitlistId = $location.search()['waitlistId'];
+            var waitlistId = $location.hash();
 
             if(!waitlistId || 0 === waitlistId.length){
                 return API.newWaitlist()
                     .then(function (waitlist) {
                         $scope.updateWL(waitlist);
+
+                        alert($location.absUrl())
+                        window.location.href = $location.absUrl();
                     })
             }else{
                 return API.getWaitlist(waitlistId)
