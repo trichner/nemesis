@@ -31,7 +31,7 @@ function setupMiddleware(app){
         function(req,accessToken, refreshToken, profile, done) {
             req.session.verified = true;
             console.log('Req: ' + req)
-            console.log('Session:' + req.session)
+            console.log('Session:' + JSON.stringify(req.session))
             console.log("ACCESSTOKEN: " + accessToken);
             service.createPilot(accessToken)
                 .then(function (pilot) {
@@ -56,17 +56,17 @@ function setupMiddleware(app){
     app.get('/auth', passport.authenticate('oauth2'));
 
     app.get('/auth/callback',
-        passport.authenticate('oauth2', { failureRedirect: app.baseUrl }),
+        passport.authenticate('oauth2', { failureRedirect: '/nemesis/' }),
         function(req, res) {
             // Successful authentication, redirect home.
             console.log("SUCCESS AUTH");
-            res.redirect(req.baseUrl);
+            res.redirect('/nemesis/');
         });
     app.get('/auth/test',
         function(req, res) {
             // Successful authentication, redirect home.
             console.log("SUCCESS AUTH");
-            res.redirect(req.baseUrl);
+            res.redirect('/nemesis/');
         });
 }
 
