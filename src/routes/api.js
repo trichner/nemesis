@@ -56,6 +56,7 @@ app.post('/waitlist/:id', function(req, res, next) {
 /* GET create new waitlist*/
 app.get('/me', function(req, res, next) {
     var pilotId = req.session.pilotId;
+    console.log('Session: ' + JSON.stringify(req.session))
     service.findPilot(pilotId)
         .then(function (pilot) {
             res.json(pilot);
