@@ -11,7 +11,9 @@ module.exports = {
     getList : getList,
     getLists : getLists,
     getAllLists : getAllLists,
-    findPilot : findPilot
+    findPilot : findPilot,
+    fetchPilotInfo : fetchPilotInfo,
+    createPilot : createPilot
 };
 
 //FIXME Hardcoded, WTF?
@@ -55,6 +57,10 @@ function getList(listId){
         });
 }
 
+function fetchPilotInfo(characterID){
+    return api.getCharacter(characterID);
+}
+
 function verifyPilot(key,verificationCode,id){
     return api.getCharacter(key,verificationCode,id)
         .then(function (character) {
@@ -65,6 +71,21 @@ function verifyPilot(key,verificationCode,id){
                 return true;
             }else{
                 return Q.reject();
+            }
+        })
+}
+
+function createPilot(accessToken){
+    return api.getCharacterId(accessToken)
+        .then(api.getCharacter)
+        .then(function (character) {
+            return dao.findOrCreatePilot(character)
+        })
+        .then(function (pilot) {
+            if(pilot){
+                return true;
+            }else{
+                return new Error('Cannot create pilot.');
             }
         })
 }

@@ -7,6 +7,7 @@ var FileStore = require('session-file-store')(session);
 var minions = require('./../minions/Minions');
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
+var service = require('./../minions/service');
 
 function setupMiddleware(app){
     // API Middleware
@@ -28,11 +29,16 @@ function setupMiddleware(app){
             passReqToCallback: true
         },
         function(req,accessToken, refreshToken, profile, done) {
-            var err = null;
             req.session.verified = true;
+            console.log('Req: ' + req)
+            console.log('Session:' + req.session)
             console.log("ACCESSTOKEN: " + accessToken);
-            console.log("VERIFY: " + JSON.stringify(profile));
-            return done(err, "SomeUser");
+            service.createPilot(accessToken)
+                .then(function (pilot) {
+                    done(null, pilot);
+                }, function (err) {
+                    done(err, null);
+                })
         }
     ));
 

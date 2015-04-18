@@ -6,6 +6,7 @@
  */
 var neow = require('neow');
 var Q    = require('q');
+var unirest = require('unirest');
 
 /*
  {
@@ -19,14 +20,11 @@ var Q    = require('q');
  factionName: '' }
 
  */
-module.exports = {
-    getCharacter : function(keyID,vCode,characterID){
-        var client = new neow.EveClient({
-            keyID: keyID,
-            vCode: vCode
-        });
+var client = new neow.EveClient();
 
-        return client.fetch('account:Characters')
+module.exports = {
+    getCharacter : function(characterID){
+        return client.fetch('eve:CharacterInfo',{characterID:characterID})
             .then(function(result){
                 if(result.characters.hasOwnProperty(characterID)){
                     return result.characters[characterID];
@@ -35,7 +33,24 @@ module.exports = {
                 }
             })
     },
+    getCharacterId : getCharacterId,
     extractShip:extractFit
+}
+
+function getCharacterId(accessToken){
+    var deferred = Q.defer();
+    unirest.get('https://login.eveonline.com/oauth/verify')
+        .header('Accept', 'application/json')
+        .auth({
+            user: 'Bearer',
+            pass: accessToken,
+            sendImmediately: true
+        })
+        .end(function (res){
+            console.log(res.body)
+            deferred.resolve(res.body.CharacterID);
+        });
+    return deferred.promise;
 }
 
 var fittingPattern  = /.*<url=fitting:([0-9:;]*)>(.*)<\/url>.*/i;
