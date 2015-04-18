@@ -74,7 +74,9 @@ function verifyPilot(key,verificationCode,id){
             }
         })
 }
+/*
 
+ */
 function createPilot(accessToken){
     return api.getCharacterId(accessToken)
         .then(api.getCharacter)

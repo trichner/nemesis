@@ -196,11 +196,12 @@ function findAllPilots() {
 
 function findOrCreatePilot(pilot){
     // not all pilots have alliances!
+    console.log('Persisting: '+JSON.stringify(pilot))
     var promises = [];
-    promises.push(Pilot.findOrCreate({ where: {id: pilot.characterID} ,defaults: {name: pilot.name}}));
-    promises.push(Corp.findOrCreate({ where: {id: pilot.corporationID} ,defaults: {name: pilot.corporationName}}));
+    promises.push(Pilot.findOrCreate({ where: {id: pilot.characterID.content} ,defaults: {name: pilot.characterName.content}}));
+    promises.push(Corp.findOrCreate({ where: {id: pilot.corporationID.content} ,defaults: {name: pilot.corporation.content}}));
     if(pilot.allianceID && pilot.allianceID!='0') {
-        promises.push(Alliance.findOrCreate({where: {id: pilot.allianceID}, defaults: {name: pilot.allianceName}}));
+        promises.push(Alliance.findOrCreate({where: {id: pilot.allianceID.content}, defaults: {name: pilot.alliance.content}}));
     }
     return Q.all(promises).spread(function (pilot,corp,alliance) {
         var promises = [];

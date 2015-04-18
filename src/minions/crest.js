@@ -24,14 +24,7 @@ var client = new neow.EveClient();
 
 module.exports = {
     getCharacter : function(characterID){
-        return client.fetch('eve:CharacterInfo',{characterID:characterID})
-            .then(function(result){
-                if(result.characters.hasOwnProperty(characterID)){
-                    return result.characters[characterID];
-                }else{
-                    return Q.reject();
-                }
-            })
+        return client.fetch('eve:CharacterInfo',{characterID:characterID});
     },
     getCharacterId : getCharacterId,
     extractShip:extractFit
@@ -47,7 +40,7 @@ function getCharacterId(accessToken){
             sendImmediately: true
         })
         .end(function (res){
-            console.log(res.body)
+            console.log('Verify Body' + res.body)
             deferred.resolve(res.body.CharacterID);
         });
     return deferred.promise;
