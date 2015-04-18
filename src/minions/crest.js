@@ -34,11 +34,7 @@ function getCharacterId(accessToken){
     var deferred = Q.defer();
     unirest.get('https://login.eveonline.com/oauth/verify')
         .header('Accept', 'application/json')
-        .auth({
-            user: 'Bearer',
-            pass: accessToken,
-            sendImmediately: true
-        })
+        .header('Authorization', 'Bearer ' + accessToken)
         .end(function (res){
             console.log('Verify Body' + JSON.stringify(res.body))
             deferred.resolve(res.body.CharacterID);
