@@ -1,9 +1,5 @@
 var app = angular.module('evewt', []);
-app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','API', function ($scope,$http,$location,$interval,$window,API) {
-  if(typeof CCPEVE == 'undefined'){
-    alert('CCPEVE not defined, please use the EVE Online in-game-browser.');
-    return;
-  }
+app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','API','EveIGB', function ($scope,$http,$location,$interval,$window,API,EveIGB) {
 
     //=== Vars
     $scope.waitlistVO = null;
@@ -42,22 +38,22 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
     };
 
     $scope.showCharInfo = function(item){
-      CCPEVE.showInfo(1377, item.characterId);
+        EveIGB.showInfo(1377, item.characterId);
     };
 
     $scope.showFitting = function(item){
-     CCPEVE.showFitting(item.shipDNA);
+        EveIGB.showFitting(item.shipDNA);
     };
 
     $scope.showCorporation = function(item){
-        CCPEVE.showInfo(2,item.corporationId);
+        EveIGB.showInfo(2,item.corporationId);
     };
     $scope.showAlliance = function(item){
-        CCPEVE.showInfo(16159,item.allianceId);
+        EveIGB.showInfo(16159,item.allianceId);
     };
 
     $scope.fleetInvite = function(item){
-        CCPEVE.inviteToFleet(item.characterId)
+        EveIGB.inviteToFleet(item.characterId)
     };
 
     $scope.removeItem = function(item){

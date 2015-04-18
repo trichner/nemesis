@@ -24,10 +24,12 @@ function setupMiddleware(app){
             tokenURL: 'https://login.eveonline.com/oauth/token',
             clientID: credentials.clientID,
             clientSecret: credentials.clientSecret,
-            callbackURL: "https://k42.ch/nemesis/api/auth/callback"
+            callbackURL: "https://k42.ch/nemesis/api/auth/callback",
+            passReqToCallback: true
         },
-        function(accessToken, refreshToken, profile, done) {
+        function(req,accessToken, refreshToken, profile, done) {
             var err = null;
+            req.session.verified = true;
             console.log("ACCESSTOKEN: " + accessToken);
             console.log("VERIFY: " + JSON.stringify(profile));
             return done(err, "SomeUser");
@@ -49,6 +51,12 @@ function setupMiddleware(app){
 
     app.get('/auth/callback',
         passport.authenticate('oauth2', { failureRedirect: app.baseUrl }),
+        function(req, res) {
+            // Successful authentication, redirect home.
+            console.log("SUCCESS AUTH");
+            res.redirect(req.baseUrl);
+        });
+    app.get('/auth/test',
         function(req, res) {
             // Successful authentication, redirect home.
             console.log("SUCCESS AUTH");
