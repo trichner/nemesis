@@ -8,18 +8,20 @@ var app = require('../src/app');
 var debug = require('debug')('nemesis:server');
 var http = require('http');
 
+var root = require('express')();
+
 /**
  * Get port from environment and store in Express.
  */
 
 var port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
-
+root.set('port', port);
+root.use('/nemesis', app);
 /**
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+var server = http.createServer(root);
 
 /**
  * Listen on provided port, on all network interfaces.

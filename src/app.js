@@ -25,12 +25,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false, type: 'application/x-www-form-urlencoded' }));
 
 // PUBLIC
-app.use('/', express.static('public'));
+app.use('/', express.static(path.resolve(__dirname, '../public')));
 
 // API
 app.use('/api',eveHeader);
 app.use('/api',session({
-  secret: minions.randomAlphanumericString(16), // Random for dev purposes, should be persisted
+  secret: minions.getSessionSecret(), // Random for dev purposes, should be persisted
   store: new FileStore()
 }))
 app.use('/api',authenticator('/verify'));
