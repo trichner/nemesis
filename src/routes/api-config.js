@@ -20,7 +20,12 @@ function setupMiddleware(app){
     passport.deserializeUser(function(pilotId, done) {
         service.findPilot(pilotId)
             .then(function (pilot) {
-                done(null, pilot);
+                if(pilot){
+                    done(null, pilot);
+                }else{
+                    done(new Error('Session not established'),null);
+                }
+
             })
     });
     passport.use(new OAuth2Strategy({
