@@ -48,10 +48,11 @@ function setupMiddleware(app){
     app.get('/auth', passport.authenticate('oauth2'));
 
     app.get('/auth/callback',
-        passport.authenticate('oauth2', { failureRedirect: '/login' }),
+        passport.authenticate('oauth2', { failureRedirect: app.baseUrl }),
         function(req, res) {
             // Successful authentication, redirect home.
-            res.redirect('/');
+            console.log("SUCCESS AUTH");
+            res.redirect(req.baseUrl);
         });
 }
 
