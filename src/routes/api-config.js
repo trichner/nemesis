@@ -25,7 +25,6 @@ function setupMiddleware(app){
                 }else{
                     done(new Error('Session not established'),null);
                 }
-
             })
     });
     passport.use(new OAuth2Strategy({

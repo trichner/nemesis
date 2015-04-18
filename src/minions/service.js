@@ -87,7 +87,7 @@ function createPilot(accessToken){
         })
         .then(function (pilot) {
             if(pilot){
-                return true;
+                return pilot;
             }else{
                 return new Error('Cannot create pilot.');
             }
