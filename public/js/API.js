@@ -5,7 +5,7 @@ app.factory('API', ['$q','$http',function($q,$http) {
     var API = {};
     var API_PREFIX = 'api'
     var URL = {
-        VERIFY : API_PREFIX +'/verify',
+        VERIFY : API_PREFIX +'/auth',
         WAITLIST : API_PREFIX +'/waitlist',
         ME : API_PREFIX +'/me'
     }
@@ -71,16 +71,9 @@ app.factory('API', ['$q','$http',function($q,$http) {
         return deferred.promise;
     }
 
-    API.verify = function(key,vCode,rememberMe){
-        if(!(key && vCode)){
-            return breakPromise();
-        }
+    API.verify = function(rememberMe){
         var deferred = $q.defer();
-        $http.post(URL.VERIFY,{
-                key:key,
-                vCode:vCode,
-                rememberMe:rememberMe
-            }).
+        $http.get(URL.VERIFY).
             success(function(data, status, headers, config) {
                 deferred.resolve(data)
             }).
@@ -106,7 +99,7 @@ app.factory('API', ['$q','$http',function($q,$http) {
         return deferred.promise;
     }
 
-    API.removeFit = function(waitlistId,itemId){
+    API.removeItem = function(waitlistId,itemId){
         if(!(waitlistId && itemId)){
             return breakPromise();
         }

@@ -16,9 +16,9 @@
     <a id="waitlist-link" href="{{window.location.href}}">{{window.location.href}}</a>
 </p>
 <div>
-	<input type="text" name="api key" placeholder="Eve API Key" ng-model="apiKey" required>
-	<input type="text" name="vCode" placeholder="Eve API Verification Code" ng-model="apiVCode" required>
-	<button ng-click="verifyPilot()">verify</button>
+	<a href="api/auth">
+		<img title="EVE SSO" src="img/EVESSO_LBLACK.png"/>
+	</a>
 	<input name="remember me" type="checkbox" ng-model="remeberMe">
 	<span>remeber me</span>
 </div>

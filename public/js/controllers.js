@@ -17,13 +17,6 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
             })
     };
 
-    $scope.verifyPilot = function () {
-        API.verify($scope.apiKey,$scope.apiVCode,$scope.rememberMe)
-            .then(function () {
-                $scope.refreshWL();
-            })
-    };
-    
     //=== Functions
     $scope.updateWL = function(waitlistVO){
       $scope.waitlistVO = waitlistVO;
