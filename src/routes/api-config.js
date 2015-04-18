@@ -58,9 +58,7 @@ function setupMiddleware(app){
         store: new FileStore()
     }))
     app.use(passport.initialize());
-    app.use(passport.session());
     app.use(eveHeader);
-
     app.get('/auth', passport.authenticate('oauth2'));
 
     app.get('/auth/callback',
@@ -70,6 +68,9 @@ function setupMiddleware(app){
             console.log("SUCCESS AUTH");
             res.redirect('/nemesis/');
         });
+
+    app.use(passport.session());
+
     app.get('/auth/test',
         function(req, res) {
             // Successful authentication, redirect home.
