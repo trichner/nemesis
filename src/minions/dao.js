@@ -15,6 +15,7 @@ var sequelize = new Sequelize('sqlite://nemesis.sqlite',
         pool: {
             // Set maxIdleTime to 10 seconds. Otherwise, it kills transactions that
             // are open for long.
+            maxConnections: 1,
             maxIdleTime: 10000
         }
     });
