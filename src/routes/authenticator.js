@@ -1,9 +1,9 @@
 
-module.exports = function(path){
+module.exports = function(paths){
     return function(req, res, next) {
-        if(req.session.verified){
+        if(req.isAuthenticated()){
             next();
-        }else if(req.path==path){
+        }else if(paths.indexOf(req.path)>=0){
             next();
         }else{
             var err = new Error('Please authenticate.')

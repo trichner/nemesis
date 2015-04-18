@@ -8,12 +8,14 @@ var minions = require('./../minions/Minions');
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
 var service = require('./../minions/service');
+var authenticator = require('./authenticator');
 
 function setupMiddleware(app){
     // API Middleware
     var credentials = minions.getEveSSOCredentials();
     passport.serializeUser(function(pilot, done) {
-        console.log("SERIALIZING: " + JSON.stringify(user));
+        console.log('SERIALIZING')
+        console.log(JSON.stringify(user));
         done(null, pilot.id);
     });
 
@@ -45,6 +47,7 @@ function setupMiddleware(app){
                     req.session.pilotId = pilot.id;
                     done(null, pilot);
                 }, function (err) {
+                    console.log('FAIL: ' + err)
                     done(err, null);
                 })
         }
@@ -53,23 +56,22 @@ function setupMiddleware(app){
     app.use(cookieParser());
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false, type: 'application/x-www-form-urlencoded' }));
+    app.use(eveHeader);
     app.use(session({
         secret: minions.getSessionSecret(),
         store: new FileStore()
     }))
     app.use(passport.initialize());
-    app.use(eveHeader);
-    app.get('/auth', passport.authenticate('oauth2'));
+    app.use(passport.session());
 
+    app.get('/auth', passport.authenticate('oauth2'));
     app.get('/auth/callback',
-        passport.authenticate('oauth2', { failureRedirect: '/nemesis/' }),
+        passport.authenticate('oauth2'),
         function(req, res) {
             // Successful authentication, redirect home.
             console.log("SUCCESS AUTH");
-            res.redirect('/nemesis/');
+            res.send();
         });
-
-    app.use(passport.session());
 
     app.get('/auth/test',
         function(req, res) {
@@ -77,6 +79,16 @@ function setupMiddleware(app){
             console.log("SUCCESS AUTH");
             res.redirect('/nemesis/');
         });
+
+    app.use(function(req, res, next) {
+        if(req.isAuthenticated()){
+            next();
+        }else{
+            var err = new Error('Please authenticate.')
+            err.status = 401;
+            return next(err);
+        }
+    })
 }
 
 module.exports = {
