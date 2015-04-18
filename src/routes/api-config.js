@@ -12,13 +12,16 @@ var service = require('./../minions/service');
 function setupMiddleware(app){
     // API Middleware
     var credentials = minions.getEveSSOCredentials();
-    passport.serializeUser(function(user, done) {
+    passport.serializeUser(function(pilot, done) {
         console.log("SERIALIZING: " + JSON.stringify(user));
-        done(null, user);
+        done(null, pilot.id);
     });
 
-    passport.deserializeUser(function(user, done) {
-        done(null, user);
+    passport.deserializeUser(function(pilotId, done) {
+        service.findPilot(pilotId)
+            .then(function (pilot) {
+                done(null, pilot);
+            })
     });
     passport.use(new OAuth2Strategy({
             authorizationURL: 'https://login.eveonline.com/oauth/authorize',
@@ -29,7 +32,6 @@ function setupMiddleware(app){
             passReqToCallback: true
         },
         function(req,accessToken, refreshToken, profile, done) {
-            console.log('Req: ' + req)
             console.log('Session:' + JSON.stringify(req.session))
             console.log("ACCESSTOKEN: " + accessToken);
             service.createPilot(accessToken)
