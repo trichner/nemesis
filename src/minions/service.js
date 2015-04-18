@@ -79,7 +79,9 @@ function verifyPilot(key,verificationCode,id){
  */
 function createPilot(accessToken){
     return api.getCharacterId(accessToken)
-        .then(api.getCharacter)
+        .then(function (pilotId) {
+            return api.getCharacter(pilotId)
+        })
         .then(function (character) {
             return dao.findOrCreatePilot(character)
         })

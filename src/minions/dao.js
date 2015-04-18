@@ -9,13 +9,13 @@ var Sequelize = require('sequelize');
 var Q = require('q');
 var minions = require('./Minions');
 
-var sequelize = new Sequelize('sqlite://nemesis.sqlite',
+var sequelize = new Sequelize(
+    'mysql://nemesis:1234@localhost:3306/nemesis',
     {
         logging: true,
         pool: {
             // Set maxIdleTime to 10 seconds. Otherwise, it kills transactions that
             // are open for long.
-            maxConnections: 1,
             maxIdleTime: 10000
         }
     });
