@@ -9,7 +9,15 @@ var Sequelize = require('sequelize');
 var Q = require('q');
 var minions = require('./Minions');
 
-var sequelize = new Sequelize('sqlite://nemesis.sqlite');
+var sequelize = new Sequelize('sqlite://nemesis.sqlite',
+    {
+        logging: true,
+        pool: {
+            // Set maxIdleTime to 10 seconds. Otherwise, it kills transactions that
+            // are open for long.
+            maxIdleTime: 10000
+        }
+    });
 
 var EXTERNAL_ID_LENGTH = 32;
 
@@ -198,10 +206,10 @@ function findOrCreatePilot(pilot){
     // not all pilots have alliances!
     console.log('Persisting: '+JSON.stringify(pilot))
     var promises = [];
-    promises.push(Pilot.findOrCreate({ where: {id: pilot.characterID.content} ,defaults: {name: pilot.characterName.content}}));
-    promises.push(Corp.findOrCreate({ where: {id: pilot.corporationID.content} ,defaults: {name: pilot.corporation.content}}));
+    promises.push(Pilot.findOrCreate({ where: {id: pilot.characterID} ,defaults: {name: pilot.characterName}}));
+    promises.push(Corp.findOrCreate({ where: {id: pilot.corporationID} ,defaults: {name: pilot.corporation}}));
     if(pilot.allianceID && pilot.allianceID!='0') {
-        promises.push(Alliance.findOrCreate({where: {id: pilot.allianceID.content}, defaults: {name: pilot.alliance.content}}));
+        promises.push(Alliance.findOrCreate({where: {id: pilot.allianceID}, defaults: {name: pilot.alliance}}));
     }
     return Q.all(promises).spread(function (pilot,corp,alliance) {
         var promises = [];
