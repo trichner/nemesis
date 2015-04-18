@@ -5,5 +5,8 @@
 *.sqlite
 
 node_modules/
+
+# Confidential
 sessions/
 session_secret
+evesso.json

@@ -1,18 +1,61 @@
 var service = require('./../minions/service');
+var minions = require('./../minions/Minions');
+var cookieParser = require('cookie-parser')
+var bodyParser = require('body-parser')
+var session = require('express-session');
+var eveHeader = require('eve-header');
+var FileStore = require('session-file-store')(session);
 
 var Q = require('q');
 var express = require('express');
-var router = express.Router();
 
+var app = express();
+
+// setup passport
+var passport = require('passport')
+var OAuth2Strategy = require('passport-oauth2').Strategy;
+var credentials = minions.getEveSSOCredentials();
+passport.use(new OAuth2Strategy({
+        authorizationURL: 'https://login.eveonline.com/oauth/authorize',
+        tokenURL: 'https://login.eveonline.com/oauth/token',
+        clientID: credentials.clientID,
+        clientSecret: credentials.clientSecret,
+        callbackURL: "https://k42.ch/nemesis/api/auth/callback"
+    },
+    function(accessToken, refreshToken, profile, done) {
+        var err = null;
+        return done(err, "SomeUser");
+    }
+));
+
+app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false, type: 'application/x-www-form-urlencoded' }));
+app.use(session({
+    secret: minions.getSessionSecret(),
+    store: new FileStore()
+}))
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(eveHeader);
+
+app.get('/auth', passport.authenticate('oauth2'));
+
+app.get('/auth/callback',
+    passport.authenticate('oauth2', { failureRedirect: '/login' }),
+    function(req, res) {
+        // Successful authentication, redirect home.
+        res.redirect('/');
+    });
 
 /* GET all owned lists*/
-router.get('/waitlist', function(req, res, next) {
+app.get('/waitlist', function(req, res, next) {
   //res.send('respond with a resource');
   res.json({wait:'lists'})
 });
 
 /* GET waitlist by id*/
-router.get('/waitlist/:id', function(req, res, next) {
+app.get('/waitlist/:id', function(req, res, next) {
   //res.send('respond with a resource');
   var externalId = req.params.id;
   service.getList(externalId).
@@ -25,7 +68,7 @@ router.get('/waitlist/:id', function(req, res, next) {
 });
 
 /* GET create new waitlist*/
-router.post('/waitlist', function(req, res, next) {
+app.post('/waitlist', function(req, res, next) {
   var pilotId = req.session.pilotId;
   service.createList(pilotId)
       .then(function (list) {
@@ -37,7 +80,7 @@ router.post('/waitlist', function(req, res, next) {
 });
 
 /* POST add entry to waitlist*/
-router.post('/waitlist/:id', function(req, res, next) {
+app.post('/waitlist/:id', function(req, res, next) {
     //res.send('respond with a resource');
     var externalId = req.params.id;
     var pilotId = req.session.pilotId;
@@ -52,7 +95,7 @@ router.post('/waitlist/:id', function(req, res, next) {
 });
 
 /* GET create new waitlist*/
-router.get('/me', function(req, res, next) {
+app.get('/me', function(req, res, next) {
     var pilotId = req.session.pilotId;
     service.findPilot(pilotId)
         .then(function (pilot) {
@@ -64,7 +107,7 @@ router.get('/me', function(req, res, next) {
 });
 
 /* POST add entry to waitlist*/
-router.delete('/waitlist/:id', function(req, res, next) {
+app.delete('/waitlist/:id', function(req, res, next) {
     //res.send('respond with a resource');
     var externalId = req.params.id;
     var pilotId = req.session.pilotId;
@@ -79,7 +122,7 @@ router.delete('/waitlist/:id', function(req, res, next) {
 });
 
 /* POST verify pilots*/
-router.post('/verify', function(req, res, next) {
+app.post('/verify', function(req, res, next) {
   var key   = req.body.key;
   var vCode = req.body.vCode;
   var rememberMe = req.body.rememberMe;
@@ -115,10 +158,10 @@ router.post('/verify', function(req, res, next) {
 });
 
 /* DELETE verify pilots*/
-router.delete('/verify', function(req, res, next) {
+app.delete('/verify', function(req, res, next) {
     if(req.session){
         req.session.verified = false;
     }
 });
 
-module.exports = router;
+module.exports = app;

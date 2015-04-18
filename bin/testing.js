@@ -2,7 +2,6 @@
  * Created by Thomas on 15.04.2015.
  */
 
-
 var neow = require('neow');
 
 var client = new neow.EveClient();
