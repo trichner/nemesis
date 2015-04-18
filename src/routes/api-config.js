@@ -29,12 +29,14 @@ function setupMiddleware(app){
             passReqToCallback: true
         },
         function(req,accessToken, refreshToken, profile, done) {
-            req.session.verified = true;
             console.log('Req: ' + req)
             console.log('Session:' + JSON.stringify(req.session))
             console.log("ACCESSTOKEN: " + accessToken);
             service.createPilot(accessToken)
                 .then(function (pilot) {
+                    console.log('Pilot:' + JSON.stringify(pilot))
+                    req.session.verified = true;
+                    req.session.pilotId = pilot.id;
                     done(null, pilot);
                 }, function (err) {
                     done(err, null);
