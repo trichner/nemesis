@@ -90,6 +90,7 @@ Waitlist.hasMany(WaitlistItem);
  factionName: ''
  }
  */
+sequelize.sync();
 
 module.exports = {
     connect : connect,
