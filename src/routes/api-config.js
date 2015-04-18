@@ -14,7 +14,7 @@ function setupMiddleware(app){
     // API Middleware
     var credentials = minions.getEveSSOCredentials();
     passport.serializeUser(function(pilot, done) {
-        console.log('SERIALIZING')
+        console.log('SERIALIZING' + pilot)
         console.log(JSON.stringify(user));
         done(null, pilot.id);
     });
