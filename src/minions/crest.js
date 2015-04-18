@@ -40,7 +40,7 @@ function getCharacterId(accessToken){
             sendImmediately: true
         })
         .end(function (res){
-            console.log('Verify Body' + res.body)
+            console.log('Verify Body' + JSON.stringify(res.body))
             deferred.resolve(res.body.CharacterID);
         });
     return deferred.promise;
