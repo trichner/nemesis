@@ -65,12 +65,10 @@ function setupMiddleware(app){
 
     app.get('/auth', passport.authenticate('oauth2'));
     app.get('/auth/callback',
-        passport.authenticate('oauth2'),
-        function(req, res) {
-            // Successful authentication, redirect home.
-            console.log("SUCCESS AUTH");
-            res.send();
-        });
+        passport.authenticate('oauth2',{
+            successRedirect : '/nemesis/',
+            failureRedirect : '/nemesis/'
+        }));
 
     app.get('/auth/test',
         function(req, res) {
