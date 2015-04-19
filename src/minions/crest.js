@@ -73,5 +73,19 @@ function disassembleShipFit(shipDNA){
     slots.forEach(function (slot) {
         parts = parts.concat(slot.split(';'))
     })
+    return parts;
 }
 
+var characterPattern  = /.*<url=showinfo:[0-9]*\/\/([0-9]*)>(.*)<\/url>.*/i;
+function extractCharacter(str){
+    var matches = characterPattern.exec(str);
+    var id,name;
+    if(matches){
+        id  = matches[1];
+        name = matches[2];
+    }
+    return {
+        id : id,
+        name: name
+    }
+}

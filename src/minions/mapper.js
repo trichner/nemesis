@@ -3,7 +3,8 @@ var Q = require('q');
 module.exports = {
     mapWaitlistDBVO : mapWaitlistDBVO,
     mapWaitlistItemDBVO : mapWaitlistItemDBVO,
-    mapPilotDBVO : mapPilotDBVO
+    mapPilotDBVO : mapPilotDBVO,
+    mapWaitlistDBVOtoAscii : mapWaitlistDBVOtoAscii
 }
 
 /*
@@ -37,6 +38,35 @@ function mapWaitlistDBVO(waitlist){
             mapped.waitlist = mappedItems;
             return mapped;
         })
+}
+
+function mapWaitlistDBVOtoAscii(waitlist){
+
+    return mapWaitlistDBVO(waitlist)
+        .then(function (mapped) {
+
+            var list = mapped.waitlist.map(function (item) {
+                var char = linkCharacter(item.characterId,item.characterName);
+                var fit  = linkFit(item.shipDNA,item.shipDNA)
+                return ' - ' + fit + ' \t ' + char + '\n';
+            })
+            list = list.join();
+
+            var ascii = '.\n';
+            var prename = mapped.ownerName.split(' ')[0];
+            ascii.concat('-= <b>' + prename + ' Fleet </b>™ =-\n')
+            ascii.concat(list);
+            ascii.concat('-==              ==-\n')
+            return ascii;
+        })
+}
+
+function linkCharacter(id,name){
+    return '<url=showinfo:1373\/\/' + id + '>' + name +'</url>'
+}
+
+function linkFit(shipDNA,shipName){
+    return '<url=fitting:' + shipDNA + '>' + shipName + '</url>'
 }
 
 /*

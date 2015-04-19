@@ -57,6 +57,14 @@ function getList(listId){
         });
 }
 
+function getListAscii(listId){
+    return dao.findWaitlistByExternalId(listId)
+        .then(function (waitlists) {
+            return Mapper.mapWaitlistDBVOtoAscii(waitlists);
+        });
+}
+
+
 function fetchPilotInfo(characterID){
     return api.getCharacter(characterID);
 }
