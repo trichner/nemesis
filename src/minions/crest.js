@@ -67,6 +67,21 @@ var TYPE_ID = {
     FEDERATION_NAVY_STASIS_WEBIFIER : 17559
 }
 
+var DD  = {
+    VINDICATOR : 17740 ,
+    ROKH : 24688 ,
+    NIGHTMARE : 17736 ,
+    MAELSTROM : 24694 ,
+    HYPERION : 24690 ,
+    MACHARIEL : 17738
+}
+
+var LL  = {
+    SCIMITAR : 11978 ,
+    BASILISK : 11985
+}
+
+
 function disassembleShipFit(shipDNA){
     var slots = shipDNA.split(':')
     var parts = [];
