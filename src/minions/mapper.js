@@ -54,9 +54,9 @@ function mapWaitlistDBVOtoAscii(waitlist){
 
             var ascii = '.\n';
             var prename = mapped.ownerName.split(' ')[0];
-            ascii.concat('-= <b>' + prename + ' Fleet </b>™ =-\n')
-            ascii.concat(list);
-            ascii.concat('-==              ==-\n')
+            ascii = ascii.concat('-= <b>' + prename + ' Fleet </b>™ =-\n')
+            ascii = ascii.concat(list);
+            ascii = ascii.concat('-==              ==-\n')
             return ascii;
         })
 }
