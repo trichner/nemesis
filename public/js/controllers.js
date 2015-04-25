@@ -1,10 +1,5 @@
-var app = angular.module('evewt', ['cgNotify']);
-app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','API','EveIGB','notify', function ($scope,$http,$location,$interval,$window,API,EveIGB,notify) {
-
-    notify({
-        message: 'Hello World',
-        duration: 5000
-    });
+var app = angular.module('evewt', []);
+app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','API','EveIGB',function ($scope,$http,$location,$interval,$window,API,EveIGB) {
 
     //=== Vars
     $scope.waitlistVO = null;
