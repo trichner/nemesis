@@ -5,6 +5,7 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
         message: 'Hello World',
         duration: 5000
     });
+
     //=== Vars
     $scope.waitlistVO = null;
     $scope.shipDNA = '';

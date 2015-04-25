@@ -1,6 +1,9 @@
 <!doctype html>
 <html lang="en" id="ng-app" ng-app="evewt">
 <head>
+	<link rel="stylesheet" type="text/css" href="style/angular-notify.css" />
+	<link rel="stylesheet" type="text/css" href="style/index.css" />
+
     <meta charset="utf-8">
     <title>Nemesis</title>
     <script src="js/angular.js"></script>
@@ -8,9 +11,6 @@
     <script src="js/controllers.js"></script>
 	<script src="js/API.js"></script>
 	<script src="js/EveIGB.js"></script>
-
-	<link rel="stylesheet" type="text/css" href="style/angular-notify.min.css" />
-	<link rel="stylesheet" type="text/css" href="style/index.css" />
 </head>
 <body onload='CCPEVE.requestTrust(location.protocol + "//" + location.host + "/*")' ng-controller="wt-list">
 <h1>Hello {{me.characterName ? me.characterName : 'Pilot'}}, welcome to Thomions' Waitlist Managing Tool!</h1>
