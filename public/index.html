@@ -15,25 +15,23 @@
 <p>Share this waitlist with this link:
     <a id="waitlist-link" href="{{window.location.href}}">{{window.location.href}}</a>
 </p>
-<div ng-class="{hidden: authenticated}">
+<div ng-class="{remove: authenticated}">
+	Please log in via EVE Single-Sing-On.
 	<a href="api/auth">
 		<img title="EVE SSO" src="img/EVESSO_SBLACK.png"/>
 	</a>
 	<input name="remember me" type="checkbox" ng-model="remeberMe">
 	<span>remember me</span>
 </div>
-<div ng-class="{hidden: !authenticated}">
+<div ng-class="{remove: !authenticated}">
 	You are logged in! Congratulations!
 </div>
-<div ng-class="{hidden: !authenticated}">
+<div ng-class="{remove: !authenticated}">
 	<button ng-click="newWaitlist()">Create new waitlist</button>
 </div>
-<div id="xup" ng-class="{hidden: !authenticated}">
+<div id="xup" ng-class="{remove: !authenticated}">
     <input type="text" name="fitting" placeholder="paste ship fitting here" ng-model="shipDNA" required>
     <button ng-click="postFit()">x up!</button>
-</div>
-<div  ng-class="{hidden: authenticated}">
-	Please log in via EVE Single-Sing-On.
 </div>
 <ol>
     <li ng-repeat="item in waitlistVO.waitlist">
