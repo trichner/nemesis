@@ -1,5 +1,7 @@
-var app = angular.module('evewt', []);
-app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','API','EveIGB',function ($scope,$http,$location,$interval,$window,API,EveIGB) {
+var app = angular.module('evewt', ['ui-notification']);
+app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','API','EveIGB','Notification',function ($scope,$http,$location,$interval,$window,API,EveIGB,Notification) {
+
+    Notification("Hello WOrld!")
 
     //=== Vars
     $scope.waitlistVO = null;
