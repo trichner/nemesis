@@ -22,9 +22,15 @@
 	<input name="remember me" type="checkbox" ng-model="remeberMe">
 	<span>remeber me</span>
 </div>
+<div ng-class="{hidden: !authenticated}">
+	<button ng-click="newWaitlist()">Create new waitlist</button>
+</div>
 <div id="xup" ng-class="{hidden: !authenticated}">
     <input type="text" name="fitting" placeholder="paste ship fitting here" ng-model="shipDNA" required>
     <button ng-click="postFit()">x up!</button>
+</div>
+<div  ng-class="{hidden: authenticated}">
+	Please log in via EVE Single-Sing-On.
 </div>
 <ol>
     <li ng-repeat="item in waitlistVO.waitlist">

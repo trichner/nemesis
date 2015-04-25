@@ -19,6 +19,13 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
             })
     };
 
+    $scope.newWaitlist = function () {
+        return API.newWaitlist()
+            .then(function (waitlist) {
+                $scope.updateWL(waitlist);
+            })
+    };
+
     //=== Functions
     $scope.updateWL = function(waitlistVO){
       $scope.waitlistVO = waitlistVO;
@@ -57,7 +64,7 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
                 $scope.refreshWL();
             })
             .then(null,function () {
-                alert('failed to remove item :(');
+                console.log('failed to remove item :(');
             })
     };
 
@@ -69,31 +76,26 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
             $scope.me = data;
             var waitlistId = $location.hash();
             $scope.authenticated = true;
-            if(!waitlistId || 0 === waitlistId.length){
-
-                return API.newWaitlist()
-                    .then(function (waitlist) {
-                        $scope.updateWL(waitlist);
-                    })
-
-            }else{
+            if(waitlistId && waitlistId.length>0){
                 return API.getWaitlist(waitlistId)
                     .then(function (waitlist) {
                         $scope.updateWL(waitlist);
                     })
                     .then(null,function () {
-                        return API.newWaitlist()
-                            .then(function (waitlist) {
-                                $scope.updateWL(waitlist);
-                            })
+                        $location.hash('');
+                        console.log('Failed to fetch waitlist')
                     })
+            }else{
+                alert('Please either create a new waitlist or join an existing waitlist');
             }
         })
-        .then(null,function () {
-            alert("I'm sowwy, something went terribly wrong");
+        .then(null,function (status) {
+            if(status==401){
+                $scope.authenticated = false;
+            }
         })
 
-    //update all 10s, veeery inefficient
+    //update every 10s, veeery inefficient
     $interval(function(){
         $scope.refreshWL();
     }, 10000);
