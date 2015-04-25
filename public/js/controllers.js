@@ -66,7 +66,7 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
     };
 
     $scope.removeItem = function(item){
-        API.removeItem(item.itemId)
+        API.removeItem($scope.waitlistVO.waitlistId,item.itemId)
             .then(function () {
                 $scope.refreshWL();
                 Notification.success("Removed " + item.characterName + " from the waitlist")
