@@ -13,7 +13,8 @@ module.exports = {
     getAllLists : getAllLists,
     findPilot : findPilot,
     fetchPilotInfo : fetchPilotInfo,
-    createPilot : createPilot
+    createPilot : createPilot,
+    getListTxt : getListTxt
 };
 
 //FIXME Hardcoded, WTF?
@@ -54,6 +55,13 @@ function getList(listId){
     return dao.findWaitlistByExternalId(listId)
         .then(function (waitlists) {
             return Mapper.mapWaitlistDBVO(waitlists);
+        });
+}
+
+function getListTxt(listId){
+    return dao.findWaitlistByExternalId(listId)
+        .then(function (waitlists) {
+            return Mapper.mapWaitlistDBVOtoAscii(waitlists);
         });
 }
 
