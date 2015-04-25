@@ -15,12 +15,15 @@
 <p>Share this waitlist with this link:
     <a id="waitlist-link" href="{{window.location.href}}">{{window.location.href}}</a>
 </p>
-<div>
+<div ng-class="{hidden: !authenticated}">
 	<a href="api/auth">
 		<img title="EVE SSO" src="img/EVESSO_SBLACK.png"/>
 	</a>
 	<input name="remember me" type="checkbox" ng-model="remeberMe">
 	<span>remember me</span>
+</div>
+<div ng-class="{hidden: authenticated}">
+	You are logged in! Congratulations!
 </div>
 <div ng-class="{hidden: !authenticated}">
 	<button ng-click="newWaitlist()">Create new waitlist</button>
