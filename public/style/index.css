@@ -73,3 +73,7 @@ div.float-container > div {
 }
 
 img{display:block;}
+
+.hidden {
+	visibility: hidden;
+}

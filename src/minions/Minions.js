@@ -49,7 +49,7 @@ module.exports = {
             credentials = fs.readFileSync(EVESSO_CREDENTIALS).toString();
             credentials = JSON.parse(credentials);
         }catch (e1){
-            throw new Error('Please provide Eve SSO oauth credentials in ' + EVESSO_CREDENTIALS + 'file.',e1);
+            throw new Error('Please provide Eve SSO oauth credentials in "' + EVESSO_CREDENTIALS + '" file.',e1);
         }
         return credentials;
     },

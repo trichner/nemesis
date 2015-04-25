@@ -81,7 +81,6 @@ var LL  = {
     BASILISK : 11985
 }
 
-
 function disassembleShipFit(shipDNA){
     var slots = shipDNA.split(':')
     var parts = [];

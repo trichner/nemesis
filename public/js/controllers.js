@@ -8,6 +8,8 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
     $scope.apiVCode = '';
     $scope.remeberMe = true;
 
+    $scope.authenticated = false;
+
     $scope.window = $window;
 
     $scope.postFit = function(){
@@ -66,12 +68,14 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
         .then(function (data) {
             $scope.me = data;
             var waitlistId = $location.hash();
-
+            $scope.authenticated = true;
             if(!waitlistId || 0 === waitlistId.length){
+
                 return API.newWaitlist()
                     .then(function (waitlist) {
                         $scope.updateWL(waitlist);
                     })
+
             }else{
                 return API.getWaitlist(waitlistId)
                     .then(function (waitlist) {

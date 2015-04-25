@@ -12,17 +12,17 @@
 <body onload='CCPEVE.requestTrust(location.protocol + "//" + location.host + "/*")' ng-controller="wt-list">
 <h1>Hello {{me.characterName ? me.characterName : 'Pilot'}}, welcome to Thomions' Waitlist Managing Tool!</h1>
 
-<p>Share your waitlist using this link:
+<p>Share this waitlist with this link:
     <a id="waitlist-link" href="{{window.location.href}}">{{window.location.href}}</a>
 </p>
 <div>
 	<a href="api/auth">
-		<img title="EVE SSO" src="img/EVESSO_LBLACK.png"/>
+		<img title="EVE SSO" src="img/EVESSO_SBLACK.png"/>
 	</a>
 	<input name="remember me" type="checkbox" ng-model="remeberMe">
 	<span>remeber me</span>
 </div>
-<div>
+<div id="xup" ng-class="{hidden: !authenticated}">
     <input type="text" name="fitting" placeholder="paste ship fitting here" ng-model="shipDNA" required>
     <button ng-click="postFit()">x up!</button>
 </div>
