@@ -13,7 +13,9 @@
 	<script src="js/EveIGB.js"></script>
 </head>
 <body onload='CCPEVE.requestTrust(location.protocol + "//" + location.host + "/*")' ng-controller="wt-list">
-<h1>Hello {{me.characterName ? me.characterName : 'Pilot'}}, welcome to Thomions' Waitlist Managing Tool!</h1>
+<span>Hello {{me.characterName ? me.characterName : 'Pilot'}}, welcome to Thomions' Waitlist Managing
+	Tool!</span>
+<h2  ng-class="{remove: !waitlistVO}" >WL Manager: {{waitlistVO.ownerName}}</h2>
 
 <p>Share this waitlist with this link:
     <a id="waitlist-link" href="{{window.location.href}}">{{window.location.href}}</a>
