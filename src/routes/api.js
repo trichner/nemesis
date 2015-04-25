@@ -19,7 +19,8 @@ app.get('/waitlist/:id.txt', function(req, res, next) {
     var externalId = req.params.id;
     service.getListTxt(externalId).
         then(function (list) {
-            res.json(list);
+            res.type('text/plain');
+            res.send(list);
         })
         .catch(function (e) {
             next(e);
