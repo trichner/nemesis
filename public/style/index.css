@@ -1,7 +1,9 @@
 body {
 	margin: 20px;
 	background: #AAAAAA;
+	font-family: Arial !important;
 }
+
 
 a#waitlist-link {
 	cursor: pointer;

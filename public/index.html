@@ -15,11 +15,12 @@
 <body onload='CCPEVE.requestTrust(location.protocol + "//" + location.host + "/*")' ng-controller="wt-list">
 <span>Hello {{me.characterName ? me.characterName : 'Pilot'}}, welcome to Thomions' Waitlist Management
 	Tool!</span>
-<h2  ng-class="{remove: !waitlistVO}" >WL Manager: {{waitlistVO.ownerName}}</h2>
-
-<p>Share this waitlist with this link:
-    <a id="waitlist-link" href="{{window.location.href}}">{{window.location.href}}</a>
-</p>
+<div ng-class="{remove: !waitlistVO}">
+	<h2>WL Manager: {{waitlistVO.ownerName}}</h2>
+	<p>Share this waitlist with this link:
+		<a id="waitlist-link" href="{{window.location.href}}">{{window.location.href}}</a>
+	</p>
+</div>
 <div ng-class="{remove: authenticated}">
 	Please log in via EVE Single-Sing-On.
 	<a href="api/auth">
