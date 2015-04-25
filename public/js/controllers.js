@@ -1,6 +1,10 @@
-var app = angular.module('evewt', []);
-app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','API','EveIGB', function ($scope,$http,$location,$interval,$window,API,EveIGB) {
+var app = angular.module('evewt', ['cgNotify']);
+app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','API','EveIGB','notify', function ($scope,$http,$location,$interval,$window,API,EveIGB,notify) {
 
+    notify({
+        message: 'Hello World',
+        duration: 5000
+    });
     //=== Vars
     $scope.waitlistVO = null;
     $scope.shipDNA = '';
