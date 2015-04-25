@@ -41,12 +41,14 @@ app.factory('EveIGB', function() {
 
     // If it is the IGB, attach the real methods
     if(typeof CCPEVE !== 'undefined'){
-        EveIGB.openEveMail = CCPEVE.openEveMail
-        for(var m in CCPEVE) {
-            if(typeof CCPEVE[m] == "function") {
-                EveIGB[m] = CCPEVE[m];
-            }
-        }
+        EveIGB.openEveMail = CCPEVE.openEveMail;
+        EveIGB.showInfo = CCPEVE.showInfo;
+        EveIGB.showFitting = CCPEVE.showFitting;
+        //for(var m in CCPEVE) {
+        //    if(typeof CCPEVE[m] == "function") {
+        //        EveIGB[m] = CCPEVE[m];
+        //    }
+        //}
 
     }
     return EveIGB;
