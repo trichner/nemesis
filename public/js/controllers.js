@@ -1,8 +1,6 @@
 var app = angular.module('evewt', ['ui-notification']);
 app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','API','EveIGB','Notification',function ($scope,$http,$location,$interval,$window,API,EveIGB,Notification) {
 
-    Notification("Hello WOrld!")
-
     //=== Vars
     $scope.waitlistVO = null;
     $scope.shipDNA = '';
@@ -18,6 +16,9 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
         API.postFit($scope.waitlistVO.waitlistId,$scope.shipDNA)
             .then(function (data) {
                 $scope.refreshWL();
+                Notification.success("Successfully x-ed up")
+            }, function () {
+                Notification.error("Cannot x up, logged in? on waitlist?")
             })
     };
 
@@ -25,6 +26,9 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
         return API.newWaitlist()
             .then(function (waitlist) {
                 $scope.updateWL(waitlist);
+                Notification.success("Successfully created waitlist")
+            }, function () {
+                Notification.error("Cannot create aitlist, logged in?")
             })
     };
 
@@ -58,15 +62,17 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
 
     $scope.fleetInvite = function(item){
         EveIGB.inviteToFleet(item.characterId)
+        Notification.success("Invited " + item.characterName + " to fleet")
     };
 
     $scope.removeItem = function(item){
         API.removeItem(item.itemId)
             .then(function () {
                 $scope.refreshWL();
+                Notification.success("Removed " + item.characterName + " from the waitlist")
             })
             .then(null,function () {
-                console.log('failed to remove item :(');
+                Notification.error('failed to remove item :(');
             })
     };
 
@@ -82,10 +88,11 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
                 return API.getWaitlist(waitlistId)
                     .then(function (waitlist) {
                         $scope.updateWL(waitlist);
+                        Notification.success('Joined waitlist');
                     })
                     .then(null,function () {
                         $location.hash('');
-                        console.log('Failed to fetch waitlist')
+                        Notification.error('Failed to fetch waitlist :(');
                     })
             }else{
                 alert('Please either create a new waitlist or join an existing waitlist');
@@ -94,6 +101,7 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
         .then(null,function (status) {
             if(status==401){
                 $scope.authenticated = false;
+                Notification.error('Please login first');
             }
         })
 
