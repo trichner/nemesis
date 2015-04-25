@@ -50,22 +50,22 @@ div.h4 {
 #first {
 	width: 300px;
 	float:left; /* add this */
-	border: 1px solid red;
+	/*border: 1px solid red;*/
 }
 #second {
-	border: 1px solid green;
+	/*border: 1px solid green; */
 	float: left; /* add this */
 }
 
 div.floater {
-	border: 1px solid green;
+	/*border: 1px solid green;*/
 	float: left; /* add this */
 	margin: 0;
 	padding: 0;
 }
 
 div.float-container > div {
-	border: 1px solid green;
+	/*border: 1px solid green;*/
 	float: left; /* add this */
 	margin: 0;
 	padding: 0;
