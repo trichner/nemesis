@@ -12,6 +12,8 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
 
     $scope.window = $window;
 
+    $scope.waitlistTxt = '';
+
     $scope.forwardMe = function(){
         
     }
@@ -45,6 +47,10 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
         API.getWaitlist($scope.waitlistVO.waitlistId)
             .then(function (data) {
                 $scope.updateWL(data);
+            })
+        API.getWaitlistTxt($scope.waitlistVO.waitlistId)
+            .then(function (waitlistTxt) {
+                $scope.waitlistTxt = waitlistTxt;
             })
     };
 

@@ -41,6 +41,21 @@ app.factory('API', ['$q','$http',function($q,$http) {
         return deferred.promise;
     }
 
+    API.getWaitlistTxt = function(waitlistId){
+        if(!waitlistId){
+            return breakPromise();
+        }
+        var deferred = $q.defer();
+        $http.get(URL.WAITLIST+'/'+waitlistId+'.txt').
+            success(function(data, status, headers, config) {
+                deferred.resolve(data)
+            }).
+            error(function(data, status, headers, config) {
+                deferred.reject(data)
+            });
+        return deferred.promise;
+    }
+
     API.postFit = function(waitlistId,shipString){
         if(!(waitlistId && shipString)){
             return breakPromise();

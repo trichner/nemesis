@@ -13,8 +13,7 @@
 	<script src="js/EveIGB.js"></script>
 </head>
 <body onload='CCPEVE.requestTrust(location.protocol + "//" + location.host + "/*")' ng-controller="wt-list">
-<span>Hello {{me.characterName ? me.characterName : 'Pilot'}}, welcome to Thomions' Waitlist Management
-	Tool!</span>
+<span>Hello {{me.characterName ? me.characterName : 'Pilot'}}!</span>
 <div ng-class="{remove: !waitlistVO}">
 	<h2>WL Manager: {{waitlistVO.ownerName}}</h2>
 	<p>Share this waitlist with this link:
@@ -32,15 +31,22 @@
 			<input name="remember me" type="checkbox" ng-model="remeberMe">
 			<span>remember me</span>
 		</div>
-		<div ng-class="{remove: !authenticated}">
+		<div ng-class="{remove: !authenticated}" class="actions">
 			You are logged in! Congratulations!
 		</div>
-		<div ng-class="{remove: !authenticated}">
+		<div ng-class="{remove: !authenticated}" class="actions">
 			<button ng-click="newWaitlist()">Create new waitlist</button>
 		</div>
-		<div id="xup" ng-class="{remove: ((!authenticated) || (!waitlistVO))}">
+		<div id="xup" ng-class="{remove: ((!authenticated) || (!waitlistVO))}" class="actions">
 			<input type="text" name="fitting" placeholder="paste ship fitting here" ng-model="shipDNA" required>
 			<button ng-click="postFit()">x up!</button>
+		</div>
+		<div ng-class="{remove: ((!authenticated) || (!waitlistVO))}" class="actions">
+			<input type="text" name="fitting" placeholder="paste ship fitting here" ng-model="shipDNA" required>
+			<button ng-click="postFit()">x up!</button>
+		</div>
+		<div>
+			<textarea cols="50" rows="15">{{waitlistTxt}}</textarea>
 		</div>
 	</div>
 	<div id="list" >
@@ -106,6 +112,8 @@
 		The page needs some design love :)
 	</div>
 </div>
-
+<div>
+	This tool was designed and implemented by Thomion, thanks to Titus Tallang for some css magic.
+</div>
 </body>
 </html>

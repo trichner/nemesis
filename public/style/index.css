@@ -68,11 +68,16 @@ div.h4 {
 	width: 300px;
 	min-height: 100px;
 	float:left; /* add this */
-	padding: 3px;
 }
 #list {
 	/*border: 1px solid blue;*/
 	float: left; /* add this */
+}
+
+.actions {
+	margin: 5px;
+	padding: 3px;
+	border: 1px dashed darkslategray;
 }
 
 
