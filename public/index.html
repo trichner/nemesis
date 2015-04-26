@@ -24,7 +24,7 @@
 <div id="container">
 	<div id="sidebar">
 		<div ng-class="{remove: authenticated}">
-			Please log in via EVE Single-Sing-On.
+			Please log in via EVE Single-Sing-On. <!-- Typo totally intended -->
 			<a href="api/auth">
 				<img title="EVE SSO" src="img/EVESSO_SBLACK.png"/>
 			</a>
@@ -68,7 +68,7 @@
 					<div>
 						<img title="{{item.shipName}}" src="https://image.eveonline.com/Render/{{item.shipType}}_64.png" ng-click="showFitting(item)"/>
 					</div>
-					<div>
+					<div ng-class="{hide: !isIGB}">
 						<img title="send fleetinvite" src="img/add-user.png" width="64" ng-click="fleetInvite(item)"/>
 					</div>
 					<div>

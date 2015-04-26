@@ -9,6 +9,7 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
     $scope.remeberMe = true;
 
     $scope.authenticated = false;
+    $scope.isIGB = (typeof CCPEVE !== 'undefined');
 
     $scope.window = $window;
 
