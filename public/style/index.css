@@ -45,7 +45,8 @@ div.h4 {
 
 #asciiList {
 	width: 280px;
-	height: 400px;
+	min-height: 400px;
+	resize: none;
 }
 
 #wrapper {
