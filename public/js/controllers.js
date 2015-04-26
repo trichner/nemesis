@@ -10,7 +10,7 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
 
     $scope.authenticated = false;
     $scope.isIGB = (typeof CCPEVE !== 'undefined');
-
+    console.log('You are' + ($scope.isIGB ? '' : ' not') + ' in IGB')
     $scope.window = $window;
 
     $scope.waitlistTxt = '';
