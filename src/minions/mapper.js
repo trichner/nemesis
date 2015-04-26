@@ -46,8 +46,8 @@ function mapWaitlistDBVOtoAscii(waitlist){
         .then(function (mapped) {
 
             var list = mapped.waitlist.map(function (item) {
-                var char = linkCharacter(item.characterId,item.characterName);
-                var fit  = linkFit(item.shipDNA,item.shipName)
+                var char = item.characterName // linkCharacter(item.characterId,item.characterName);
+                var fit  = item.shipName //linkFit(item.shipDNA,item.shipName)
                 return ' * ' + fit + ' \t ' + char + '\n';
             })
             list = list.join();
