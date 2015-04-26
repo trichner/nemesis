@@ -110,3 +110,9 @@ img{display:block;}
 .remove {
 	display: none;
 }
+
+#footer {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 0.5em;
+	font-style: italic;
+}
