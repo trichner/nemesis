@@ -12,6 +12,9 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
 
     $scope.window = $window;
 
+    $scope.forwardMe = function(){
+        
+    }
     $scope.postFit = function(){
         API.postFit($scope.waitlistVO.waitlistId,$scope.shipDNA)
             .then(function (data) {

@@ -35,7 +35,7 @@
 <div ng-class="{remove: !authenticated}">
 	<button ng-click="newWaitlist()">Create new waitlist</button>
 </div>
-<div id="xup" ng-class="{remove: !authenticated}">
+<div id="xup" ng-class="{remove: ((!authenticated) || (!waitlistVO))}">
     <input type="text" name="fitting" placeholder="paste ship fitting here" ng-model="shipDNA" required>
     <button ng-click="postFit()">x up!</button>
 </div>
