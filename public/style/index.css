@@ -61,16 +61,17 @@ div.h4 {
 
 #container {
 	width: 100%;
-	border: 1px solid black;
+	/*border: 1px solid black;*/
 	overflow: hidden; /* will contain if #first is longer than #second */
 }
 #sidebar {
 	width: 300px;
 	min-height: 100px;
 	float:left; /* add this */
+	padding: 3px;
 }
 #list {
-	border: 1px solid blue;
+	/*border: 1px solid blue;*/
 	float: left; /* add this */
 }
 
