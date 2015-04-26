@@ -21,56 +21,63 @@
 		<a id="waitlist-link" href="{{window.location.href}}">{{window.location.href}}</a>
 	</p>
 </div>
-<div ng-class="{remove: authenticated}">
-	Please log in via EVE Single-Sing-On.
-	<a href="api/auth">
-		<img title="EVE SSO" src="img/EVESSO_SBLACK.png"/>
-	</a>
-	<input name="remember me" type="checkbox" ng-model="remeberMe">
-	<span>remember me</span>
-</div>
-<div ng-class="{remove: !authenticated}">
-	You are logged in! Congratulations!
-</div>
-<div ng-class="{remove: !authenticated}">
-	<button ng-click="newWaitlist()">Create new waitlist</button>
-</div>
-<div id="xup" ng-class="{remove: ((!authenticated) || (!waitlistVO))}">
-    <input type="text" name="fitting" placeholder="paste ship fitting here" ng-model="shipDNA" required>
-    <button ng-click="postFit()">x up!</button>
-</div>
-<ol>
-    <li ng-repeat="item in waitlistVO.waitlist">
-        <div id="wrapper" class="float-container">
-			<div>
-				<img title="{{item.characterName}}" src="https://image.eveonline.com/Character/{{item.characterId}}_64.jpg" ng-click="showCharInfo(item)"/>
-			</div>
-			<div>
-				<div>
-					<img title="{{item.corporationName}}"
-						 src="https://image.eveonline.com/Corporation/{{item.corporationId}}_32.png"
-						 ng-click="showCorporation(item)"/>
-				</div>
-				<div  style="width: 32px;height: 32px">
-					<img ng-class="{hidden: !item.allianceId}" title="{{item.allianceName}}"
-						 src="https://image.eveonline.com/Alliance/{{item.allianceId}}_32.png"
-						 ng-click="showAlliance(item)"/>
-				</div>
-			</div>
 
-			<div>
-				<img title="{{item.shipName}}" src="https://image.eveonline.com/Render/{{item.shipType}}_64.png" ng-click="showFitting(item)"/>
-			</div>
-			<div>
-				<img title="send fleetinvite" src="img/add-user.png" width="64" ng-click="fleetInvite(item)"/>
-			</div>
-			<div>
-				<img title="remove from list" src="img/close.png" width="64" ng-click="removeItem(item)"/>
-			</div>
-        </div>
-		<p>{{item.characterName}}</p>
-    </li>
-</ol>
+<div id="container">
+	<div id="sidebar">
+		<div ng-class="{remove: authenticated}">
+			Please log in via EVE Single-Sing-On.
+			<a href="api/auth">
+				<img title="EVE SSO" src="img/EVESSO_SBLACK.png"/>
+			</a>
+			<input name="remember me" type="checkbox" ng-model="remeberMe">
+			<span>remember me</span>
+		</div>
+		<div ng-class="{remove: !authenticated}">
+			You are logged in! Congratulations!
+		</div>
+		<div ng-class="{remove: !authenticated}">
+			<button ng-click="newWaitlist()">Create new waitlist</button>
+		</div>
+		<div id="xup" ng-class="{remove: ((!authenticated) || (!waitlistVO))}">
+			<input type="text" name="fitting" placeholder="paste ship fitting here" ng-model="shipDNA" required>
+			<button ng-click="postFit()">x up!</button>
+		</div>
+	</div>
+	<div id="list" >
+		<ol>
+			<li ng-repeat="item in waitlistVO.waitlist">
+				<div id="wrapper" class="float-container">
+					<div>
+						<img title="{{item.characterName}}" src="https://image.eveonline.com/Character/{{item.characterId}}_64.jpg" ng-click="showCharInfo(item)"/>
+					</div>
+					<div>
+						<div>
+							<img title="{{item.corporationName}}"
+								 src="https://image.eveonline.com/Corporation/{{item.corporationId}}_32.png"
+								 ng-click="showCorporation(item)"/>
+						</div>
+						<div  style="width: 32px;height: 32px">
+							<img ng-class="{hidden: !item.allianceId}" title="{{item.allianceName}}"
+								 src="https://image.eveonline.com/Alliance/{{item.allianceId}}_32.png"
+								 ng-click="showAlliance(item)"/>
+						</div>
+					</div>
+
+					<div>
+						<img title="{{item.shipName}}" src="https://image.eveonline.com/Render/{{item.shipType}}_64.png" ng-click="showFitting(item)"/>
+					</div>
+					<div>
+						<img title="send fleetinvite" src="img/add-user.png" width="64" ng-click="fleetInvite(item)"/>
+					</div>
+					<div>
+						<img title="remove from list" src="img/close.png" width="64" ng-click="removeItem(item)"/>
+					</div>
+				</div>
+				<p>{{item.characterName}}</p>
+			</li>
+		</ol>
+	</div>
+</div>
 <div id="how">
 	<div id="how-label">How does it work? [TODO]</div>
 	<div id="how-create" class="h4">Create new Waitlist</div>
