@@ -3,6 +3,7 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
 
     //=== Vars
     $scope.waitlistVO = null;
+    $scope.waitlists = null;
     $scope.shipDNA = '';
     $scope.apiKey = '';
     $scope.apiVCode = '';
@@ -113,6 +114,11 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
                 $scope.authenticated = false;
                 Notification.error('Please login first');
             }
+        })
+
+    API.getWaitlists()
+        .then(function (waitlists) {
+            $scope.waitlists = waitlists;
         })
 
     //update every 10s, veeery inefficient

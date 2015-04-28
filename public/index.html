@@ -21,6 +21,16 @@
 	</p>
 </div>
 
+<div ng-class="{remove: waitlistVO || !authenticated}">
+	<ol>
+		<li ng-repeat="list in waitlists">
+			<p>Share this waitlist with this link:
+				<a id="waitlists-link" href="{{window.location.href}}">{{window.location.href + '##' + list.waitlistId	}}</a>
+			</p>
+		</li>
+	</ol>
+</div>
+
 <div id="container">
 	<div id="sidebar">
 		<div ng-class="{remove: authenticated}">
