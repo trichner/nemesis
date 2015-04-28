@@ -163,7 +163,7 @@ function findWaitlistByExternalId(externalId){
 
 // Eager load entire list
 function findWaitlistsByOwner(pilotId){
-    return Waitlist.findAll({ where: {owner: pilotId}});
+    return Waitlist.findAll({ where: {ownerId: pilotId}});
 }
 
 // Eager load entire list
