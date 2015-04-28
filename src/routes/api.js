@@ -10,7 +10,11 @@ apiConfig.setupMiddleware(app);
 /* GET all owned lists*/
 app.get('/waitlist', function(req, res, next) {
   //res.send('respond with a resource');
-  res.json({wait:'lists'})
+    var pilotId = req.session.pilotId;
+    service.getAllLists(pilotId)
+        .then(function (lists){
+            res.json({waitlists : lists})
+        })
 });
 
 /* GET waitlist by id*/
