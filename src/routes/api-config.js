@@ -70,6 +70,20 @@ function setupMiddleware(app){
             failureRedirect : '/nemesis/'
         }));
 
+
+    /* DELETE verify pilots*/
+    app.delete('/auth', function(req, res, next) {
+        req.session.destroy(function(err){
+            if(err){
+                var err = new Error('Cannot logout')
+                err.status = 500;
+                next(err);
+            }else{
+                res.status(200).end();
+            }
+        })
+    });
+
     app.get('/auth/test',
         function(req, res) {
             // Successful authentication, redirect home.

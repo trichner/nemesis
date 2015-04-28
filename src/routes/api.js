@@ -148,11 +148,5 @@ app.post('/verify', function(req, res, next) {
 
 });
 
-/* DELETE verify pilots*/
-app.delete('/verify', function(req, res, next) {
-    if(req.session){
-        req.session.verified = false;
-    }
-});
 
 module.exports = app;

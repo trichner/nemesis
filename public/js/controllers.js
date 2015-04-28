@@ -87,6 +87,16 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
             })
     };
 
+    $scope.logout = function () {
+        API.logout()
+            .then(function () {
+                Notification.success("Logged out")
+            })
+            .then(null,function () {
+                Notification.error('failed to logout :(');
+            })
+    }
+
 
     //=== Fetch data
 
