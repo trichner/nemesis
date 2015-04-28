@@ -22,11 +22,14 @@
 </div>
 
 <div ng-class="{remove: waitlistVO || !authenticated}">
-	<div ng-repeat="list in waitlists">
-		<p>Share this waitlist with this link:
-			<a id="waitlists-link" href="{{window.location.href + '##' + list.waitlistId}}">{{list.waitlistId}}</a>
-		</p>
-	</div>
+	<h2>Your previous waitlists:</h2>
+	<ul>
+		<li ng-repeat="list in waitlists">
+			<p>
+				<a id="waitlists-link" href="{{window.location.href + '##' + list.waitlistId}}">{{list.waitlistId}}</a>
+			</p>
+		</li>
+	</ul>
 </div>
 
 <div id="container">
