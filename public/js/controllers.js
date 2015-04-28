@@ -3,7 +3,7 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
 
     //=== Vars
     $scope.waitlistVO = null;
-    $scope.waitlists = null;
+    $scope.waitlists = {waitlists:[]};
     $scope.shipDNA = '';
     $scope.apiKey = '';
     $scope.apiVCode = '';

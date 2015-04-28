@@ -60,7 +60,7 @@ app.factory('API', ['$q','$http',function($q,$http) {
         var deferred = $q.defer();
         $http.get(URL.WAITLIST).
             success(function(data, status, headers, config) {
-                deferred.resolve(data)
+                deferred.resolve(data.waitlists)
             }).
             error(function(data, status, headers, config) {
                 deferred.reject(data)
