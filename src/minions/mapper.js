@@ -50,7 +50,7 @@ function mapWaitlistDBVOtoAscii(waitlist){
                 var fit  = item.shipName //linkFit(item.shipDNA,item.shipName)
                 return ' * ' + fit + ' \t ' + char + '\n';
             })
-            list = list.join();
+            list = list.join('');
 
             var ascii = '.\n';
             var prename = mapped.ownerName.split(' ')[0];
