@@ -35,7 +35,7 @@ function getAllLists(pilotId){
 }
 
 function getLists(pilotId){
-    return dao.findWaitlistByOwner(pilotId)
+    return dao.findWaitlistsByOwner(pilotId)
         .then(function (waitlists) {
             waitlists = waitlists.map(function (list) {
                 return Mapper.mapWaitlistDBVO(list);
