@@ -52,9 +52,9 @@ app.factory('Minions', function($q) {
 
         var ascii = '.\n';
         var prename = waitlist.ownerName.split(' ')[0];
-        ascii = ascii.concat('-=   <b>' + prename + "'s Fleet </b>   =-\n")
+        //ascii = ascii.concat('-=   <b>' + prename + "'s Fleet </b>   =-\n")
         ascii = ascii.concat(list);
-        ascii = ascii.concat('-==              ==-\n')
+        //ascii = ascii.concat('-==              ==-\n')
         return ascii;
     }
 
