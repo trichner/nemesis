@@ -12,7 +12,7 @@ body {
 
 a#waitlist-link {
 	cursor: pointer;
-	color: rgba(22, 97, 126, 0.45);
+	color: rgba(26, 181, 212, 1);
 	text-decoration: underline;
 	vertical-align: middle;
 }
