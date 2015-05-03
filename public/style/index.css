@@ -6,6 +6,12 @@ body {
 	color: white;
 }
 
+#wlurl-box {
+	/*width: 500px;*/
+	/*border: 1px solid black;*/
+	background: rgba(22, 97, 126, 0.8);
+	overflow: hidden;  /* add this to contain floated children */
+}
 
 a#waitlist-link {
 	cursor: pointer;
@@ -91,14 +97,6 @@ div.h4 {
 	padding: 3px;
 	border: 1px dashed white;
 	background: rgba(22, 97, 126, 0.8);
-}
-
-
-div.floater {
-	/*border: 1px solid green;*/
-	float: left; /* add this */
-	margin: 0;
-	padding: 0;
 }
 
 div.float-container > div {
