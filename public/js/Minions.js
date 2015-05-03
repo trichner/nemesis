@@ -42,7 +42,7 @@ app.factory('Minions', function($q) {
         return '<url=fitting:' + shipDNA + '>' + shipName + '</url>'
     }
 
-    Minions.waitlist2ascii = function(waitlist){
+    Minions.waitlist2ascii = function(waitlist,head,foot){
         var list = waitlist.waitlist.map(function (item) {
             var char = item.characterName   // linkCharacter(item.characterId,item.characterName);
             var fit  = item.shipName        //linkFit(item.shipDNA,item.shipName)
@@ -52,9 +52,10 @@ app.factory('Minions', function($q) {
 
         var ascii = '.\n';
         var prename = waitlist.ownerName.split(' ')[0];
-        //ascii = ascii.concat('-=   <b>' + prename + "'s Fleet </b>   =-\n")
+        head = head.replace('%n',prename)
+        ascii = ascii.concat(head);
         ascii = ascii.concat(list);
-        //ascii = ascii.concat('-==              ==-\n')
+        ascii = ascii.concat(foot)
         return ascii;
     }
 

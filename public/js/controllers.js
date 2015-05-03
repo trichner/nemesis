@@ -69,10 +69,7 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
     $scope.updateWL = function(waitlistVO){
         $scope.waitlistVO = waitlistVO;
         // add ascii list
-        var tmplist = $scope.asciiHead;
-        tmplist = tmplist.concat(Minions.waitlist2ascii(waitlistVO));
-        tmplist = tmplist.concat($scope.asciiFoot);
-        $scope.waitlistTxt = tmplist;
+        $scope.waitlistTxt = Minions.waitlist2ascii(waitlistVO,$scope.asciiHead,$scope.asciiFoot);
     };
 
     $scope.refreshWL = function(){
