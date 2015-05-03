@@ -63,29 +63,6 @@ function extractFit(str){
 }
 
 
-var TYPE_ID = {
-    FEDERATION_NAVY_STASIS_WEBIFIER : 17559
-}
-
-var DD  = {
-    VINDICATOR : 17740 ,
-    ROKH : 24688 ,
-    NIGHTMARE : 17736 ,
-    MAELSTROM : 24694 ,
-    HYPERION : 24690 ,
-    MACHARIEL : 17738
-}
-
-var LL  = {
-    SCIMITAR : 11978 ,
-    BASILISK : 11985
-}
-
-function parseSlot(str){
-    var arr = str.split(';');
-    return {id: arr[0],n:arr[1]};
-}
-
 var characterPattern  = /.*<url=showinfo:[0-9]*\/\/([0-9]*)>(.*)<\/url>.*/i;
 function extractCharacter(str){
     var matches = characterPattern.exec(str);
@@ -99,9 +76,3 @@ function extractCharacter(str){
         name: name
     }
 }
-
-var shipstr = 'Fergus MacConal > x DD  <url=fitting:24688:2048;1:1952;1:26082;1:7783;8:26088;1:2281;2:10190;3:1999;1:17559;2:1978;1:26076;1:2205;5:23719;5:23051;720:21740;12000:28999;1::>bang bang</url>  or logi4  <url=fitting:11985:2048;1:3608;4:31366;1:16487;2:2281;1:2104;1:31796;1:6005;1:14136;1:17499;1:31932;1:23719;5:28999;1::>Stoney</url>'
-
-var ship = extractFit(shipstr);
-
-ship = teardownShipFit(ship.dna);

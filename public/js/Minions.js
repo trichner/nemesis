@@ -1,6 +1,29 @@
 app.factory('Minions', function($q) {
     var Minions = {};
 
+    var TYPE_ID = {
+        FEDERATION_NAVY_STASIS_WEBIFIER : 17559
+    }
+
+    var DD  = {
+        VINDICATOR : 17740 ,
+        ROKH : 24688 ,
+        NIGHTMARE : 17736 ,
+        MAELSTROM : 24694 ,
+        HYPERION : 24690 ,
+        MACHARIEL : 17738
+    }
+
+    var LL  = {
+        SCIMITAR : 11978 ,
+        BASILISK : 11985
+    }
+
+    function parseSlot(str){
+        var arr = str.split(';');
+        return {id: arr[0],n:arr[1]};
+    }
+
     Minions.teardownShipFit = function(shipDNA){
         var slots = shipDNA.split(':')
 
