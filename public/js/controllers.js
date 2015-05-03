@@ -108,7 +108,7 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
     API.getMe()
         .then(function (data) {
             $scope.me = data;
-            var waitlistId = $location.hash();
+            var waitlistId = $scope.getWaitlistId(); //$location.hash();
             $scope.authenticated = true;
             if(waitlistId && waitlistId.length>0){
                 return API.getWaitlist(waitlistId)
