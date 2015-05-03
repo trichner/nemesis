@@ -26,7 +26,7 @@
 	<ul>
 		<li ng-repeat="list in waitlists">
 			<p>
-				<a id="waitlists-link" href="{{window.location.href + '?waitlistId=' + list.waitlistId}}">{{list.waitlistId}}</a>
+				<a id="waitlists-link" href="{{window.location.href + '?waitlistId=' + list.waitlistId}}" target="_self">{{list.waitlistId}}</a>
 			</p>
 		</li>
 	</ul>

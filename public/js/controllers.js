@@ -17,6 +17,7 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
     $scope.waitlistTxt = '';
 
     $scope.getWaitlistId = function () {
+        console.log("ID: " + $location.search())
         return $location.search().waitlistId;
     }
 
