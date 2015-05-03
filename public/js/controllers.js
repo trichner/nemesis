@@ -31,6 +31,10 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
         return waitlistId;
     }
 
+    $scope.isOwner = function () {
+        return $scope.waitlistVO.ownerId == $scope.me.characterId;
+    }
+
     $scope.forwardMe = function(){
         
     }
