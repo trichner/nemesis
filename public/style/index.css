@@ -9,7 +9,7 @@ body {
 
 a#waitlist-link {
 	cursor: pointer;
-	color: #0000FF;
+	color: rgba(22, 97, 126, 1);
 	text-decoration: underline;
 }
 /*eve plasma #16617E*/
