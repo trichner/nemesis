@@ -104,6 +104,10 @@ function mapWaitlistItemDBVO(item){
         })
 }
 
+function shipTeardown(shipDNA){
+
+}
+
 /*
  {
  "id": "698922015",

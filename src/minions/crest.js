@@ -81,13 +81,9 @@ var LL  = {
     BASILISK : 11985
 }
 
-function disassembleShipFit(shipDNA){
-    var slots = shipDNA.split(':')
-    var parts = [];
-    slots.forEach(function (slot) {
-        parts = parts.concat(slot.split(';'))
-    })
-    return parts;
+function parseSlot(str){
+    var arr = str.split(';');
+    return {id: arr[0],n:arr[1]};
 }
 
 var characterPattern  = /.*<url=showinfo:[0-9]*\/\/([0-9]*)>(.*)<\/url>.*/i;
@@ -103,3 +99,9 @@ function extractCharacter(str){
         name: name
     }
 }
+
+var shipstr = 'Fergus MacConal > x DD  <url=fitting:24688:2048;1:1952;1:26082;1:7783;8:26088;1:2281;2:10190;3:1999;1:17559;2:1978;1:26076;1:2205;5:23719;5:23051;720:21740;12000:28999;1::>bang bang</url>  or logi4  <url=fitting:11985:2048;1:3608;4:31366;1:16487;2:2281;1:2104;1:31796;1:6005;1:14136;1:17499;1:31932;1:23719;5:28999;1::>Stoney</url>'
+
+var ship = extractFit(shipstr);
+
+ship = teardownShipFit(ship.dna);

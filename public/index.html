@@ -10,6 +10,7 @@
 	<script src="js/angular-ui-notification.min.js"></script>
     <script src="js/controllers.js"></script>
 	<script src="js/API.js"></script>
+	<script src="js/Minions.js"></script>
 	<script src="js/EveIGB.js"></script>
 </head>
 <body onload='CCPEVE.requestTrust(location.protocol + "//" + location.host + "/*")' ng-controller="wt-list">
@@ -56,7 +57,10 @@
 			<button ng-click="postFit()">x up!</button>
 		</div>
 		<div id="asciiList-container" class="actions" ng-class="{remove: ((!authenticated) || (!waitlistVO))}">
-			<textarea placeholder="waitlist in text format" readonly id="asciiList" onclick="this.focus();this.select()">{{waitlistTxt}}</textarea>
+			<textarea placeholder="waitlist header" id="asciiHead" ng-model="asciiHead" class="asciiTextarea"></textarea>
+			<textarea placeholder="waitlist in text format" readonly id="asciiList" class="asciiTextarea"
+					  onclick="this.focus();this.select()" ng-model="waitlistTxt"></textarea>
+			<textarea placeholder="waitlist footer" id="asciiFoot" class="asciiTextarea" ng-model="asciiFoot"></textarea>
 		</div>
 	</div>
 	<div id="list" >

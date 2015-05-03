@@ -2,7 +2,7 @@ body {
 	margin: 20px;
 	/*background: #AAAAAA;*/
 	background-image: url(../img/nebula.jpg);
-	font-family: Arial !important;
+	font-family: BankGothic, Arial, sans-serif !important;
 	color: white;
 }
 
@@ -46,10 +46,13 @@ div.h4 {
 	font-size: 130%;
 }
 
-#asciiList {
+.asciiTextarea {
 	width: 275px;
-	min-height: 400px;
 	resize: none;
+}
+
+#asciiList {
+	min-height: 400px;
 }
 
 #wrapper {

@@ -1,5 +1,5 @@
 var app = angular.module('evewt', ['ui-notification']);
-app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','API','EveIGB','Notification',function ($scope,$http,$location,$interval,$window,API,EveIGB,Notification) {
+app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','API','EveIGB','Notification','Minions',function ($scope,$http,$location,$interval,$window,API,EveIGB,Notification,Minions) {
 
     //=== Helpers
 
@@ -18,16 +18,17 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
     $scope.apiVCode = '';
     $scope.remeberMe = true;
 
+    $scope.asciiHead = '-== VG Fleet ==-';
+    $scope.asciiFoot = '-==          ==-';
+    $scope.waitlistTxt = '';
+
     $scope.authenticated = false;
     $scope.isIGB = (typeof CCPEVE !== 'undefined');
-    console.log('You are' + ($scope.isIGB ? '' : ' not') + ' in IGB')
+    console.log('You are' + ($scope.isIGB ? '' : ' not') + ' in Eve IGB')
     $scope.window = $window;
-
-    $scope.waitlistTxt = '';
 
     $scope.getWaitlistId = function () {
         var waitlistId = getQueryParam('waitlistId');
-        console.log("ID: " + JSON.stringify(waitlistId));
         return waitlistId;
     }
 
@@ -38,6 +39,11 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
     $scope.forwardMe = function(){
         
     }
+
+    $scope.isItemOwner = function(item) {
+        return $scope.waitlistVO.ownerId == item.characterId;
+    }
+
     $scope.postFit = function(){
         API.postFit($scope.waitlistVO.waitlistId,$scope.shipDNA)
             .then(function (data) {
@@ -61,8 +67,12 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
 
     //=== Functions
     $scope.updateWL = function(waitlistVO){
-      $scope.waitlistVO = waitlistVO;
-      //$location.hash(waitlistVO.waitlistId);
+        $scope.waitlistVO = waitlistVO;
+        // add ascii list
+        var tmplist = $scope.asciiHead;
+        tmplist = tmplist.concat(Minions.waitlist2ascii(waitlistVO));
+        tmplist = tmplist.concat($scope.asciiFoot);
+        $scope.waitlistTxt = tmplist;
     };
 
     $scope.refreshWL = function(){
@@ -70,10 +80,12 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
             .then(function (data) {
                 $scope.updateWL(data);
             })
+        /*
         API.getWaitlistTxt($scope.waitlistVO.waitlistId)
             .then(function (waitlistTxt) {
                 $scope.waitlistTxt = waitlistTxt;
             })
+            */
     };
 
     $scope.showCharInfo = function(item){
