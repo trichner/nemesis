@@ -16,8 +16,10 @@
 <span>Hello {{me.characterName ? me.characterName : 'Pilot'}}!</span>
 <div ng-class="{remove: !waitlistVO}">
 	<h2>WL Manager: {{waitlistVO.ownerName}}</h2>
-	<img width="32px" height="32px"	 src="img/url.png"/>
-	<a id="waitlist-link" href="{{window.location.href}}">{{window.location.href}}</a>
+	<div>
+		<img width="32px" height="32px"	 src="img/url.png"/>
+		<a id="waitlist-link" href="{{window.location.href}}">{{window.location.href}}</a>
+	</div>
 </div>
 
 <div ng-class="{remove: waitlistVO || !authenticated}">
