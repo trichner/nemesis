@@ -44,14 +44,15 @@
 			<span>remember me</span>
 		</div>
 		<div ng-class="{remove: !authenticated}" class="actions">
-			You are logged in! Congratulations!
+			Logged in.
 			<button ng-click="logout()">logout</button>
 		</div>
 		<div ng-class="{remove: ((!authenticated) || (waitlistVO))}" class="actions">
 			<button ng-click="newWaitlist()">Create new waitlist</button>
 		</div>
 		<div id="xup" ng-class="{remove: ((!authenticated) || (!waitlistVO))}" class="actions">
-			<input type="text" name="fitting" placeholder="paste ship fitting here" ng-model="shipDNA" required>
+			<input type="text" name="fitting" placeholder="paste ship fitting here" ng-model="shipDNA"
+				   required onclick="this.focus();this.select()">
 			<button ng-click="postFit()">x up!</button>
 		</div>
 		<div id="asciiList-container" class="actions" ng-class="{remove: ((!authenticated) || (!waitlistVO))}">
