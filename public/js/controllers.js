@@ -1,6 +1,15 @@
 var app = angular.module('evewt', ['ui-notification']);
 app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','API','EveIGB','Notification',function ($scope,$http,$location,$interval,$window,API,EveIGB,Notification) {
 
+    //=== Helpers
+
+    function getQueryParam(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
     //=== Vars
     $scope.waitlistVO = null;
     $scope.waitlists = {waitlists:[]};
@@ -17,8 +26,9 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
     $scope.waitlistTxt = '';
 
     $scope.getWaitlistId = function () {
-        console.log("ID: " + JSON.stringify($location.search()));
-        return $location.search().waitlistId;
+        var waitlistId = getQueryParam('waitlistId');
+        console.log("ID: " + JSON.stringify(waitlistId));
+        return waitlistId;
     }
 
     $scope.forwardMe = function(){
