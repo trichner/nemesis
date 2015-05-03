@@ -92,6 +92,15 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
         Notification.success("Invited " + item.characterName + " to fleet")
     };
 
+    $scope.makeBoss = function(item){
+        API.makeBoss($scope.waitlistVO.waitlistId,item.characterId)
+            .then(function () {
+                Notification.success("Made " + item.characterName + " waitlist manager")
+            }, function () {
+                Notification.error('Failed to make ' + item.characterName + ' boss');
+            })
+    };
+
     $scope.removeItem = function(item){
         API.removeItem($scope.waitlistVO.waitlistId,item.itemId)
             .then(function () {

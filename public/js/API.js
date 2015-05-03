@@ -85,6 +85,23 @@ app.factory('API', ['$q','$http',function($q,$http) {
         return deferred.promise;
     }
 
+    API.makeBoss = function(waitlistId,bossId){
+        if(!(waitlistId && bossId)){
+            return breakPromise();
+        }
+        var deferred = $q.defer();
+        $http.post(URL.WAITLIST+'/'+waitlistId + '/owner',{
+            ownerId : bossId
+        }).
+            success(function(data, status, headers, config) {
+                deferred.resolve(data)
+            }).
+            error(function(data, status, headers, config) {
+                deferred.reject(data)
+            });
+        return deferred.promise;
+    }
+
     API.newWaitlist = function(){
         var deferred = $q.defer();
         $http.post(URL.WAITLIST).

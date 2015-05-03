@@ -205,7 +205,6 @@ function findAllPilots() {
 
 function findOrCreatePilot(pilot){
     // not all pilots have alliances!
-    console.log('Persisting: '+JSON.stringify(pilot))
     var promises = [];
     promises.push(Pilot.findOrCreate({ where: {id: pilot.characterID.content} ,defaults: {name: pilot.characterName.content}}));
     promises.push(Corp.findOrCreate({ where: {id: pilot.corporationID.content} ,defaults: {name: pilot.corporation.content}}));

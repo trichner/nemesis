@@ -14,7 +14,8 @@ module.exports = {
     findPilot : findPilot,
     fetchPilotInfo : fetchPilotInfo,
     createPilot : createPilot,
-    getListTxt : getListTxt
+    getListTxt : getListTxt,
+    updateWaitlistOwner :updateWaitlistOwner
 };
 
 //FIXME Hardcoded, WTF?
@@ -64,14 +65,6 @@ function getListTxt(listId){
             return Mapper.mapWaitlistDBVOtoAscii(waitlists);
         });
 }
-
-function getListAscii(listId){
-    return dao.findWaitlistByExternalId(listId)
-        .then(function (waitlists) {
-            return Mapper.mapWaitlistDBVOtoAscii(waitlists);
-        });
-}
-
 
 function fetchPilotInfo(characterID){
     return api.getCharacter(characterID);
@@ -148,4 +141,19 @@ function findPilot(pilotId){
         .then(function (pilot) {
             return Mapper.mapPilotDBVO(pilot);
         });
+}
+
+function updateWaitlistOwner(ownerId,waitlistId, newOwnerId){
+    return dao.findPilotById(newOwnerId)
+        .then(function (pilot) {
+            // verify that new boss exists
+            return dao.findWaitlistByExternalId(waitlistId)
+                .then(function (waitlist) {
+                    if(waitlist.ownerId!=ownerId){
+                        return Q.reject(new Error('Not authorized, not owner'));
+                    }else{
+                        return waitlist.setOwner(pilot);
+                    }
+                })
+        })
 }
