@@ -7,15 +7,14 @@ body {
 }
 
 #wlurl-box {
-	/*width: 500px;*/
-	/*border: 1px solid black;*/
 	overflow: hidden;  /* add this to contain floated children */
 }
 
 a#waitlist-link {
 	cursor: pointer;
-	color: rgba(22, 97, 126, 1);
+	color: rgba(22, 97, 126, 0.45);
 	text-decoration: underline;
+	vertical-align: middle;
 }
 /*eve plasma #16617E*/
 div#how {
