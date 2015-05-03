@@ -54,6 +54,7 @@ app.factory('Minions', function($q) {
         var prename = waitlist.ownerName.split(' ')[0];
         head = head.replace('%n',prename)
         ascii = ascii.concat(head);
+        ascii = ascii.concat('\n');
         ascii = ascii.concat(list);
         ascii = ascii.concat(foot)
         return ascii;
