@@ -51,7 +51,7 @@ app.factory('Minions', function($q) {
         list = list.join('');
 
         var ascii = '.\n';
-        var prename = mapped.ownerName.split(' ')[0];
+        var prename = waitlist.ownerName.split(' ')[0];
         ascii = ascii.concat('-=   <b>' + prename + "'s Fleet </b>   =-\n")
         ascii = ascii.concat(list);
         ascii = ascii.concat('-==              ==-\n')
