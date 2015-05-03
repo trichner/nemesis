@@ -16,6 +16,10 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
 
     $scope.waitlistTxt = '';
 
+    $scope.getWaitlistId = function () {
+        return $location.search().waitlistId;
+    }
+
     $scope.forwardMe = function(){
         
     }
@@ -32,17 +36,18 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
     $scope.newWaitlist = function () {
         return API.newWaitlist()
             .then(function (waitlist) {
+                waitlist.waitlistId;
                 $scope.updateWL(waitlist);
                 Notification.success("Successfully created waitlist")
             }, function () {
-                Notification.error("Cannot create aitlist, logged in?")
+                Notification.error("Cannot create waitlist, logged in?")
             })
     };
 
     //=== Functions
     $scope.updateWL = function(waitlistVO){
       $scope.waitlistVO = waitlistVO;
-      $location.hash(waitlistVO.waitlistId);
+      //$location.hash(waitlistVO.waitlistId);
     };
 
     $scope.refreshWL = function(){
