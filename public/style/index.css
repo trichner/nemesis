@@ -108,6 +108,18 @@ img{display:block;}
 	display: none;
 }
 
+.textover {
+	position: relative;
+}
+
+.textover > p {
+	position: absolute;
+	bottom: 0;
+	left: 0.5em;
+	font-weight: bold;
+	color: white;
+}
+
 #footer {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 0.7em;

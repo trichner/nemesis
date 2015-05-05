@@ -68,13 +68,14 @@ app.factory('API', ['$q','$http',function($q,$http) {
         return deferred.promise;
     }
 
-    API.postFit = function(waitlistId,shipString){
+    API.postFit = function(waitlistId,shipString,role){
         if(!(waitlistId && shipString)){
             return breakPromise();
         }
         var deferred = $q.defer();
         $http.post(URL.WAITLIST+'/'+waitlistId,{
-                shipString : shipString
+                shipString : shipString,
+                role: role
             }).
             success(function(data, status, headers, config) {
                 deferred.resolve(data)

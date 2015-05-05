@@ -61,7 +61,7 @@ app.post('/waitlist/:id', function(req, res, next) {
     var externalId = req.params.id;
     var pilotId = req.session.pilotId;
     var shipString   = req.body.shipString;
-    service.addToList(pilotId,externalId,shipString)
+    service.addToList(pilotId,externalId,shipString,role)
         .then(function (itemId) {
             res.json({id: itemId});
         })

@@ -94,8 +94,9 @@
 					</div>
 
 					<div class="float-container">
-						<div ng-repeat="fitting in item.fittings">
+						<div ng-repeat="fitting in item.fittings" class="textover">
 							<img title="{{fitting.shipName}}" src="https://image.eveonline.com/Render/{{fitting.shipType}}_64.png" ng-click="showFitting(fitting)"/>
+							<p>{{fitting.role ? fitting.role : ''}}</p>
 						</div>
 					</div>
 					<div ng-class="{hidden: !isIGB}">

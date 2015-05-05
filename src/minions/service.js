@@ -103,9 +103,9 @@ function createPilot(accessToken){
         })
 }
 
-function addToList(pilotId,listId,shipString){
+function addToList(pilotId,listId,shipString,role){
     var ship = api.extractShip(shipString);
-    return dao.addToWaitlist(pilotId,listId,null,ship.type,ship.dna,ship.name)
+    return dao.addToWaitlist(pilotId,listId,null,ship.type,ship.dna,ship.name,role)
         .then(function (item) {
             return item.order;
         })

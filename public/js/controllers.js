@@ -24,14 +24,14 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
 
 
     $scope.roles = [
-        {name: 'T1',    type: 'DD'},
-        {name: 'shiny',    type: 'DD'},
-        {name: 'Logi',  type: 'L'},
-        {name: 'Logi4', type: 'L'},
-        {name: 'Logi5', type: 'L'},
-        {name: 'Scout', type: 'OG'},
-        {name: 'Picket', type: 'OG'},
-        {name: 'OGB', type: 'OG'}
+        {name: 'T1',     type: 'DD', id:'DD'},
+        {name: 'shiny',  type: 'DD', id:'DD'},
+        {name: 'Logi',   type: 'L' , id:'LL'},
+        {name: 'Logi4',  type: 'L' , id:'L4'},
+        {name: 'Logi5',  type: 'L' , id:'L5'},
+        {name: 'Scout',  type: 'OG', id:'S'},
+        {name: 'Picket', type: 'OG', id:'P'},
+        {name: 'OGB',    type: 'OG', id:'OGB'}
     ]
     $scope.mRole = $scope.roles[0]
 
@@ -58,7 +58,7 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
     }
 
     $scope.postFit = function(){
-        API.postFit($scope.waitlistVO.waitlistId,$scope.shipDNA)
+        API.postFit($scope.waitlistVO.waitlistId,$scope.shipDNA,$scope.mRole.id)
             .then(function (data) {
                 $scope.refreshWL();
                 Notification.success("Successfully x-ed up")
