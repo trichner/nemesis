@@ -91,7 +91,9 @@
 					</div>
 
 					<div>
-						<img title="{{item.shipName}}" src="https://image.eveonline.com/Render/{{item.shipType}}_64.png" ng-click="showFitting(item)"/>
+						<div ng-repeat="fitting in item">
+							<img title="{{fitting.shipName}}" src="https://image.eveonline.com/Render/{{fitting.shipType}}_64.png" ng-click="showFitting(fitting)"/>
+						</div>
 					</div>
 					<div ng-class="{hidden: !isIGB}">
 						<img title="send fleetinvite" src="img/add-user.png" width="64" ng-click="fleetInvite(item)"/>
