@@ -43,10 +43,14 @@ app.factory('Minions', function($q) {
     }
 
     Minions.waitlist2ascii = function(waitlist,head,foot){
-        var list = waitlist.waitlist.map(function (item) {
-            var char = item.characterName   // linkCharacter(item.characterId,item.characterName);
-            var fit  = item.shipName        //linkFit(item.shipDNA,item.shipName)
-            return ' * ' + fit + ' \t ' + char + '\n';
+        var list =  [];
+
+        waitlist.waitlist.forEach(function (item) {
+            item.fittings.forEach(function (fitting) {
+                var char = item.characterName   // linkCharacter(item.characterId,item.characterName);
+                var fit  = fitting.shipName        //linkFit(item.shipDNA,item.shipName)
+                list.push(' * ' + fit + ' \t ' + char + '\n')
+            })
         })
         list = list.join('');
 
