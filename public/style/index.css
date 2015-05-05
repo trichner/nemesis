@@ -1,6 +1,5 @@
 body {
 	margin: 20px;
-	/*background: #AAAAAA;*/
 	background-image: url(../img/nebula.jpg);
 	font-family: BankGothic, Arial, sans-serif !important;
 	color: white;
@@ -10,7 +9,7 @@ body {
 	overflow: hidden;  /* add this to contain floated children */
 }
 
-a#waitlist-link {
+a{
 	cursor: pointer;
 	color: rgba(26, 181, 212, 1);
 	text-decoration: underline;
@@ -68,26 +67,22 @@ div.h4 {
 #first {
 	width: 300px;
 	float:left; /* add this */
-	/*border: 1px solid red;*/
 }
 #second {
-	/*border: 1px solid green; */
 	float: left; /* add this */
 }
 
 #container {
 	width: 100%;
-	/*border: 1px solid black;*/
 	overflow: hidden; /* will contain if #first is longer than #second */
 }
 #sidebar {
 	width: 300px;
 	min-height: 100px;
-	float:left; /* add this */
+	float:left;
 }
 #list {
-	/*border: 1px solid blue;*/
-	float: left; /* add this */
+	float: left;
 }
 
 .actions {
@@ -98,11 +93,9 @@ div.h4 {
 }
 
 div.float-container > div {
-	/*border: 1px solid green;*/
 	float: left; /* add this */
 	margin: 0;
 	padding: 0;
-	/*background-color: rgba(0, 0, 0, 0.18);*/
 }
 
 img{display:block;}
