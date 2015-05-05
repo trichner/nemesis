@@ -3,8 +3,7 @@ var Q = require('q');
 module.exports = {
     mapWaitlistDBVO : mapWaitlistDBVO,
     mapWaitlistItemDBVO : mapWaitlistItemDBVO,
-    mapPilotDBVO : mapPilotDBVO,
-    mapWaitlistDBVOtoAscii : mapWaitlistDBVOtoAscii
+    mapPilotDBVO : mapPilotDBVO
 }
 
 /*
