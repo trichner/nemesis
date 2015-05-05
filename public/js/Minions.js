@@ -79,7 +79,7 @@ app.factory('Minions', function($q) {
         var str = '';
         for (var key in count) {
             if (count.hasOwnProperty(key)) {
-                var line = key + ': '+  count[key] + '  '
+                var line = '' + key + ': '+  count[key] + '  '
                 str = str.concat(line);
             }
         }
