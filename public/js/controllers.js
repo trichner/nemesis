@@ -22,17 +22,29 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
     $scope.asciiFoot = '-==          ==-';
     $scope.waitlistTxt = '';
 
+    $scope.stats = '';
+
+    var RoleID = {
+        DD : 'DD',
+        L : 'L',
+        L4 : 'L4',
+        L5 : 'L5',
+        S : 'S',
+        P : 'P',
+        OGB : 'OGB'
+    }
 
     $scope.roles = [
-        {name: 'T1',     type: 'Damage Dealer', id:'DD'},
-        {name: 'shiny',  type: 'Damage Dealer', id:'DD'},
-        {name: 'Logi',   type: 'Logistics' , id:'LL'},
-        {name: 'Logi4',  type: 'Logistics' , id:'L4'},
-        {name: 'Logi5',  type: 'Logistics' , id:'L5'},
-        {name: 'Scout',  type: 'Off-grid', id:'S'},
-        {name: 'Picket', type: 'Off-grid', id:'P'},
-        {name: 'OGB',    type: 'Off-grid', id:'OGB'}
+        {name: 'T1',     type: 'Damage Dealer', id:RoleID.DD},
+        {name: 'shiny',  type: 'Damage Dealer', id:RoleID.DD},
+        {name: 'Logi',   type: 'Logistics' , id:RoleID.L},
+        {name: 'Logi4',  type: 'Logistics' , id:RoleID.L4},
+        {name: 'Logi5',  type: 'Logistics' , id:RoleID.L5},
+        {name: 'Scout',  type: 'Off-grid', id:RoleID.S},
+        {name: 'Picket', type: 'Off-grid', id:RoleID.P},
+        {name: 'OGB',    type: 'Off-grid', id:RoleID.OGB}
     ]
+
     $scope.mRole = $scope.roles[0]
 
     $scope.authenticated = false;
@@ -83,6 +95,7 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
         $scope.waitlistVO = waitlistVO;
         // add ascii list
         $scope.waitlistTxt = Minions.waitlist2ascii(waitlistVO,$scope.asciiHead,$scope.asciiFoot);
+        $scope.stats = Minions.waitlistStatsTxt(waitlistVO);
     };
 
     $scope.refreshWL = function(){

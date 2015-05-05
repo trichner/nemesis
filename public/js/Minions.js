@@ -64,5 +64,26 @@ app.factory('Minions', function($q) {
         return ascii;
     }
 
+    Minions.waitlistStats = function (waitlistVO) {
+        var count = {};
+        waitlistVO.waitlist.forEach(function (item) {
+            item.fittings.forEach(function (fitting) {
+                count[fitting.role] = (count[fitting.role] ? count[fitting.role] : 0) + 1;
+            })
+        })
+        return count;
+    };
+
+    Minions.waitlistStatsTxt = function(waitlistVO){
+        var count = Minions.waitlistStats(waitlistVO)
+        var str = '';
+        for (var key in count) {
+            if (eve_headers.hasOwnProperty(key)) {
+                var line = key + ': '+  count[key] + '  '
+                str = str.concat(line);
+            }
+        }
+        return str;
+    }
     return Minions;
 });

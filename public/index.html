@@ -73,7 +73,8 @@
 			<textarea placeholder="waitlist footer" id="asciiFoot" class="asciiTextarea" ng-model="asciiFoot"></textarea>
 		</div>
 	</div>
-	<div id="list" >
+	<div id="list" ng-class="{hide: ((!authenticated) || (!waitlistVO))}">
+		<p>Waitlist: {{stats}}</p>
 		<ol>
 			<li ng-repeat="item in waitlistVO.waitlist">
 				<div id="wrapper" class="float-container">
