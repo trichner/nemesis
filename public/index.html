@@ -61,6 +61,9 @@
 		<div id="xup" ng-class="{remove: ((!authenticated) || (!waitlistVO))}" class="actions">
 			<input type="text" name="fitting" placeholder="paste ship fitting here" ng-model="shipDNA"
 				   required onclick="this.focus();this.select()">
+			<select ng-model="mRole"
+					ng-options="role.name group by role.type for role in roles">
+			</select>
 			<button ng-click="postFit()">x up!</button>
 		</div>
 		<div id="asciiList-container" class="actions" ng-class="{remove: ((!authenticated) || (!waitlistVO))}">

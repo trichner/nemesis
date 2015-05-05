@@ -22,6 +22,19 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
     $scope.asciiFoot = '-==          ==-';
     $scope.waitlistTxt = '';
 
+
+    $scope.roles = [
+        {name: 'T1',    type: 'DD'},
+        {name: 'shiny',    type: 'DD'},
+        {name: 'Logi',  type: 'L'},
+        {name: 'Logi4', type: 'L'},
+        {name: 'Logi5', type: 'L'},
+        {name: 'Scout', type: 'OG'},
+        {name: 'Picket', type: 'OG'},
+        {name: 'OGB', type: 'OG'}
+    ]
+    $scope.mRole = $scope.roles[0]
+
     $scope.authenticated = false;
     $scope.isIGB = (typeof CCPEVE !== 'undefined');
     console.log('You are' + ($scope.isIGB ? '' : ' not') + ' in Eve IGB')
