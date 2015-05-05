@@ -55,17 +55,23 @@ var WaitlistItem = sequelize.define('item', {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true
-    },
+    }
+}, {});
+
+var ShipFitting = sequelize.define('fitting', {
     shipId: {
         type: Sequelize.STRING
     },
-    shipName: {
+    name: {
         type: Sequelize.STRING
     },
-    shipDNA: {
+    dna: {
         type: Sequelize.STRING
     },
-    shipType: {
+    type: {
+        type: Sequelize.STRING
+    },
+    role: {
         type: Sequelize.STRING
     }
 }, {});
@@ -83,8 +89,10 @@ var Waitlist = sequelize.define('waitlist', {
 Corp.belongsTo(Alliance);
 Pilot.belongsTo(Corp);
 WaitlistItem.belongsTo(Pilot);
+WaitlistItem.belongsTo(Waitlist);
 Waitlist.belongsTo(Pilot, {as: 'owner'});
 Waitlist.hasMany(WaitlistItem);
+WaitlistItem.hasMany(ShipFitting);
 
 /*
  pilot:
@@ -111,7 +119,8 @@ module.exports = {
     addToWaitlist : addToWaitlist,
     findItemByOrder : findItemByOrder,
     findAllWaitlists : findAllWaitlists,
-    findWaitlistsByOwner : findWaitlistsByOwner
+    findWaitlistsByOwner : findWaitlistsByOwner,
+    findItemByPilot : findItemByPilot
 }
 
 function connect(){
@@ -122,35 +131,69 @@ function findItemByOrder(order){
     return WaitlistItem.find({where:{order:order}}).then(assertObject);
 }
 
-function addToWaitlist(pilotId,externalId,shipId,shipType,shipDNA,shipName){
+function findItemByPilot(waitlistId,pilotId){
+    return findWaitlistByExternalId(waitlistId)
+        .then(function (waitlist) {
+            return WaitlistItem.findOne({where:{waitlistId:waitlist.id,pilotId:pilotId}})
+        })
+        .then(assertObject)
+}
+
+function addToItem(item,shipId,shipType,shipDNA,shipName,role){
+    return createFitting(shipId,shipName,shipDNA,shipType,role)
+        .then(function (fitting) {
+            return item.addFitting(fitting);
+        })
+}
+
+function addToWaitlist(pilotId,externalId,shipId,shipType,shipDNA,shipName,role){
 
     if(!(shipDNA && shipType && shipName)){
        return Q.reject(new Error("Ship not fully defined: " + shipDNA + ' '+ shipType + ' ' + shipName));
     }
 
-    return findPilotById(pilotId)
-        .then(function (pilot) {
-            return Q.all([pilot,findWaitlistByExternalId(externalId).then(assertObject)]);
-        })
+    return Q.all([findPilotById(pilotId).then(assertObject),findWaitlistByExternalId(externalId).then(assertObject)])
         .spread(function (pilot, waitlist) {
-            return WaitlistItem.create({
-                shipId: shipId,
-                shipName: shipName,
-                shipDNA: shipDNA,
-                shipType: shipType
+            return WaitlistItem.findOrCreate({where:{waitlistId:waitlist.id,pilotId:pilot.id}})
+                .spread(function (item,created) {
+                    var promise = item;
+                    if(created){
+                        promise = item.setPilot(pilot)
+                            .then(function () {
+                                return item.setWaitlist(waitlist)
+                            })
+                            .then(function () {
+                                return item;
+                            })
+                    }
+                    return promise;
                 })
                 .then(function (item) {
-                    return item.setPilot(pilot).then(function () {
-                        return item;
-                    })
-                })
-                .then(function (item) {
-                    return waitlist.addItem(item)
+                    return createFitting(shipId,shipName,shipDNA,shipType,role)
+                        .then(function (fitting) {
+                            return item.addFitting(fitting)
+                        })
+                        .then(function () {
+                            return item.setWaitlist(waitlist)
+                        })
+                        .then(function () {
+                            return waitlist.addItem(item)
+                        })
                         .then(function () {
                             return item;
                         });
                 })
         })
+}
+
+function createFitting(shipId,name,dna,type,role){
+    return ShipFitting.create({
+        shipId: shipId,
+        name: name,
+        dna: dna,
+        type: type,
+        role:role
+    });
 }
 
 // Eager load entire list

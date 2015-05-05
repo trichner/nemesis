@@ -18,20 +18,6 @@ app.get('/waitlist', function(req, res, next) {
 });
 
 /* GET waitlist by id*/
-app.get('/waitlist/:id.txt', function(req, res, next) {
-    //res.send('respond with a resource');
-    var externalId = req.params.id;
-    service.getListTxt(externalId).
-        then(function (list) {
-            res.type('text/plain');
-            res.send(list);
-        })
-        .catch(function (e) {
-            next(e);
-        })
-});
-
-/* GET waitlist by id*/
 app.get('/waitlist/:id.json', function(req, res, next) {
     //res.send('respond with a resource');
     var externalId = req.params.id;

@@ -154,7 +154,7 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
                         Notification.error('Failed to fetch waitlist :(');
                     })
             }else{
-                alert('Please either create a new waitlist or join an existing waitlist');
+                // Stay on home, need waitlist firs
             }
         })
         .then(null,function (status) {

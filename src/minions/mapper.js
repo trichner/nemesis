@@ -40,35 +40,6 @@ function mapWaitlistDBVO(waitlist){
         })
 }
 
-function mapWaitlistDBVOtoAscii(waitlist){
-
-    return mapWaitlistDBVO(waitlist)
-        .then(function (mapped) {
-
-            var list = mapped.waitlist.map(function (item) {
-                var char = item.characterName // linkCharacter(item.characterId,item.characterName);
-                var fit  = item.shipName //linkFit(item.shipDNA,item.shipName)
-                return ' * ' + fit + ' \t ' + char + '\n';
-            })
-            list = list.join('');
-
-            var ascii = '.\n';
-            var prename = mapped.ownerName.split(' ')[0];
-            ascii = ascii.concat('-=   <b>' + prename + "'s Fleet </b>   =-\n")
-            ascii = ascii.concat(list);
-            ascii = ascii.concat('-==              ==-\n')
-            return ascii;
-        })
-}
-
-function linkCharacter(id,name){
-    return '<url=showinfo:1373\/\/' + id + '>' + name +'</url>'
-}
-
-function linkFit(shipDNA,shipName){
-    return '<url=fitting:' + shipDNA + '>' + shipName + '</url>'
-}
-
 /*
  {
  "order": 3,
@@ -96,16 +67,26 @@ function mapWaitlistItemDBVO(item){
             return mapPilotDBVO(pilot)
         })
         .then(function (mapped) {
-            mapped.shipDNA  = item.shipDNA;
-            mapped.shipName = item.shipName;
             mapped.itemId   = item.order;
-            mapped.shipType = item.shipType;
-            return mapped;
+            return item.getFittings()
+                .then(function (fittings) {
+                    return fittings.map(mapShipFitting)
+                })
+                .then(function (mappedFittings) {
+                    mapped.fittings = mappedFittings;
+                    return mapped;
+                })
         })
 }
 
-function shipTeardown(shipDNA){
-
+function mapShipFitting(fitting){
+    var mapped = {};
+    mapped.shipDNA  = fitting.dna;
+    mapped.shipName = fitting.name;
+    mapped.shipId   = fitting.shipId;
+    mapped.shipType = fitting.type;
+    mapped.role     = fitting.role;
+    return mapped;
 }
 
 /*
