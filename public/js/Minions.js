@@ -78,7 +78,7 @@ app.factory('Minions', function($q) {
         var count = Minions.waitlistStats(waitlistVO)
         var str = '';
         for (var key in count) {
-            if (eve_headers.hasOwnProperty(key)) {
+            if (count.hasOwnProperty(key)) {
                 var line = key + ': '+  count[key] + '  '
                 str = str.concat(line);
             }
