@@ -24,14 +24,14 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
 
 
     $scope.roles = [
-        {name: 'T1',     type: 'DD', id:'DD'},
-        {name: 'shiny',  type: 'DD', id:'DD'},
-        {name: 'Logi',   type: 'L' , id:'LL'},
-        {name: 'Logi4',  type: 'L' , id:'L4'},
-        {name: 'Logi5',  type: 'L' , id:'L5'},
-        {name: 'Scout',  type: 'OG', id:'S'},
-        {name: 'Picket', type: 'OG', id:'P'},
-        {name: 'OGB',    type: 'OG', id:'OGB'}
+        {name: 'T1',     type: 'Damage Dealer', id:'DD'},
+        {name: 'shiny',  type: 'Damage Dealer', id:'DD'},
+        {name: 'Logi',   type: 'Logistics' , id:'LL'},
+        {name: 'Logi4',  type: 'Logistics' , id:'L4'},
+        {name: 'Logi5',  type: 'Logistics' , id:'L5'},
+        {name: 'Scout',  type: 'Off-grid', id:'S'},
+        {name: 'Picket', type: 'Off-grid', id:'P'},
+        {name: 'OGB',    type: 'Off-grid', id:'OGB'}
     ]
     $scope.mRole = $scope.roles[0]
 
