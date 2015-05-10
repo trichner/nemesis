@@ -69,9 +69,10 @@ app.factory('Minions', function($q) {
         waitlistVO.waitlist.forEach(function (item) {
             item.fittings.forEach(function (fitting) {
                 if(fitting.role){
-                    count[fitting.role] = (count[fitting.role] ? count[fitting.role] : 0) + 1;
+                    var type = fitting.role[0];
+                    count[type] = (count[type] ? count[type] : 0) + 1;
                 }else{
-                    count.unknown = (count.unknown ? count.unknown : 0) + 1;
+                    count.u = (count.u ? count.u : 0) + 1;
                 }
             })
         })

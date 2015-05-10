@@ -26,8 +26,7 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
     }
 
     $scope.roles = [
-        {name: 'T1',     type: 'Damage Dealer', id:RoleID.DD},
-        {name: 'T2',     type: 'Damage Dealer', id:RoleID.DD},
+        {name: 'DD',     type: 'Damage Dealer', id:RoleID.DD},
         {name: 'Logi4',  type: 'Logistics' , id:RoleID.L4},
         {name: 'Logi5',  type: 'Logistics' , id:RoleID.L5},
         {name: 'Scout/Hacker',    type: 'Off-grid', id:RoleID.SH},
