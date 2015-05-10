@@ -100,14 +100,14 @@
 							<p>{{fitting.role ? fitting.role : ''}}</p>
 						</div>
 					</div>
-					<div ng-class="{hidden: !isIGB}">
-						<img title="send fleetinvite" src="img/add-user.png" width="64" ng-click="fleetInvite(item)"/>
-					</div>
 					<div ng-class="{hidden: !canRemove(item.characterId)}">
 						<img title="remove from list" src="img/close.png" width="64" ng-click="removeItem(item)"/>
 					</div>
 					<div ng-class="{hidden: !isOwner()}">
 						<img title="make boss" src="img/star.png" width="64" ng-click="makeBoss(item)"/>
+					</div>
+					<div ng-class="{hidden: !isIGB}">
+						<img title="send fleetinvite" src="img/add-user.png" width="64" ng-click="fleetInvite(item)"/>
 					</div>
 				</div>
 				<p>{{item.characterName}}</p>
