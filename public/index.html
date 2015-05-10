@@ -103,7 +103,7 @@
 					<div ng-class="{hidden: !isIGB}">
 						<img title="send fleetinvite" src="img/add-user.png" width="64" ng-click="fleetInvite(item)"/>
 					</div>
-					<div>
+					<div ng-class="{hidden: !canRemove(item.characterId)}">
 						<img title="remove from list" src="img/close.png" width="64" ng-click="removeItem(item)"/>
 					</div>
 					<div ng-class="{hidden: !isOwner()}">

@@ -161,6 +161,10 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
             })
     }
 
+    $scope.canRemove = function (characterId) {
+        return (isOwner() || characterId==me.characterId);
+    }
+
 
     //=== Fetch data
 
