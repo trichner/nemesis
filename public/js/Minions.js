@@ -48,8 +48,8 @@ app.factory('Minions', function($q) {
         waitlist.waitlist.forEach(function (item) {
             item.fittings.forEach(function (fitting) {
                 var char = item.characterName       //Minions.linkCharacter(item.characterId,item.characterName);
-                var fit  = fitting.shipName         //Minions.linkFit(item.shipDNA,item.shipName)
-                list.push(' * ' + fit + ' \t ' + char + '\n')
+                var role  = fitting.role         //Minions.linkFit(item.shipDNA,item.shipName)
+                list.push(' * ' + role + ' \t ' + char + '\n')
             })
         })
         list = list.join('');
