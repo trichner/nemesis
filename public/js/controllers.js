@@ -39,7 +39,7 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
         {name: 'T2',     type: 'Damage Dealer', id:RoleID.DD},
         {name: 'Logi4',  type: 'Logistics' , id:RoleID.L4},
         {name: 'Logi5',  type: 'Logistics' , id:RoleID.L5},
-        {name: 'Scout/Hacker',    type: 'Off-grid', id:RoleID.SP},
+        {name: 'Scout/Hacker',    type: 'Off-grid', id:RoleID.SH},
         {name: 'Scout',  type: 'Off-grid', id:RoleID.S},
         {name: 'Picket', type: 'Off-grid', id:RoleID.P},
         {name: 'OGB',    type: 'Off-grid', id:RoleID.OGB}
