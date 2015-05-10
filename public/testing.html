@@ -1,15 +1,27 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="evewt">
 <head>
 	<link rel="stylesheet" type="text/css" href="style/index.css" />
 
     <meta charset="utf-8">
     <title>Nemesis: an EVE Online Waitlist Management Tool</title>
+
+	<script src="js/angular.js"></script>
+	<script src="js/angular-ui-notification.min.js"></script>
+	<script src="js/testing.js"></script>
+	<script src="js/API.js"></script>
+	<script src="js/Minions.js"></script>
+	<script src="js/EveIGB.js"></script>
+
 </head>
-<body>
+<body ng-controller="wt-list">
 
-
-
+<div class="float-container">
+	<div ng-repeat="fitting in item.fittings" class="textover">
+		<img title="{{fitting.shipName}}" src="https://image.eveonline.com/Render/{{fitting.shipType}}_64.png" ng-click="showFitting(fitting)"/>
+		<p>{{fitting.role ? fitting.role : ''}}</p>
+	</div>
+</div>
 
 <div id="footer">
 	Nemesis: an EVE Online Waitlist Management Tool by Thomion, thanks to Titus Tallang for some css magic.
