@@ -94,12 +94,6 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
             .then(function (data) {
                 $scope.updateWL(data);
             })
-        /*
-        API.getWaitlistTxt($scope.waitlistVO.waitlistId)
-            .then(function (waitlistTxt) {
-                $scope.waitlistTxt = waitlistTxt;
-            })
-            */
     };
 
     $scope.showCharInfo = function(item){
