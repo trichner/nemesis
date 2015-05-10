@@ -1,15 +1,6 @@
 var app = angular.module('evewt', ['ui-notification']);
 app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','API','EveIGB','Notification','Minions',function ($scope,$http,$location,$interval,$window,API,EveIGB,Notification,Minions) {
 
-    //=== Helpers
-
-    function getQueryParam(name) {
-        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-            results = regex.exec(location.search);
-        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-    }
-
     //=== Vars
     $scope.waitlistVO = null;
     $scope.waitlists = {waitlists:[]};
@@ -53,7 +44,7 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
     $scope.window = $window;
 
     $scope.getWaitlistId = function () {
-        var waitlistId = getQueryParam('waitlistId');
+        var waitlistId = Minions.getQueryParam('waitlistId');
         return waitlistId;
     }
 
