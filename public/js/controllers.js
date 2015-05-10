@@ -65,6 +65,7 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
             .then(function (data) {
                 $scope.refreshWL();
                 Notification.success("Successfully x-ed up")
+                $scope.shipDNA = '';
             }, function () {
                 Notification.error("Cannot x up, logged in? on waitlist?")
             })
@@ -149,7 +150,6 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
     $scope.canRemove = function (characterId) {
         return ($scope.isOwner() || characterId==$scope.me.characterId);
     }
-
 
     //=== Fetch data
 
