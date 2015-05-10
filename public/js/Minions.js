@@ -49,7 +49,7 @@ app.factory('Minions', function($q) {
             item.fittings.forEach(function (fitting) {
                 var char = item.characterName       //Minions.linkCharacter(item.characterId,item.characterName);
                 var role  = fitting.role         //Minions.linkFit(item.shipDNA,item.shipName)
-                list.push(' * ' + role + ' \t ' + char + '\n')
+                list.push(' * ' + char + ' \t ' + role + '\n')
             })
         })
         list = list.join('');
