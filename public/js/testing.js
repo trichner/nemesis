@@ -24,4 +24,18 @@ app.controller('testing',[ '$scope','$http','$location','$interval','$window','A
 
     }
 
+    $scope.onClick = function(){
+        var safety = true;
+
+        return function(item){
+            if(!safety){
+                console.log('Safety OFF firing: ' + item.id)
+            }else{
+                console.log('Safety ON, now offlining: ' + item.id)
+
+            }
+            safety = false;
+        }
+    }();
+
 }]);
