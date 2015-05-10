@@ -1,7 +1,8 @@
 <!doctype html>
 <html lang="en" ng-app="evewt">
 <head>
-	<link rel="stylesheet" type="text/css" href="style/index.css" />
+    <link rel="stylesheet" type="text/css" href="style/index.css" />
+    <link rel="stylesheet" type="text/css" href="style/testing.css" />
 
     <meta charset="utf-8">
     <title>Nemesis: an EVE Online Waitlist Management Tool</title>
@@ -14,12 +15,18 @@
 	<script src="js/EveIGB.js"></script>
 
 </head>
-<body ng-controller="wt-list">
+<body ng-controller="testing">
 
 <div class="float-container">
-	<div ng-repeat="fitting in item.fittings" class="textover">
-		<img title="{{fitting.shipName}}" src="https://image.eveonline.com/Render/{{fitting.shipType}}_64.png" ng-click="showFitting(fitting)"/>
-		<p>{{fitting.role ? fitting.role : ''}}</p>
+	<div ng-repeat="item in list" class="float-container">
+        <div class="safetybutton">
+            <div id="button" ng-click="onItemClick(item)">
+
+            </div>
+            <div id="safety" ng-click="onSafetyClick(item)">
+
+            </div>
+        </div>
 	</div>
 </div>
 

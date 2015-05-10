@@ -1,0 +1,21 @@
+.safetybutton {
+	position: relative;
+	width: 100px;
+	height: 100px;
+}
+.safetybutton > #button {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100px;
+	height: 100px;
+}
+.safetybutton > #safety {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: red;
+	opacity: 0.8;
+	width: 100px;
+	height: 100px;
+}
