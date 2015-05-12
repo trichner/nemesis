@@ -165,6 +165,8 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
     }
 
     //=== Fetch data
+    // fetch it so the link is stored even if we are not logged in
+    $scope.getWaitlistId();
 
     API.getMe()
         .then(function (data) {
