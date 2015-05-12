@@ -45,9 +45,9 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
     $scope.getWaitlistId = function () {
         var waitlistId = Minions.getQueryParam('waitlistId');
         if(waitlistId){
-            $cookies.waitlistId = waitlistId;
+            $cookies.putObject('waitlistId',waitlistId,{secure:true});
         }else{
-            waitlistId = $cookies.waitlistId;
+            waitlistId = $cookies.getObject('waitlistId');
         }
         return waitlistId;
     }
@@ -86,7 +86,7 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
     };
 
     $scope.leaveWaitlist = function () {
-        $cookies.waitlistId = null;
+        $cookies.remove('waitlistId');
         window.location = stripQueryFromUrl(window.location.href);
         window.location.reload(true);
     };
