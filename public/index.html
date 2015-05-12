@@ -99,7 +99,8 @@
 					<div class="float-container">
 						<div ng-repeat="fitting in item.fittings" class="textover">
 							<img title="{{fitting.shipName}}" src="https://image.eveonline.com/Render/{{fitting.shipType}}_64.png" ng-click="showFitting(fitting)"/>
-							<p>{{fitting.role ? fitting.role : ''}}</p>
+							<span class="line">{{fitting.role ? fitting.role : ''}}</span>
+							<span class="strut"></span>
 						</div>
 					</div>
 					<div ng-class="{hidden: !canRemove(item.characterId)}">
