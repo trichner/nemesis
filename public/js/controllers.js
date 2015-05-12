@@ -1,5 +1,5 @@
 var app = angular.module('evewt', ['ui-notification','ngCookies']);
-app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','API','EveIGB','Notification','Minions','$cookies',function ($scope,$http,$location,$interval,$window,API,EveIGB,Notification,Minions,$cookies) {
+app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','API','EveIGB','Notification','Minions','$cookieStore',function ($scope,$http,$location,$interval,$window,API,EveIGB,Notification,Minions,$cookieStore) {
 
     //=== Vars
     $scope.waitlistVO = null;
@@ -45,9 +45,9 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
     $scope.getWaitlistId = function () {
         var waitlistId = Minions.getQueryParam('waitlistId');
         if(waitlistId){
-            $cookies.putObject('waitlistId',waitlistId,{secure:true});
+            $cookieStore.put('waitlistId',waitlistId);
         }else{
-            waitlistId = $cookies.getObject('waitlistId');
+            waitlistId = $cookieStore.get('waitlistId');
         }
         return waitlistId;
     }
@@ -86,7 +86,7 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
     };
 
     $scope.leaveWaitlist = function () {
-        $cookies.remove('waitlistId');
+        $cookieStore.remove('waitlistId');
         window.location = stripQueryFromUrl(window.location.href);
         window.location.reload(true);
     };
