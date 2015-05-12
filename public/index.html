@@ -54,6 +54,7 @@
 		<div ng-class="{remove: !authenticated}" class="actions">
 			Logged in.
 			<button ng-click="logout()">logout</button>
+			<button ng-click="leaveWaitlist()">home</button>
 		</div>
 		<div ng-class="{remove: ((!authenticated) || (waitlistVO))}" class="actions">
 			<button ng-click="newWaitlist()">Create new waitlist</button>

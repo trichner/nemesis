@@ -1,5 +1,5 @@
-var app = angular.module('evewt', ['ui-notification']);
-app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','API','EveIGB','Notification','Minions',function ($scope,$http,$location,$interval,$window,API,EveIGB,Notification,Minions) {
+var app = angular.module('evewt', ['ui-notification','ngCookies']);
+app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','API','EveIGB','Notification','Minions','$cookies',function ($scope,$http,$location,$interval,$window,API,EveIGB,Notification,Minions,$cookies) {
 
     //=== Vars
     $scope.waitlistVO = null;
@@ -44,6 +44,11 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
 
     $scope.getWaitlistId = function () {
         var waitlistId = Minions.getQueryParam('waitlistId');
+        if(waitlistId){
+            $cookies.putObject('waitlistId',waitlistId,{secure:true});
+        }else{
+            waitlistId = $cookies.getObject('waitlistId');
+        }
         return waitlistId;
     }
 
@@ -73,13 +78,22 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
     $scope.newWaitlist = function () {
         return API.newWaitlist()
             .then(function (waitlist) {
-                waitlist.waitlistId;
                 $scope.updateWL(waitlist);
                 Notification.success("Successfully created waitlist")
             }, function () {
                 Notification.error("Cannot create waitlist, logged in?")
             })
     };
+
+    $scope.leaveWaitlist = function () {
+        $cookies.remove('waitlistId');
+        window.location = stripQueryFromUrl(window.location.href);
+        window.location.reload(true);
+    };
+
+    function stripQueryFromUrl(url){
+        return url.substring(0,url.indexOf('?'))
+    }
 
     //=== Functions
     $scope.updateWL = function(waitlistVO){
@@ -164,7 +178,6 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
                         Notification.success('Joined waitlist');
                     })
                     .then(null,function () {
-                        $location.hash('');
                         Notification.error('Failed to fetch waitlist :(');
                     })
             }else{
