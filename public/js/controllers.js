@@ -164,6 +164,17 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
         return ($scope.isOwner() || characterId==$scope.me.characterId);
     }
 
+    $scope.getWaitlistUrl = function () {
+        var waitlistId = $scope.getWaitlistId();
+        var url;
+        if(waitlistId && waitlistId.length){
+            url = location.protocol + "//" + location.host + location.pathname + '?waitlistId=' + waitlistId;
+        }else{
+            url = '';
+        }
+        return url;
+    }
+
     //=== Fetch data
     // fetch it so the link is stored even if we are not logged in
     $scope.getWaitlistId();
