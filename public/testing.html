@@ -30,6 +30,13 @@
 	</div>
 </div>
 
+<div class="float-container">
+    <div ng-repeat="fitting in fittings" class="textover">
+        <img src="https://image.eveonline.com/Render/{{fitting.shipType}}_64.png"/>
+        <p>{{fitting.role ? fitting.role : ''}}</p>
+    </div>
+</div>
+
 <div id="footer">
 	Nemesis: an EVE Online Waitlist Management Tool by Thomion, thanks to Titus Tallang for some css magic.
 </div>

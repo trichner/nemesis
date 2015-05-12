@@ -6,6 +6,12 @@ app.controller('testing',[ '$scope','$http','$location','$interval','$window','A
 
     $scope.window = $window;
 
+    $scope.fittings = [
+        {role:'DD',shipType:17736},
+        {role:'L4',shipType:17736},
+        {role:'SH',shipType:17736},
+        ]
+
     $scope.list = [
         {id:'1'},
         {id:'2'},
