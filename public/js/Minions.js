@@ -46,11 +46,14 @@ app.factory('Minions', function($q) {
         var list =  [];
 
         waitlist.waitlist.forEach(function (item) {
+            var char = item.characterName
+            var line = ' * ' + char + ' \t ';
             item.fittings.forEach(function (fitting) {
-                var char = item.characterName       //Minions.linkCharacter(item.characterId,item.characterName);
-                var role  = fitting.role         //Minions.linkFit(item.shipDNA,item.shipName)
-                list.push(' * ' + char + ' \t ' + role + '\n')
+                line += fitting.role;
+                line += ', ';
             })
+            line += '\n';
+            list.push(line);
         })
         list = list.join('');
 
