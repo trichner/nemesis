@@ -2,6 +2,7 @@ var dao = require('./dao');
 var api = require('./crest');
 var Q = require('q');
 var Mapper = require('./mapper');
+var sanitizer = require('sanitizer');
 
 module.exports = {
     verifyPilot : verifyPilot,
@@ -105,6 +106,8 @@ function createPilot(accessToken){
 
 function addToList(pilotId,listId,shipString,role){
     var ship = api.extractShip(shipString);
+    ship.name = sanitizer.sanitize(ship.name);
+    role = sanitizer.sanitize(role);
     return dao.addToWaitlist(pilotId,listId,null,ship.type,ship.dna,ship.name,role)
         .then(function (item) {
             return item.order;
