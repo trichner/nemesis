@@ -59,7 +59,7 @@ div.h4 {
 }
 
 #wrapper {
-	width: 500px;
+	width: 600px;
 	border: 1px solid black;
 	background-color: rgba(0, 0, 0, 0.18);
 	overflow: hidden;  /* add this to contain floated children */
