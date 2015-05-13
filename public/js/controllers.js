@@ -130,6 +130,16 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
         Notification.success("Invited " + item.characterName + " to fleet")
     };
 
+    $scope.startConversation = function(item){
+        EveIGB.startConversation(item.characterId)
+        Notification.success("Invited " + item.characterName + " to conversation")
+    };
+
+    $scope.sendMail = function(item){
+        EveIGB.sendMail(item.characterId)
+        Notification.success("Sent " + item.characterName + " an email")
+    };
+
     $scope.makeBoss = function(item){
         API.makeBoss($scope.waitlistVO.waitlistId,item.characterId)
             .then(function () {

@@ -6,17 +6,19 @@ app.factory('EveIGB', function() {
     function notimplemented(){
         console.log('NOT IMPLEMENTED')
     }
+
+    function nop(){}
     // stubs for all methods
     var EveIGB = {
-        openEveMail : function(){},
-        showInfo : function(){},
+        openEveMail : nop,
+        showInfo : nop,
         showPreview : notimplemented,
         showRouteTo : notimplemented,
-        showMap :     function(){},
-        showFitting : function(){},
+        showMap :     nop,
+        showFitting : nop,
         showContract : notimplemented,
         showMarketDetails : notimplemented,
-        requestTrust : function(){},
+        requestTrust : nop,
         setDestination : notimplemented,
         addWaypoint : notimplemented,
         joinChannel : notimplemented,
@@ -31,13 +33,13 @@ app.factory('EveIGB', function() {
         removeCorpContact : notimplemented,
         block : notimplemented,
         addBounty : notimplemented,
-        inviteToFleet : function(){},
-        startConversation : notimplemented,
+        inviteToFleet : nop,
+        startConversation : nop,
         showContracts : notimplemented,
         showOnMap : notimplemented,
         editMember : notimplemented,
         awardDecoration : notimplemented,
-        sendMail : notimplemented,
+        sendMail : nop,
         showContents : notimplemented,
         bookmark : notimplemented
     };
@@ -48,14 +50,9 @@ app.factory('EveIGB', function() {
         EveIGB.showInfo = function(a,b){CCPEVE.showInfo(a,b)};
         EveIGB.showFitting = function(fit){CCPEVE.showFitting(fit)};
         EveIGB.requestTrust = function(url){CCPEVE.requestTrust(url)};
-        EveIGB.inviteToFleet = function(arg){CCPEVE.inviteToFleet(arg)};
-
-        //for(var m in CCPEVE) {
-        //    if(typeof CCPEVE[m] == "function") {
-        //        EveIGB[m] = CCPEVE[m];
-        //    }
-        //}
-
+        EveIGB.inviteToFleet = function(characterId){CCPEVE.inviteToFleet(characterId)};
+        EveIGB.sendMail = function(characterId,subject,body){CCPEVE.sendMail(characterId,subject,body)};
+        EveIGB.startConversation = function (characterId) {CCPEVE.startConversation(characterId)}
     }
     return EveIGB;
 });
