@@ -25,6 +25,11 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
         OGB : 'OGB'
     }
 
+    var eveMail = {
+        "subject" : "Bad Fitting",
+        "body" : "Your fit is bad and you should feel bad!"
+    };
+
     $scope.roles = [
         {name: 'DD',     type: 'Damage Dealer', id:RoleID.DD},
         {name: 'Logi4',  type: 'Logistics' , id:RoleID.L4},
@@ -136,7 +141,7 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
     };
 
     $scope.sendMail = function(item){
-        EveIGB.sendMail(item.characterId)
+        EveIGB.sendMail(item.characterId,eveMail.subject,eveMail.body)
         Notification.success("Sent " + item.characterName + " an email")
     };
 
