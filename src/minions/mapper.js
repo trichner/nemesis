@@ -28,7 +28,7 @@ module.exports = {
 function mapWaitlistDBVO(waitlist){
     var mapped = {};
     mapped.ownerId      = waitlist.ownerId;
-    mapped.createdAt    = waitlist.createdAt;
+    mapped.createdAt    = (new Date(waitlist.createdAt)).getMilliseconds();
     mapped.waitlistId   = waitlist.externalId;
     mapped.ownerName    = waitlist.owner ? waitlist.owner.name : '';
     mapped.waitlistName = waitlist.name;
