@@ -79,6 +79,7 @@
 	<div id="list" ng-class="{hidden: ((!authenticated) || (!waitlistVO))}">
 		<p>Waitlist: {{stats}}</p>
 		<ol>
+			<p>{{item.characterName}}</p>
 			<li ng-repeat="item in waitlistVO.waitlist track by item.itemId">
 				<div id="wrapper" class="float-container">
 					<div>
@@ -123,7 +124,6 @@
 							 ng-click="sendMail(item)"/>
 					</div>
 				</div>
-				<p>{{item.characterName}}</p>
 			</li>
 		</ol>
 	</div>
