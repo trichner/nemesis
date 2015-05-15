@@ -27,10 +27,10 @@ module.exports = {
 
 function mapWaitlistDBVO(waitlist){
     var mapped = {};
-    mapped.ownerId = waitlist.ownerId;
-    mapped.createdAt = waitlist.createdAt;
-    mapped.waitlistId = waitlist.externalId;
-    mapped.ownerName = waitlist.owner ? waitlist.owner.name : '';
+    mapped.ownerId      = waitlist.ownerId;
+    mapped.createdAt    = waitlist.createdAt;
+    mapped.waitlistId   = waitlist.externalId;
+    mapped.ownerName    = waitlist.owner ? waitlist.owner.name : '';
     mapped.waitlistName = waitlist.name;
     var items = waitlist.items ? waitlist.items.map(mapWaitlistItemDBVO) : [];
     return Q.all(items)
