@@ -1,6 +1,6 @@
 body {
 	margin: 20px;
-	background-image: url(../img/nebula.jpg);
+	background: rgb(22, 71, 97) url(../img/nebula.jpg);
 	font-family: BankGothic, Arial, sans-serif !important;
 	color: white;
 }
