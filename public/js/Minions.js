@@ -139,11 +139,14 @@ app.factory('Minions', function($q) {
         //---- Custom Attribute
         paper.customAttributes.arc = function (value, total, R) {
             var alpha = 360 / total * value,
-                a = (90 - alpha) * Math.PI / 180,
-                x = center + R * Math.cos(a),
-                y = center - R * Math.sin(a),
-                color = "hsb(".concat(Math.round(R) / 200, ",", value / total, ", .75)"),
-                path;
+                a = (90 - alpha) * Math.PI / 180;
+            console.log('A: ' +a);
+            var x = center + R * Math.cos(a);
+            var y = center - R * Math.sin(a);
+            console.log('X: ' + x);
+            console.log('Y: ' + y);
+            var color = "hsb(".concat(Math.round(R) / 200, ",", value / total, ", .75)");
+            var path;
             if (total == value) {
                 path = [["M", center, center - R], ["A", R, R, 0, 1, 1,center - 0.01, center -
                 R]];

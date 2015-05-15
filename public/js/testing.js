@@ -45,6 +45,7 @@ app.controller('testing',[ '$scope','$http','$location','$interval','$window','A
         }
     }();
 
-    Minions.createTimer('timer',new Date())
+    $scope.startDate = new Date();
+    //Minions.createTimer('timer',new Date())
 
 }]);
