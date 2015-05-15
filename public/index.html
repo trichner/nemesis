@@ -79,8 +79,8 @@
 	<div id="list" ng-class="{hidden: ((!authenticated) || (!waitlistVO))}">
 		<p>Waitlist: {{stats}}</p>
 		<ol>
-			<p>{{item.characterName}}</p>
 			<li ng-repeat="item in waitlistVO.waitlist track by item.itemId">
+				<p>{{item.characterName}}</p>
 				<div id="wrapper" class="float-container">
 					<div>
 						<img title="{{item.characterName}}" src="https://image.eveonline.com/Character/{{item.characterId}}_64.jpg" ng-click="showCharInfo(item)"/>
