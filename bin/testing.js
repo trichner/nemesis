@@ -2,14 +2,8 @@
  * Created by Thomas on 15.04.2015.
  */
 
-var neow = require('neow');
+var dateString = "2015-05-06T18:06:28.000Z"
 
-var client = new neow.EveClient();
+console.log("Date:" + new Date(dateString))
 
-client.fetch('eve:CharacterInfo',{characterID:1643072492})
-    .then(function(result){
-        console.log(result)
-    })
-    .catch(function (e) {
-        console.log(e)
-    })
+console.log("Date:" + new Date(new Date() - dateString.getTime()))

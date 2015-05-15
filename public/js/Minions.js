@@ -5,6 +5,7 @@ app.directive('n1bTimer', function(Minions) {
             startDate: '='
         },
         link: function(scope, element, attrs) {
+            console.log("DateStr: " + scope.startDate)
             var date = new Date(scope.startDate);
             console.log("Date: " + date)
             Minions.createTimer(element[0], date);
@@ -139,13 +140,13 @@ app.factory('Minions', function($q) {
 
         //---- Custom Attribute
         paper.customAttributes.arc = function (value, total, R) {
+            if(!value){
+                console.warn("INVALID VALUE!")
+            }
             var alpha = 360 / total * value,
                 a = (90 - alpha) * Math.PI / 180;
-            console.log('A: ' +a);
             var x = center + R * Math.cos(a);
             var y = center - R * Math.sin(a);
-            console.log('X: ' + x);
-            console.log('Y: ' + y);
             var color = "hsb(".concat(Math.round(R) / 200, ",", value / total, ", .75)");
             var path;
             if (total == value) {
@@ -160,7 +161,7 @@ app.factory('Minions', function($q) {
         //--- draw components
         drawMarks(R, 60);
         var sec = paper.path().attr(param).attr({arc: [0, 60, R]});
-        var text = paper.text(center, center, "Raphaël!").attr(textAttr);
+        var text = paper.text(center, center, "").attr(textAttr);
 
         function updateVal(value, total, R, hand) {
             if (init) {
@@ -191,8 +192,7 @@ app.factory('Minions', function($q) {
 
         //--- start clock
         (function () {
-            var d = new Date(new Date() - start.getTime());
-            console.log("Secs: " + d.getSeconds())
+            var d = new Date((new Date()).getTime() - start.getTime());
             updateVal(d.getSeconds(), 60, R, sec, 2);
 
             text.attr({text: toMinutes(d.getTime()) + 'm'})
