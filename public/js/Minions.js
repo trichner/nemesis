@@ -5,9 +5,7 @@ app.directive('n1bTimer', function(Minions) {
             startDate: '='
         },
         link: function(scope, element, attrs) {
-            console.log("DateStr: " + scope.startDate)
             var date = new Date(scope.startDate);
-            console.log("Date: " + date)
             Minions.createTimer(element[0], date);
         }
     }
@@ -140,9 +138,6 @@ app.factory('Minions', function($q) {
 
         //---- Custom Attribute
         paper.customAttributes.arc = function (value, total, R) {
-            if(typeof value == 'undefined' || value==null){
-                console.warn("INVALID VALUE!")
-            }
             var alpha = 360 / total * value,
                 a = (90 - alpha) * Math.PI / 180;
             var x = center + R * Math.cos(a);
