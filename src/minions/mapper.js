@@ -28,7 +28,7 @@ module.exports = {
 function mapWaitlistDBVO(waitlist){
     var mapped = {};
     mapped.ownerId      = waitlist.ownerId;
-    mapped.createdAt    = (new Date(waitlist.createdAt)).getMilliseconds();
+    mapped.createdAt    = (new Date(waitlist.createdAt)).getTime();
     mapped.waitlistId   = waitlist.externalId;
     mapped.ownerName    = waitlist.owner ? waitlist.owner.name : '';
     mapped.waitlistName = waitlist.name;
@@ -68,7 +68,7 @@ function mapWaitlistItemDBVO(item){
         })
         .then(function (mapped) {
             mapped.itemId    = item.order;
-            mapped.createdAt = item.createdAt;
+            mapped.createdAt = (new Date(item.createdAt)).getTime();
             return item.getFittings()
                 .then(function (fittings) {
                     return fittings.map(mapShipFitting)
