@@ -140,7 +140,7 @@ app.factory('Minions', function($q) {
 
         //---- Custom Attribute
         paper.customAttributes.arc = function (value, total, R) {
-            if(!value){
+            if(typeof value == 'undefined' || value==null){
                 console.warn("INVALID VALUE!")
             }
             var alpha = 360 / total * value,
