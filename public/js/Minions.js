@@ -6,6 +6,7 @@ app.directive('n1bTimer', function(Minions) {
         },
         link: function(scope, element, attrs) {
             var date = new Date(scope.startDate);
+            console.log("Date: " + date)
             Minions.createTimer(element[0], date);
         }
     }
@@ -191,6 +192,7 @@ app.factory('Minions', function($q) {
         //--- start clock
         (function () {
             var d = new Date(new Date() - start.getTime());
+            console.log("Secs: " + d.getSeconds())
             updateVal(d.getSeconds(), 60, R, sec, 2);
 
             text.attr({text: toMinutes(d.getTime()) + 'm'})
