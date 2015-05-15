@@ -109,8 +109,7 @@
 					<div ng-class="{hidden: !isOwner()}">
 						<img title="make boss" src="img/star.png" height="64" ng-click="makeBoss(item)"/>
 					</div>
-					<div class="timer">
-						{{createTimer(item)}}
+					<div class="timer" n1b-timer>
 					</div>
 					<div ng-class="{remove: !isIGB}">
 						<img title="send fleetinvite" src="img/add-user.png" height="64" ng-click="fleetInvite(item)"/>

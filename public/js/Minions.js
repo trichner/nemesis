@@ -1,3 +1,14 @@
+app.directive('n1bTimer', function(Minions) {
+    return {
+        restrict: 'A',
+        scope: {
+            dset: '='
+        },
+        link: function(scope, element, attrs) {
+            Minions.createTimer(element[0],new Date())
+        }
+    }
+});
 app.factory('Minions', function($q) {
     var Minions = {};
 
