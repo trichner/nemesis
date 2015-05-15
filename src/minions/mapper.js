@@ -66,7 +66,8 @@ function mapWaitlistItemDBVO(item){
             return mapPilotDBVO(pilot)
         })
         .then(function (mapped) {
-            mapped.itemId   = item.order;
+            mapped.itemId    = item.order;
+            mapped.createdAt = item.createdAt;
             return item.getFittings()
                 .then(function (fittings) {
                     return fittings.map(mapShipFitting)

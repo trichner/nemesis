@@ -2,10 +2,11 @@ app.directive('n1bTimer', function(Minions) {
     return {
         restrict: 'A',
         scope: {
-            dset: '='
+            startDate: '='
         },
         link: function(scope, element, attrs) {
-            Minions.createTimer(element[0],new Date())
+            var date = new Date(scope.startDate);
+            Minions.createTimer(element[0], date);
         }
     }
 });
@@ -33,6 +34,10 @@ app.factory('Minions', function($q) {
     function parseSlot(str){
         var arr = str.split(';');
         return {id: arr[0],n:arr[1]};
+    }
+
+    function toMinutes(millis){
+        return Math.floor(millis/(1000*60))
     }
 
     Minions.teardownShipFit = function(shipDNA){
@@ -182,11 +187,10 @@ app.factory('Minions', function($q) {
 
         //--- start clock
         (function () {
-            var d = new Date()
-            d = new Date(d.getTime() - start.getTime());
+            var d = new Date(new Date() - start.getTime());
             updateVal(d.getSeconds(), 60, R, sec, 2);
 
-            text.attr({text: d.getMinutes() + 'm'})
+            text.attr({text: toMinutes(d.getTime()) + 'm'})
 
             setTimeout(arguments.callee, 1000);
             init = false;
