@@ -85,6 +85,11 @@ div.h4 {
 	float: left;
 }
 
+.timer{
+	height: 64px;
+	width: 64px;
+}
+
 .actions {
 	margin: 5px;
 	padding: 3px;

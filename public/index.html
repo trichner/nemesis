@@ -78,7 +78,7 @@
 	<div id="list" ng-class="{hidden: ((!authenticated) || (!waitlistVO))}">
 		<p>Waitlist: {{stats}}</p>
 		<ol>
-			<li ng-repeat="item in waitlistVO.waitlist">
+			<li ng-repeat="item in waitlistVO.waitlist track by item.itemId">
 				<div id="wrapper" class="float-container">
 					<div>
 						<img title="{{item.characterName}}" src="https://image.eveonline.com/Character/{{item.characterId}}_64.jpg" ng-click="showCharInfo(item)"/>
@@ -107,6 +107,9 @@
 					</div>
 					<div ng-class="{hidden: !isOwner()}">
 						<img title="make boss" src="img/star.png" height="64" ng-click="makeBoss(item)"/>
+					</div>
+					<div class="timer">
+						{{createTimer(item)}}
 					</div>
 					<div ng-class="{remove: !isIGB}">
 						<img title="send fleetinvite" src="img/add-user.png" height="64" ng-click="fleetInvite(item)"/>

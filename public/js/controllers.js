@@ -190,6 +190,10 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
         return url;
     }
 
+    $scope.createTimer = function(item){
+        Minions.createTimer(this, new Date());
+    }
+
     //=== Fetch data
     // fetch it so the link is stored even if we are not logged in
     $scope.getWaitlistId();

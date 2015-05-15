@@ -1,4 +1,4 @@
-var app = angular.module('evewt', ['ui-notification']);
+var app = angular.module('testapp', ['ui-notification']);
 app.controller('testing',[ '$scope','$http','$location','$interval','$window','API','EveIGB','Notification','Minions',function ($scope,$http,$location,$interval,$window,API,EveIGB,Notification,Minions) {
 
     $scope.isIGB = (typeof CCPEVE !== 'undefined');
@@ -43,5 +43,7 @@ app.controller('testing',[ '$scope','$http','$location','$interval','$window','A
             safety = false;
         }
     }();
+
+    Minions.createTimer('timer',new Date())
 
 }]);
