@@ -29,15 +29,15 @@
 			<span>remember me</span>
 		</div>
 		<div ng-class="{remove: !authenticated}" class="actions">
-			Logged in.
+			Logged in as {{me.characterName}}.
 			<button ng-click="logout()">logout</button>
-			<button ng-click="leaveWaitlist()">home</button>
 		</div>
 		<div ng-class="{remove: ((!authenticated) || (waitlistVO))}" class="actions">
 			<button ng-click="newWaitlist()">Create new waitlist</button>
 		</div>
 	</div>
 	<div id="list" ng-class="{hidden: ((!authenticated))}">
+		<h2>All Open Waitlists</h2>
 		<ol>
 			<li ng-repeat="list in waitlists track by list.waitlistId">
 				<p>
