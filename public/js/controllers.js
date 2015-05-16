@@ -92,7 +92,8 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
 
     $scope.leaveWaitlist = function () {
         $cookieStore.remove('waitlistId');
-        window.location = stripQueryFromUrl(window.location.href);
+        var url = location.protocol + "//" + location.host + '/nemesis/home.html';
+        window.location.href = url;
         window.location.reload(true);
     };
 
