@@ -152,7 +152,7 @@ app.factory('Minions', function($q) {
         list = list.join('');
 
         var ascii = '.\n';
-        var prename = waitlist.ownerName.split(' ')[0];
+        var prename = waitlist.owner.characterName.split(' ')[0];
         head = head.replace('%n',prename)
         ascii = ascii.concat(head);
         ascii = ascii.concat('\n');
