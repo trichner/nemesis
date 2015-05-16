@@ -41,7 +41,7 @@
 		<ol>
 			<li ng-repeat="list in waitlists track by list.waitlistId">
 				<p>
-					<a id="waitlists-link" href="{{getWaitlistUrl()}}" target="_self">{{list.owner
+					<a id="waitlists-link" href="{{getWaitlistUrl(list)}}" target="_self">{{list.owner
 						.characterName}}</a>
 				</p>
 				<div id="wrapper" class="float-container">

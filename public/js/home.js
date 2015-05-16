@@ -70,14 +70,8 @@ app.controller('home',[ '$scope','$http','$location','$interval','$window','API'
             })
     }
 
-    $scope.getWaitlistUrl = function () {
-        var waitlistId = $scope.getWaitlistId();
-        var url;
-        if(waitlistId && waitlistId.length){
-            url = location.protocol + "//" + location.host + '/nemesis/?waitlistId=' + waitlistId;
-        }else{
-            url = '';
-        }
+    $scope.getWaitlistUrl = function (list) {
+        var url = location.protocol + "//" + location.host + '/nemesis/?waitlistId=' + list.waitlistId;
         return url;
     }
 
