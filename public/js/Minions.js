@@ -7,6 +7,11 @@ app.directive('n1bTimer', function(Minions) {
         link: function(scope, element, attrs) {
             var date = new Date(scope.startDate);
             createTimer(element[0], date);
+
+            function toMinutes(millis){
+                return Math.floor(millis/(1000*60))
+            }
+
             function createTimer(element,start){
                 var paper = Raphael(element, '100%', '100%');
                 //---- calculate dimensions and size
@@ -111,10 +116,6 @@ app.factory('Minions', function($q) {
     function parseSlot(str){
         var arr = str.split(';');
         return {id: arr[0],n:arr[1]};
-    }
-
-    function toMinutes(millis){
-        return Math.floor(millis/(1000*60))
     }
 
     Minions.teardownShipFit = function(shipDNA){
