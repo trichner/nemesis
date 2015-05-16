@@ -30,17 +30,18 @@ function mapWaitlistDBVO(waitlist){
     mapped.ownerId      = waitlist.ownerId;
     mapped.createdAt    = (new Date(waitlist.createdAt)).getTime();
     mapped.waitlistId   = waitlist.externalId;
-    mapped.ownerName    = waitlist.owner ? waitlist.owner.name : '';
     mapped.waitlistName = waitlist.name;
+
     var items = waitlist.items ? waitlist.items.map(mapWaitlistItemDBVO) : [];
     return Q.all(items)
         .then(function (mappedItems) {
             mapped.waitlist = mappedItems;
-            return mapPilotDBVO(waitlist.owner)
-                .then(function (mappedPilot) {
-                    mapped.owner = mappedPilot;
-                    return mapped;
-                })
+            return waitlist.getOwner();
+        })
+        .then(mapPilotDBVO)
+        .then(function (mappedPilot) {
+            mapped.owner = mappedPilot;
+            return mapped;
         })
 }
 
