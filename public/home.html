@@ -18,17 +18,6 @@
 <body onload='CCPEVE.requestTrust(location.protocol + "//" + location.host + "/*")' ng-controller="home">
 <span>Hello {{me.characterName ? me.characterName : 'Pilot'}}!</span>
 
-<div>
-	<h2>Your previous waitlists:</h2>
-	<ul>
-		<li ng-repeat="list in waitlists">
-			<p>
-				<a id="waitlists-link" href="{{window.location.href + '?waitlistId=' + list.waitlistId}}" target="_self">{{list.waitlistId}}</a>
-			</p>
-		</li>
-	</ul>
-</div>
-
 <div id="container">
 	<div id="sidebar">
 		<div ng-class="{remove: authenticated}" class="actions">
@@ -50,49 +39,34 @@
 	</div>
 	<div id="list" ng-class="{hidden: ((!authenticated) || (!waitlistVO))}">
 		<ol>
-			<li ng-repeat="item in waitlistVO.waitlist track by item.itemId">
-				<p>{{item.characterName}}</p>
+			<li ng-repeat="list in waitlists track by list.externalId">
+				<p>
+					<a id="waitlists-link" href="{{window.location.href + '?waitlistId=' + list.waitlistId}}" target="_self">{{list.owner.characterName}}</a>
+				</p>
 				<div id="wrapper" class="float-container">
 					<div>
-						<img title="{{item.characterName}}" src="https://image.eveonline.com/Character/{{item.characterId}}_64.jpg" ng-click="showCharInfo(item)"/>
+						<img title="{{list.owner.characterName}}"
+							 src="https://image.eveonline.com/Character/{{list.owner.characterId}}_64.jpg"
+							 ng-click="showCharInfo(list.owner)"/>
 					</div>
 					<div>
 						<div>
-							<img title="{{item.corporationName}}"
-								 src="https://image.eveonline.com/Corporation/{{item.corporationId}}_32.png"
-								 ng-click="showCorporation(item)"/>
+							<img title="{{list.owner.corporationName}}"
+								 src="https://image.eveonline.com/Corporation/{{list.owner.corporationId}}_32.png"
+								 ng-click="showCorporation(list.owner)"/>
 						</div>
 						<div  style="width: 32px;height: 32px">
-							<img ng-class="{hidden: !item.allianceId}" title="{{item.allianceName}}"
-								 src="https://image.eveonline.com/Alliance/{{item.allianceId}}_32.png"
-								 ng-click="showAlliance(item)"/>
+							<img ng-class="{hidden: !list.owner.allianceId}" title="{{list.owner.allianceName}}"
+								 src="https://image.eveonline.com/Alliance/{{list.owner.allianceId}}_32.png"
+								 ng-click="showAlliance(list.owner)"/>
 						</div>
 					</div>
 
-					<div class="float-container">
-						<div ng-repeat="fitting in item.fittings" class="textover">
-							<img title="{{fitting.shipName}}" src="https://image.eveonline.com/Render/{{fitting.shipType}}_64.png" ng-click="showFitting(fitting)"/>
-							<p>{{fitting.role ? fitting.role : ''}}</p>
-						</div>
-					</div>
-					<div ng-class="{hidden: !canRemove(item.characterId)}">
-						<img title="remove from list" src="img/close.png" height="64" ng-click="removeItem(item)"/>
-					</div>
-					<div ng-class="{hidden: !isOwner()}">
-						<img title="make boss" src="img/star.png" height="64" ng-click="makeBoss(item)"/>
-					</div>
-					<div class="timer" n1b-timer start-date="item.createdAt">
-					</div>
-					<div ng-class="{remove: !isIGB}">
-						<img title="send fleetinvite" src="img/add-user.png" height="64" ng-click="fleetInvite(item)"/>
+					<div class="timer" n1b-timer start-date="list.createdAt">
 					</div>
 					<div ng-class="{remove: !isIGB}">
 						<img title="start conversation" src="img/start-conversation.png" height="64"
-							 ng-click="startConversation(item)"/>
-					</div>
-					<div ng-class="{remove: !isIGB}">
-						<img title="send prepared eve-mail" src="img/send-mail.png" height="64"
-							 ng-click="sendMail(item)"/>
+							 ng-click="startConversation(item.owner)"/>
 					</div>
 				</div>
 			</li>

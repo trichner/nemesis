@@ -36,7 +36,11 @@ function mapWaitlistDBVO(waitlist){
     return Q.all(items)
         .then(function (mappedItems) {
             mapped.waitlist = mappedItems;
-            return mapped;
+            return mapPilotDBVO(waitlist.owner)
+                .then(function (mappedPilot) {
+                    mapped.owner = mappedPilot;
+                    return mapped;
+                })
         })
 }
 

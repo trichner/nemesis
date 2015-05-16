@@ -55,6 +55,11 @@ app.controller('home',[ '$scope','$http','$location','$interval','$window','API'
         EveIGB.showInfo(16159,item.allianceId);
     };
 
+    $scope.startConversation = function(item){
+        EveIGB.startConversation(item.characterId)
+        Notification.success("Invited " + item.characterName + " to conversation")
+    };
+
     $scope.logout = function () {
         API.logout()
             .then(function () {
@@ -75,6 +80,7 @@ app.controller('home',[ '$scope','$http','$location','$interval','$window','API'
         }
         return url;
     }
+
 
     //=== Fetch data
     // fetch it so the link is stored even if we are not logged in
