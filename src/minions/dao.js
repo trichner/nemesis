@@ -2,20 +2,17 @@
  * Created by Thomas on 11.04.2015.
  */
 
-
-
-// Or you can simply use a connection uri
+//---- Init DB Connection
 var Sequelize = require('sequelize');
 var Q = require('q');
 var minions = require('./Minions');
 
 var sequelize = new Sequelize(
-    'mysql://nemesis:1234@localhost:3306/nemesis',
+    'mysql://nemesis:1234@localhost:3306/nemesis', // HARDCODED for now
     {
         logging: false,
         pool: {
-            // Set maxIdleTime to 10 seconds. Otherwise, it kills transactions that
-            // are open for long.
+            // Set maxIdleTime to 10 seconds. Otherwise, it kills transactions that are open for long.
             maxIdleTime: 10000
         }
     });
@@ -86,6 +83,7 @@ var Waitlist = sequelize.define('waitlist', {
 }, {});
 
 
+//---- Relations
 Corp.belongsTo(Alliance);
 Pilot.belongsTo(Corp);
 WaitlistItem.belongsTo(Pilot);
@@ -94,19 +92,6 @@ Waitlist.belongsTo(Pilot, {as: 'owner'});
 Waitlist.hasMany(WaitlistItem);
 WaitlistItem.hasMany(ShipFitting);
 
-/*
- pilot:
- {
- name: 'Thomion',
- characterID: '698922015',
- corporationName: 'Deep Core Mining Inc.',
- corporationID: '1000006',
- allianceID: '0',
- allianceName: '',
- factionID: '0',
- factionName: ''
- }
- */
 sequelize.sync();
 
 module.exports = {

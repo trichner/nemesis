@@ -4,6 +4,7 @@ app.controller('home',[ '$scope','$http','$location','$interval','$window','API'
     //=== Vars
     $scope.waitlists = {waitlists:[]};
 
+    $scope.me = null;
     $scope.authenticated = false;
 
     $scope.isIGB = (typeof CCPEVE !== 'undefined');
@@ -82,20 +83,7 @@ app.controller('home',[ '$scope','$http','$location','$interval','$window','API'
     API.getMe()
         .then(function (data) {
             $scope.me = data;
-            var waitlistId = $scope.getWaitlistId();
             $scope.authenticated = true;
-            if(waitlistId && waitlistId.length>0){
-                return API.getWaitlist(waitlistId)
-                    .then(function (waitlist) {
-                        $scope.updateWL(waitlist);
-                        Notification.success('Joined waitlist');
-                    })
-                    .then(null,function () {
-                        Notification.error('Failed to fetch waitlist :(');
-                    })
-            }else{
-                // Stay on home, need waitlist firs
-            }
         })
         .then(null,function (status) {
             if(status==401){

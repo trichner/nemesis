@@ -11,7 +11,7 @@ apiConfig.setupMiddleware(app);
 app.get('/waitlist', function(req, res, next) {
   //res.send('respond with a resource');
     var pilotId = req.session.pilotId;
-    service.getLists(pilotId)
+    service.getAllLists(pilotId) //getLists(pilotId)
         .then(function (lists){
             res.json({waitlists : lists})
         })

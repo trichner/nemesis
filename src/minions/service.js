@@ -23,7 +23,7 @@ module.exports = {
 var ADMINS = ['698922015'];
 
 function getAllLists(pilotId){
-    if(ADMINS.indexOf(pilotId)>=0){
+    //if(ADMINS.indexOf(pilotId)>=0){
         return dao.findAllWaitlists()
             .then(function (waitlists) {
                 waitlists = waitlists.map(function (list) {
@@ -31,9 +31,9 @@ function getAllLists(pilotId){
                 })
                 return Q.all(waitlists);
             });
-    }else{
-        return Q.reject(new Error('Not Authorized!'));
-    }
+    //}else{
+    //    return Q.reject(new Error('Not Authorized!'));
+    //}
 }
 
 function getLists(pilotId){
