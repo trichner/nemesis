@@ -37,7 +37,7 @@
 			<button ng-click="newWaitlist()">Create new waitlist</button>
 		</div>
 	</div>
-	<div id="list" ng-class="{hidden: ((!authenticated) || (!waitlistVO))}">
+	<div id="list" ng-class="{hidden: ((!authenticated))}">
 		<ol>
 			<li ng-repeat="list in waitlists track by list.waitlistId">
 				<p>
