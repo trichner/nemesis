@@ -18,7 +18,7 @@
 <body onload='CCPEVE.requestTrust(location.protocol + "//" + location.host + "/*")' ng-controller="wt-list">
 <span>Hello {{me.characterName ? me.characterName : 'Pilot'}}!</span>
 <div ng-class="{remove: !waitlistVO}">
-	<h2>WL Manager: {{waitlistVO.ownerName}}</h2>
+	<h2>WL Manager: {{waitlistVO.owner.characterName}}</h2>
 	<div id="wlurl-box" class="float-container">
 		<div>
 			<img width="32px" height="32px"	 src="img/url.png"/>
@@ -80,7 +80,7 @@
 		<p>Waitlist: {{stats}}</p>
 		<ol>
 			<li ng-repeat="item in waitlistVO.waitlist track by item.itemId">
-				<p>{{item.owner.characterName}}</p>
+				<p>{{item.characterName}}</p>
 				<div id="wrapper" class="float-container">
 					<div>
 						<img title="{{item.characterName}}" src="https://image.eveonline.com/Character/{{item.characterId}}_64.jpg" ng-click="showCharInfo(item)"/>
