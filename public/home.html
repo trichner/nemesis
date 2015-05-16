@@ -39,7 +39,7 @@
 	</div>
 	<div id="list" ng-class="{hidden: ((!authenticated) || (!waitlistVO))}">
 		<ol>
-			<li ng-repeat="list in waitlists track by list.externalId">
+			<li ng-repeat="list in waitlists track by list.waitlistId">
 				<p>
 					<a id="waitlists-link" href="{{window.location.href + '?waitlistId=' + list.waitlistId}}" target="_self">{{list.owner.characterName}}</a>
 				</p>

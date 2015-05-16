@@ -103,9 +103,4 @@ app.controller('home',[ '$scope','$http','$location','$interval','$window','API'
             $scope.waitlists = waitlists;
         })
 
-    //update every 10s, veeery inefficient
-    $interval(function(){
-        $scope.refreshWL();
-    }, 10000);
-    //
 }]);
