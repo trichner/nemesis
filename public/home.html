@@ -18,6 +18,7 @@
 <body onload='CCPEVE.requestTrust(location.protocol + "//" + location.host + "/*")' ng-controller="home">
 <span>Hello {{me.characterName ? me.characterName : 'Pilot'}}!</span>
 
+<h2>Home: All Open Waitlists</h2>
 <div id="container">
 	<div id="sidebar">
 		<div ng-class="{remove: authenticated}" class="actions">
@@ -37,7 +38,6 @@
 		</div>
 	</div>
 	<div id="list" ng-class="{hidden: ((!authenticated))}">
-		<h2>All Open Waitlists</h2>
 		<ol>
 			<li ng-repeat="list in waitlists track by list.waitlistId">
 				<p>
