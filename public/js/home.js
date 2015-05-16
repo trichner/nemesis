@@ -74,7 +74,7 @@ app.controller('home',[ '$scope','$http','$location','$interval','$window','API'
         var waitlistId = $scope.getWaitlistId();
         var url;
         if(waitlistId && waitlistId.length){
-            url = location.protocol + "//" + location.host + '/nemesis?waitlistId=' + waitlistId;
+            url = location.protocol + "//" + location.host + '/nemesis/?waitlistId=' + waitlistId;
         }else{
             url = '';
         }
