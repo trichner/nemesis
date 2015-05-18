@@ -112,14 +112,14 @@
 					</div>
 					<div class="timer" n1b-timer start-date="item.createdAt">
 					</div>
-					<div ng-class="{remove: !isIGB}">
+					<div ng-class="{remove: !isIGB || !isOwner()}">
 						<img title="send fleetinvite" src="img/add-user.png" height="64" ng-click="fleetInvite(item)"/>
 					</div>
 					<div ng-class="{remove: !isIGB}">
 						<img title="start conversation" src="img/start-conversation.png" height="64"
 							 ng-click="startConversation(item)"/>
 					</div>
-					<div ng-class="{remove: !isIGB}">
+					<div ng-class="{remove: !isIGB} || !isOwner()">
 						<img title="send prepared eve-mail" src="img/send-mail.png" height="64"
 							 ng-click="sendMail(item)"/>
 					</div>
