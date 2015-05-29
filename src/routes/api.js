@@ -99,6 +99,12 @@ app.get('/me', function(req, res, next) {
         })
 });
 
+/* GET create new waitlist*/
+app.post('/me', function(req, res, next) {
+    var pilotId = req.session.pilotId;
+    // store headers
+});
+
 /* POST add entry to waitlist*/
 app.delete('/waitlist/:id', function(req, res, next) {
     //res.send('respond with a resource');
