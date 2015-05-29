@@ -8,7 +8,6 @@ var minions = require('./../minions/Minions');
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
 var service = require('./../minions/service');
-var authenticator = require('./authenticator');
 
 function setupMiddleware(app){
     // API Middleware
