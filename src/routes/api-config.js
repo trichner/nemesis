@@ -57,7 +57,8 @@ function setupMiddleware(app){
     app.use(eveHeader);
     app.use(session({
         secret: minions.getSessionSecret(),
-        store: new FileStore()
+        store: new FileStore(),
+        name: 'nemesis.sid'
     }))
     app.use(passport.initialize());
     app.use(passport.session());
