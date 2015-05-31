@@ -90,6 +90,11 @@ div.h4 {
 	width: 64px;
 }
 
+.timer32{
+	height: 32px;
+	width: 32px;
+}
+
 .actions {
 	margin: 5px;
 	padding: 3px;
