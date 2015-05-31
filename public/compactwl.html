@@ -99,14 +99,14 @@
                 </div>
             </div>
         </td>
-        <td>
-            <div ng-class="{hidden: !canRemove(item.characterId)}">
+        <td><div class="float-container">
+            <div ng-class="{remove: !canRemove(item.characterId)}">
                 <img title="remove from list" src="img/close.png" height="32" ng-click="removeItem(item)"/>
             </div>
-            <div ng-class="{hidden: !isOwner()}">
+            <div ng-class="{remove: !isOwner()}">
                 <img title="make boss" src="img/star.png" height="32" ng-click="makeBoss(item)"/>
             </div>
-            <div class="timer" n1b-timer start-date="item.createdAt">
+            <div class="timer32" n1b-timer start-date="item.createdAt">
             </div>
             <div ng-class="{remove: !isIGB || !isOwner()}">
                 <img title="send fleetinvite" src="img/add-user.png" height="32" ng-click="fleetInvite(item)"/>
@@ -119,7 +119,7 @@
                 <img title="send prepared eve-mail" src="img/send-mail.png" height="32"
                      ng-click="sendMail(item)"/>
             </div>
-        </td>
+        </div></td>
     </tr>
 </table>
 <div ng-class="{remove: waitlistVO || !authenticated}">
