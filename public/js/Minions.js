@@ -164,14 +164,23 @@ app.factory('Minions', function($q) {
     Minions.waitlistStats = function (waitlistVO) {
         var count = {};
         waitlistVO.waitlist.forEach(function (item) {
+            var pilotCount = {}
             item.fittings.forEach(function (fitting) {
                 if(fitting.role){
                     var type = fitting.role[0];
-                    count[type] = (count[type] ? count[type] : 0) + 1;
+                    pilotCount[type] = 1;
                 }else{
-                    count.u = (count.u ? count.u : 0) + 1;
+                    pilotCount.u = 1;
                 }
             })
+            for (var key in pilotCount) {
+                if (pilotCount.hasOwnProperty(key)) {
+                    if(!count[key]){
+                        count[key] = 0;
+                    }
+                    count[key] += pilotCount[key];
+                }
+            }
         })
         return count;
     };
