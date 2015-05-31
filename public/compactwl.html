@@ -90,10 +90,10 @@
         </td>
         <td>
             <div class="float-container">
-                <div ng-repeat="fitting in item.fittings" class="textover">
+                <div ng-repeat="fitting in item.fittings" class="textover" ng-click="showFitting(fitting)">
                     <img title="{{fitting.shipName}}"
                          src="https://image.eveonline.com/Render/{{fitting.shipType}}_32.png"
-                         ng-click="showFitting(fitting)"/>
+                         />
 
                     <p>{{fitting.role ? fitting.role : ''}}</p>
                 </div>
