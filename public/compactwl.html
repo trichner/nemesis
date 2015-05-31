@@ -30,12 +30,17 @@
 		<td>{{$index+1}}</td>
 		<td>{{item.characterName}}</td>
 		<td>
-			<img title="{{item.corporationName}}"
+			<div class="float-container">
+			<div>
+				<img title="{{item.corporationName}}"
 				 src="https://image.eveonline.com/Corporation/{{item.corporationId}}_32.png"
-				 ng-click="showCorporation(item)"/>
-			<img ng-class="{hidden: !item.allianceId}" title="{{item.allianceName}}"
+				 ng-click="showCorporation(item)"/></div>
+			<div>
+				<img ng-class="{hidden: !item.allianceId}" title="{{item.allianceName}}"
 				 src="https://image.eveonline.com/Alliance/{{item.allianceId}}_32.png"
 				 ng-click="showAlliance(item)"/>
+			</div>
+			</div>
 		</td>
 		<td>Ship Fits
 			<div class="float-container">
