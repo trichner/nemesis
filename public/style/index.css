@@ -137,3 +137,7 @@ img{display:block;}
 	font-style: italic;
 	padding: 1em;
 }
+
+.wlcompacttr {
+	white-space: nowrap;
+}
