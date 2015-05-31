@@ -40,15 +40,15 @@
                         <img title="Waitlist Share URL" height="32px" src="img/url.png"/>
                     </a>
                 </div>
-                <div ng-class="{remove: !authenticated}" class="actions">
+                <div ng-class="{remove: !authenticated}">
                     Logged in as {{me.characterName}}.
                     <button ng-click="logout()">logout</button>
                     <button ng-click="leaveWaitlist()">home</button>
                 </div>
-                <div ng-class="{remove: ((!authenticated) || (waitlistVO))}" class="actions">
+                <div ng-class="{remove: ((!authenticated) || (waitlistVO))}">
                     <button ng-click="newWaitlist()">Create Waitlist</button>
                 </div>
-                <div ng-class="{remove: ((!authenticated) || (!waitlistVO))}" class="actions">
+                <div ng-class="{remove: ((!authenticated) || (!waitlistVO))}">
                     <input type="text" name="fitting" placeholder="paste ship fitting here" ng-model="shipDNA"
                            required onclick="this.focus();this.select()">
                     <select ng-model="mRole"
