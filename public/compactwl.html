@@ -108,7 +108,7 @@
                 <img title="make boss" src="img/star.png" height="32" ng-click="makeBoss(item)"/>
             </div>
             <div>
-                {{Date.create(item.createdAt).format('{hh}:{mm}')}}
+                {{item.createdAt | date : 'HH:mm'}}
             </div>
             <div ng-class="{remove: !isIGB || !isOwner()}">
                 <img title="send fleetinvite" src="img/add-user.png" height="32" ng-click="fleetInvite(item)"/>
