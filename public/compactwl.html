@@ -24,11 +24,13 @@
             <div class="float-container">
                 <div>
                     <img title="{{waitlistVO.owner.characterName}}"
-                         src="https://image.eveonline.com/Character/{{waitlistVO.owner.characterId}}_64.jpg"
+                         src="https://image.eveonline.com/Character/{{waitlistVO.owner.characterId}}_16.jpg"
                          ng-click="showCharInfo(waitlistVO.owner.characterId)"/>
                 </div>
                 <div>
-                    <img title="Waitlist Share URL" width="16px" href="{{getWaitlistUrl()}}" height="16px" src="img/url.png"/>
+                    <a href="{{getWaitlistUrl()}}">
+                        <img title="Waitlist Share URL" width="16px"  height="16px" src="img/url.png"/>
+                    </a>
                 </div>
             </div>
         </td>
