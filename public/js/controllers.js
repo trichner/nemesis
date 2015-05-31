@@ -115,8 +115,8 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
             })
     };
 
-    $scope.showCharInfo = function(item){
-        EveIGB.showInfo(1377, item.characterId);
+    $scope.showCharInfo = function(characterId){
+        EveIGB.showInfo(1377, characterId);
     };
 
     $scope.showFitting = function(item){
