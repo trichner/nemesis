@@ -18,20 +18,20 @@
 </head>
 <body onload='CCPEVE.requestTrust(location.protocol + "//" + location.host + "/*")' ng-controller="wt-list">
 
+<div ng-class="{remove: authenticated}">
+    Please log in via EVE Single-Sing-On. <!-- Typo totally intended -->
+    <a href="api/auth">
+        <img title="EVE SSO" src="img/EVESSO_SBLACK.png"/>
+    </a>
+    <input name="remember me" type="checkbox" ng-model="remeberMe">
+    <span>remember me</span>
+</div>
 <table ng-class="{remove: !waitlistVO}" style="width:100%">
     <tr>
         <td colspan="5">
             <div class="float-container">
-                <div ng-class="{remove: authenticated}">
-                    Please log in via EVE Single-Sing-On. <!-- Typo totally intended -->
-                    <a href="api/auth">
-                        <img title="EVE SSO" src="img/EVESSO_SBLACK.png"/>
-                    </a>
-                    <input name="remember me" type="checkbox" ng-model="remeberMe">
-                    <span>remember me</span>
-                </div>
                 <div>
-                    <img title="{{waitlistVO.owner.characterName}}"
+                    <img title="Your friendly waitlist manager is {{waitlistVO.owner.characterName}}"
                          src="https://image.eveonline.com/Character/{{waitlistVO.owner.characterId}}_32.jpg"
                          ng-click="showCharInfo(waitlistVO.owner.characterId)"/>
                 </div>
