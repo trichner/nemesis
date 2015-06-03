@@ -79,6 +79,9 @@ var Waitlist = sequelize.define('waitlist', {
     },
     externalId: {
         type: Sequelize.STRING
+    },
+    lastActivityAt: {
+        type: Sequelize.DATE
     }
 }, {});
 
@@ -105,7 +108,8 @@ module.exports = {
     findItemByOrder : findItemByOrder,
     findAllWaitlists : findAllWaitlists,
     findWaitlistsByOwner : findWaitlistsByOwner,
-    findItemByPilot : findItemByPilot
+    findItemByPilot : findItemByPilot,
+    updateWatilistLastActivityByExternalId : updateWatilistLastActivityByExternalId
 }
 
 function connect(){
@@ -165,6 +169,9 @@ function addToWaitlist(pilotId,externalId,shipId,shipType,shipDNA,shipName,role)
                             return waitlist.addItem(item)
                         })
                         .then(function () {
+                            return waitlist.updateAttributes({lastActivityAt: sequelize.fn('NOW')});
+                        })
+                        .then(function () {
                             return item;
                         });
                 })
@@ -207,13 +214,20 @@ function createWaitlist(pilotId){
         .then(function (pilot) {
             var externalId = minions.randomAlphanumericString(EXTERNAL_ID_LENGTH);
             var name = pilot.name + '`s waitlist';
-            return Q.all([Waitlist.create({externalId:externalId, name:name}), Q.fulfill(pilot)]);
+            return Q.all([Waitlist.create({externalId:externalId, name:name,lastActivityAt:new Date()}), Q.fulfill(pilot)]);
         })
         .spread(function (waitlist,pilot) {
             return waitlist.setOwner(pilot)
                 .then(function () {
                     return findWaitlistByExternalId(waitlist.externalId);
                 })
+        })
+}
+
+function updateWatilistLastActivityByExternalId(waitlistId){
+    return findWaitlistByExternalId(waitlistId)
+        .then(function (waitlist) {
+            return waitlist.updateAttributes({lastActivityAt: sequelize.fn('NOW')});
         })
 }
 

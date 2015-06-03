@@ -130,6 +130,9 @@ function removeFromList(pilotId,listId,order){
                     })
             }
         })
+        .then(function () {
+            dao.updateWatilistLastActivityByExternalId(listId);
+        })
 }
 
 function isListOwner(pilotId,listId){
