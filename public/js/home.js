@@ -37,7 +37,7 @@ app.controller('home',[ '$scope','$http','$location','$interval','$window','API'
     $scope.newWaitlist = function () {
         return API.newWaitlist()
             .then(function (waitlist) {
-                $scope.updateWL(waitlist);
+                updateWaitlists();
                 Notification.success("Successfully created waitlist")
             }, function () {
                 Notification.error("Cannot create waitlist, logged in?")
@@ -75,7 +75,15 @@ app.controller('home',[ '$scope','$http','$location','$interval','$window','API'
         return url;
     }
 
-
+    function updateWaitlists(){
+        API.getWaitlists()
+            .then(function (waitlists) {
+                waitlists = waitlists.sort(function (listA, listB) {
+                    return listB.lastActivityAt - listA.lastActivityAt;
+                })
+                $scope.waitlists = waitlists;
+            })
+    }
     //=== Fetch data
     // fetch it so the link is stored even if we are not logged in
     $scope.getWaitlistId();
@@ -92,12 +100,6 @@ app.controller('home',[ '$scope','$http','$location','$interval','$window','API'
             }
         })
 
-    API.getWaitlists()
-        .then(function (waitlists) {
-            waitlists = waitlists.sort(function (listA, listB) {
-                return listB.lastActivityAt - listA.lastActivityAt;
-            })
-            $scope.waitlists = waitlists;
-        })
+    updateWaitlists();
 
 }]);
