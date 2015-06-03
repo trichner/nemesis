@@ -24,13 +24,14 @@ var ADMINS = ['698922015'];
 
 function getAllLists(pilotId){
     //if(ADMINS.indexOf(pilotId)>=0){
-        return dao.findAllWaitlists()
-            .then(function (waitlists) {
-                waitlists = waitlists.map(function (list) {
-                    return Mapper.mapWaitlistDBVO(list);
-                })
-                return Q.all(waitlists);
-            });
+    var yesterday = new Date((new Date()).getTime() - 1000*60*60*24);
+    return dao.findAllWaitlistsSince(yesterday)
+        .then(function (waitlists) {
+            waitlists = waitlists.map(function (list) {
+                return Mapper.mapWaitlistDBVO(list);
+            })
+            return Q.all(waitlists);
+        });
     //}else{
     //    return Q.reject(new Error('Not Authorized!'));
     //}

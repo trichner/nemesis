@@ -109,7 +109,8 @@ module.exports = {
     findAllWaitlists : findAllWaitlists,
     findWaitlistsByOwner : findWaitlistsByOwner,
     findItemByPilot : findItemByPilot,
-    updateWatilistLastActivityByExternalId : updateWatilistLastActivityByExternalId
+    updateWatilistLastActivityByExternalId : updateWatilistLastActivityByExternalId,
+    findAllWaitlistsSince : findAllWaitlistsSince
 }
 
 function connect(){
@@ -209,6 +210,15 @@ function findAllWaitlists(){
         .then(assertObject);
 }
 
+// Eager load entire list
+function findAllWaitlistsSince(newerThan){
+    return Waitlist.findAll({
+        include: [{ model: WaitlistItem, as: 'items' }],
+        order: [ [ WaitlistItem, 'order' ] ],
+        lastActivityAt: {$gt:newerThan}})
+        .then(assertObject);
+}
+
 function createWaitlist(pilotId){
     return findPilotById(pilotId)
         .then(function (pilot) {
@@ -266,4 +276,16 @@ function findOrCreatePilot(pilot){
             return pilot;
         })
     })
+}
+
+function removeWaitlistsOlderThan(date){
+    return Waitlist.findAll({
+        include: [{ model: WaitlistItem, as: 'items' }],
+        where : {} })
+        .then(function (waitlists) {
+            var promises = [];
+            waitlists.forEach(function (waitlist) {
+
+            })
+        });
 }
