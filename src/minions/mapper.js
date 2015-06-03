@@ -29,6 +29,7 @@ function mapWaitlistDBVO(waitlist){
     var mapped = {};
     mapped.ownerId      = waitlist.ownerId;
     mapped.createdAt    = (new Date(waitlist.createdAt)).getTime();
+    mapped.lastActivityAt    = (new Date(waitlist.lastActivityAt)).getTime();
     mapped.waitlistId   = waitlist.externalId;
     mapped.waitlistName = waitlist.name;
 

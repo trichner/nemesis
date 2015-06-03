@@ -95,7 +95,7 @@ app.controller('home',[ '$scope','$http','$location','$interval','$window','API'
     API.getWaitlists()
         .then(function (waitlists) {
             waitlists = waitlists.sort(function (listA, listB) {
-                return listB.createdAt - listA.createdAt;
+                return listB.lastActivityAt - listA.lastActivityAt;
             })
             $scope.waitlists = waitlists;
         })
