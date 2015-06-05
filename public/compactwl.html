@@ -37,18 +37,17 @@
                          ng-click="showCharInfo(waitlistVO.owner.characterId)"/>
                 </div>
                 <div>
-                    <span editable-text="waitlistVO.waitlistName"
-                        onbeforesave="updateName($data)">{{waitlistVO.waitlistName || 'Waitlist'}}</span>
-                </div>
-                <div>
                     <a href="{{getWaitlistUrl()}}">
                         <img title="Waitlist Share URL" height="32px" src="img/url.png"/>
                     </a>
                 </div>
+                <div>
+                    <span editable-text="waitlistVO.waitlistName"
+                          onbeforesave="updateName($data)">{{waitlistVO.waitlistName || 'Waitlist'}}</span>
+                </div>
                 <div ng-class="{remove: !authenticated}">
-                    Logged in as {{me.characterName}}.
-                    <button ng-click="logout()">logout</button>
-                    <button ng-click="leaveWaitlist()">home</button>
+                    <button ng-click="logout()">Logout {{me.characterName}}</button>
+                    <button ng-click="leaveWaitlist()">Home</button>
                 </div>
                 <div ng-class="{remove: ((!authenticated) || (waitlistVO))}">
                     <button ng-click="newWaitlist()">Create Waitlist</button>
