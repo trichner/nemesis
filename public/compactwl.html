@@ -41,9 +41,12 @@
                         <img title="Waitlist Share URL" height="32px" src="img/url.png"/>
                     </a>
                 </div>
-                <div>
+                <div ng-class="{remove: !isOwner()}">
                     <span editable-text="waitlistVO.waitlistName"
                           onbeforesave="updateName($data)">{{waitlistVO.waitlistName || 'Waitlist'}}</span>
+                </div>
+                <div ng-class="{remove: isOwner()}">
+                    <span>{{waitlistVO.waitlistName || ''}}</span>
                 </div>
                 <div ng-class="{remove: !authenticated}">
                     <button ng-click="logout()">Logout {{me.characterName}}</button>
