@@ -37,8 +37,8 @@
                          ng-click="showCharInfo(waitlistVO.owner.characterId)"/>
                 </div>
                 <div>
-                    <p editable-text="waitlistVO.waitlistName"
-                        onbeforesave="updateName($data)">{{waitlistVO.waitlistName || 'Waitlist'}}</p>
+                    <span editable-text="waitlistVO.waitlistName"
+                        onbeforesave="updateName($data)">{{waitlistVO.waitlistName || 'Waitlist'}}</span>
                 </div>
                 <div>
                     <a href="{{getWaitlistUrl()}}">
