@@ -19,9 +19,17 @@
 </head>
 <body onload='CCPEVE.requestTrust(location.protocol + "//" + location.host + "/*")' ng-controller="wt-list">
 <div ng-class="{remove: !waitlistVO}">
-	<h2 editable-text="waitlistVO.waitlistName" onbeforesave="updateName($data)">{{waitlistVO.waitlistName ||
-		'WL Manager:' +
-		waitlistVO.owner.characterName}}</h2>
+	<div ng-class="{remove: !isOwner()}">
+		<h2 editable-text="waitlistVO.waitlistName" onbeforesave="updateName($data)">{{waitlistVO.waitlistName ||
+			'WL Manager:' +
+			waitlistVO.owner.characterName}}</h2>
+	</div>
+	<div ng-class="{remove: isOwner()}">
+		<h2>{{waitlistVO.waitlistName ||
+			'WL Manager:' +
+			waitlistVO.owner.characterName}}</h2>
+	</div>
+
 	<div id="wlurl-box" class="float-container">
 		<div>
 			<img width="16px" height="16px"	 src="img/url.png"/>
