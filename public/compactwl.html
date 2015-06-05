@@ -37,6 +37,10 @@
                          ng-click="showCharInfo(waitlistVO.owner.characterId)"/>
                 </div>
                 <div>
+                    <p editable-text="waitlistVO.waitlistName"
+                        onbeforesave="updateName($data)">{{waitlistVO.waitlistName || 'Waitlist'}}</p>
+                </div>
+                <div>
                     <a href="{{getWaitlistUrl()}}">
                         <img title="Waitlist Share URL" height="32px" src="img/url.png"/>
                     </a>
