@@ -103,6 +103,24 @@ app.factory('API', ['$q','$http',function($q,$http) {
         return deferred.promise;
     }
 
+
+    API.updateName = function(waitlistId,name){
+        if(!(waitlistId && name)){
+            return breakPromise();
+        }
+        var deferred = $q.defer();
+        $http.post(URL.WAITLIST+'/'+waitlistId + '/name',{
+            name: name
+        }).
+            success(function(data, status, headers, config) {
+                deferred.resolve(data)
+            }).
+            error(function(data, status, headers, config) {
+                deferred.reject(data)
+            });
+        return deferred.promise;
+    }
+
     API.newWaitlist = function(){
         var deferred = $q.defer();
         $http.post(URL.WAITLIST).

@@ -86,6 +86,21 @@ app.post('/waitlist/:id/owner', function(req, res, next) {
         })
 });
 
+/* POST chang owner*/
+app.post('/waitlist/:id/name', function(req, res, next) {
+    //res.send('respond with a resource');
+    var externalId = req.params.id;
+    var pilotId = req.session.pilotId;
+    var name   = req.body.name;
+    service.updateWaitlistName(pilotId,externalId,name)
+        .then(function (waitlist) {
+            res.json(waitlist);
+        })
+        .catch(function (e) {
+            next(e);
+        })
+});
+
 /* GET create new waitlist*/
 app.get('/me', function(req, res, next) {
     var pilotId = req.session.pilotId;

@@ -1,4 +1,4 @@
-var app = angular.module('evewt', ['ui-notification','ngCookies']);
+var app = angular.module('evewt', ['ui-notification','ngCookies',"xeditable"]);
 app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','API','EveIGB','Notification','Minions','$cookieStore',function ($scope,$http,$location,$interval,$window,API,EveIGB,Notification,Minions,$cookieStore) {
 
     //=== Vars
@@ -189,6 +189,20 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
         }
         return url;
     }
+
+    $scope.updateName = function(name){
+        API.updateName($scope.waitlistVO.waitlistId,name)
+            .then(function (data) {
+                $scope.updateWL(data);
+                Notification.success("Updated name")
+                return false;
+            })
+            .then(null,function () {
+                Notification.error('failed to update name :(');
+                return false;
+            })
+    }
+
 
     $scope.createTimer = function(item){
         Minions.createTimer(this, new Date());

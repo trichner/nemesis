@@ -16,7 +16,8 @@ module.exports = {
     fetchPilotInfo : fetchPilotInfo,
     createPilot : createPilot,
     getListTxt : getListTxt,
-    updateWaitlistOwner :updateWaitlistOwner
+    updateWaitlistOwner :updateWaitlistOwner,
+    updateWaitlistName : updateWaitlistName
 };
 
 //FIXME Hardcoded, WTF?
@@ -157,10 +158,22 @@ function updateWaitlistOwner(ownerId,waitlistId, newOwnerId){
             return dao.findWaitlistByExternalId(waitlistId)
                 .then(function (waitlist) {
                     if(waitlist.ownerId!=ownerId){
-                        return Q.reject(new Error('Not authorized, not owner'));
-                    }else{
-                        return waitlist.setOwner(pilot);
+                        throw new Error('Not authorized, not owner');
                     }
+                    return waitlist.setOwner(pilot);
                 })
+        })
+}
+
+function updateWaitlistName(ownerId,waitlistId, name){
+    return dao.findWaitlistByExternalId(waitlistId)
+        .then(function (waitlist) {
+            if(waitlist.ownerId!=ownerId){
+                throw new Error('Not authorized, not owner');
+            }
+            name = name.substring(0, 50);
+            name = sanitizer.sanitize(name);
+            return waitlist.update({name:name})
+                .then(Mapper.mapWaitlistDBVO)
         })
 }
