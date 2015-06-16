@@ -1,7 +1,7 @@
 # Nemesis
 
 The purpose of this webtool is to make a Waitlist Managers and Fleetcommanders job a bit less painful,
-simple x-up via copy & paste as well as simple authentication via Eve SSO. Integrates with the Eve 
+simple x-up with ship fitting via copy & paste from ingame as well as simple authentication via Eve SSO. Integrates with the Eve 
 IGB to show fittings, characters, corporations and to directly invite pilots from the waitlist.
 On the other hand it also works perfectly fine in Chrome (great to have it on that third monitor).
 
