@@ -1,9 +1,6 @@
 /**
  * Created by Thomas on 16.04.2015.
  */
-/**
- * Created by Thomas on 11.04.2015.
- */
 var neow = require('neow');
 var Q    = require('q');
 var unirest = require('unirest');
