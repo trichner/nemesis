@@ -23,14 +23,14 @@ module.exports = {
 //FIXME Hardcoded, WTF?
 var ADMINS = ['698922015'];
 
+var MAX_WL_NAME_LENGTH = 60;
+
 function getAllLists(pilotId){
     //if(ADMINS.indexOf(pilotId)>=0){
-    var yesterday = new Date((new Date()).getTime() - 1000*60*60*24);
+    var yesterday = new Date((new Date()).getTime() - 1000*60*60*24); //FIXME
     return dao.findAllWaitlistsSince(yesterday)
         .then(function (waitlists) {
-            waitlists = waitlists.map(function (list) {
-                return Mapper.mapWaitlistDBVO(list);
-            })
+            waitlists = waitlists.map(Mapper.mapWaitlistDBVO)
             return Q.all(waitlists);
         });
     //}else{
@@ -41,32 +41,24 @@ function getAllLists(pilotId){
 function getLists(pilotId){
     return dao.findWaitlistsByOwner(pilotId)
         .then(function (waitlists) {
-            waitlists = waitlists.map(function (list) {
-                return Mapper.mapWaitlistDBVO(list);
-            })
+            waitlists = waitlists.map(Mapper.mapWaitlistDBVO)
             return Q.all(waitlists);
         });
 }
 
 function createList(pilotId){
     return dao.createWaitlist(pilotId)
-        .then(function (waitlists) {
-            return Mapper.mapWaitlistDBVO(waitlists);
-        });
+        .then(Mapper.mapWaitlistDBVO);
 }
 
 function getList(listId){
     return dao.findWaitlistByExternalId(listId)
-        .then(function (waitlists) {
-            return Mapper.mapWaitlistDBVO(waitlists);
-        });
+        .then(Mapper.mapWaitlistDBVO);
 }
 
 function getListTxt(listId){
     return dao.findWaitlistByExternalId(listId)
-        .then(function (waitlists) {
-            return Mapper.mapWaitlistDBVOtoAscii(waitlists);
-        });
+        .then(Mapper.mapWaitlistDBVOtoAscii);
 }
 
 function fetchPilotInfo(characterID){
@@ -75,9 +67,7 @@ function fetchPilotInfo(characterID){
 
 function verifyPilot(key,verificationCode,id){
     return api.getCharacter(key,verificationCode,id)
-        .then(function (character) {
-            return dao.findOrCreatePilot(character)
-        })
+        .then(dao.findOrCreatePilot)
         .then(function (pilot) {
             if(pilot){
                 return true;
@@ -91,12 +81,8 @@ function verifyPilot(key,verificationCode,id){
  */
 function createPilot(accessToken){
     return api.getCharacterId(accessToken)
-        .then(function (pilotId) {
-            return api.getCharacter(pilotId)
-        })
-        .then(function (character) {
-            return dao.findOrCreatePilot(character)
-        })
+        .then(api.getCharacter)
+        .then(dao.findOrCreatePilot)
         .then(function (pilot) {
             if(pilot){
                 return pilot;
@@ -146,9 +132,7 @@ function isListOwner(pilotId,listId){
 
 function findPilot(pilotId){
     return dao.findPilotById(pilotId)
-        .then(function (pilot) {
-            return Mapper.mapPilotDBVO(pilot);
-        });
+        .then(Mapper.mapPilotDBVO);
 }
 
 function updateWaitlistOwner(ownerId,waitlistId, newOwnerId){
@@ -171,9 +155,9 @@ function updateWaitlistName(ownerId,waitlistId, name){
             if(waitlist.ownerId!=ownerId){
                 throw new Error('Not authorized, not owner');
             }
-            name = name.substring(0, 50);
+            name = name.substring(0, MAX_WL_NAME_LENGTH);
             name = sanitizer.sanitize(name);
             return waitlist.update({name:name})
-                .then(Mapper.mapWaitlistDBVO)
         })
+        .then(Mapper.mapWaitlistDBVO)
 }
