@@ -33,7 +33,7 @@ function getCharacterId(accessToken){
         .header('Accept', 'application/json')
         .header('Authorization', 'Bearer ' + accessToken)
         .end(function (res){
-            console.log('Verify Body' + JSON.stringify(res.body))
+            //console.log('Verify Body' + JSON.stringify(res.body))
             deferred.resolve(res.body.CharacterID);
         });
     return deferred.promise;
