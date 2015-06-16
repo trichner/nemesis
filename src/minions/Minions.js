@@ -5,6 +5,7 @@ var crypto = require('crypto');
 var fs = require('fs');
 
 var SECRET_FILE = 'session_secret';
+var CONFIG_FILE = 'config.json';
 var EVESSO_CREDENTIALS = 'evesso.json';
 var SECRET_LENGTH = 20;
 
@@ -42,6 +43,16 @@ module.exports = {
             }
         }
         return secret;
+    },
+    loadConfig : function(){
+        var configJson,config = {};
+        try{
+            configJson = fs.readFileSync(CONFIG_FILE).toString();
+            config = JSON.parse(configJson)
+        }catch (e1){
+            console.log('WARN: Cannot load config file, ' + CONFIG_FILE + ': '+e1);
+        }
+        return config;
     },
     getEveSSOCredentials : function(){
         var credentials;
