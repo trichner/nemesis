@@ -16,7 +16,7 @@ function randomString(howMany, chars) {
         , len = chars.length;
 
     for (var i = 0; i < howMany; i++) {
-        value[i] = chars[rnd[i] % len]
+        value.push(chars[rnd[i] % len])
     };
 
     return value.join('');
@@ -34,12 +34,15 @@ module.exports = {
         var secret;
         try{
             secret = fs.readFileSync(SECRET_FILE).toString();
+            if(secret.length<SECRET_LENGTH){
+                throw new Error("Stored secret is too short")
+            }
         }catch (e1){
             secret = randomAlphanumericString(SECRET_LENGTH);
             try{
                 fs.writeFileSync(SECRET_FILE,secret);
             }catch(e){
-                console.log('Cannot write secret to disk: '+e);
+                console.log('WARN: Cannot write secret to disk: '+e);
             }
         }
         return secret;
@@ -60,7 +63,7 @@ module.exports = {
             credentials = fs.readFileSync(EVESSO_CREDENTIALS).toString();
             credentials = JSON.parse(credentials);
         }catch (e1){
-            throw new Error('Please provide Eve SSO oauth credentials in "' + EVESSO_CREDENTIALS + '" file.',e1);
+            throw new Error('Provide Eve SSO oauth credentials in "' + EVESSO_CREDENTIALS + '" file.',e1);
         }
         return credentials;
     },
