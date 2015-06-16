@@ -20,22 +20,15 @@ module.exports = {
     updateWaitlistName : updateWaitlistName
 };
 
-//FIXME Hardcoded, WTF?
-var ADMINS = ['698922015'];
-
 var MAX_WL_NAME_LENGTH = 60;
 
 function getAllLists(pilotId){
-    //if(ADMINS.indexOf(pilotId)>=0){
     var yesterday = new Date((new Date()).getTime() - 1000*60*60*24); //FIXME
     return dao.findAllWaitlistsSince(yesterday)
         .then(function (waitlists) {
             waitlists = waitlists.map(Mapper.mapWaitlistDBVO)
             return Q.all(waitlists);
         });
-    //}else{
-    //    return Q.reject(new Error('Not Authorized!'));
-    //}
 }
 
 function getLists(pilotId){
