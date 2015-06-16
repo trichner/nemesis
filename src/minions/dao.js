@@ -5,97 +5,25 @@
 //---- Init DB Connection
 var Sequelize = require('sequelize');
 var Q = require('q');
-var minions = require('./Minions');
+var minions = require('./minions');
+var models = require('./models')
 
+/* Note:
+ * It seems sqlite has problems with locks,
+ * mysql seems to work just fine.
+ */
 var sequelize = new Sequelize(
-    'mysql://nemesis:1234@localhost:3306/nemesis', // HARDCODED for now
+    minions.loadConfig().databaseURL,
     {
-        logging: false,
+        logging: minions.loadConfig().databaseLogging,
         pool: {
             // Set maxIdleTime to 10 seconds. Otherwise, it kills transactions that are open for long.
             maxIdleTime: 10000
         }
     });
 
-var EXTERNAL_ID_LENGTH = 32;
-
-var Corp = sequelize.define('corp', {
-    id: {
-        type: Sequelize.STRING
-    },
-    name: {
-        type: Sequelize.STRING
-    }
-}, {});
-
-var Alliance = sequelize.define('alliance', {
-    id: {
-        type: Sequelize.STRING
-    },
-    name: {
-        type: Sequelize.STRING
-    }
-}, {});
-
-var Pilot = sequelize.define('pilot', {
-    id: {
-        type: Sequelize.STRING
-    },
-    name: {
-        type: Sequelize.STRING
-    }
-},{});
-
-
-var WaitlistItem = sequelize.define('item', {
-    order: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
-    }
-}, {});
-
-var ShipFitting = sequelize.define('fitting', {
-    shipId: {
-        type: Sequelize.STRING
-    },
-    name: {
-        type: Sequelize.STRING
-    },
-    dna: {
-        type: Sequelize.STRING
-    },
-    type: {
-        type: Sequelize.STRING
-    },
-    role: {
-        type: Sequelize.STRING
-    }
-}, {});
-
-var Waitlist = sequelize.define('waitlist', {
-    name: {
-        type: Sequelize.STRING
-    },
-    externalId: {
-        type: Sequelize.STRING
-    },
-    lastActivityAt: {
-        type: Sequelize.DATE
-    }
-}, {});
-
-
-//---- Relations
-Corp.belongsTo(Alliance);
-Pilot.belongsTo(Corp);
-WaitlistItem.belongsTo(Pilot);
-WaitlistItem.belongsTo(Waitlist);
-Waitlist.belongsTo(Pilot, {as: 'owner'});
-Waitlist.hasMany(WaitlistItem);
-WaitlistItem.hasMany(ShipFitting);
-
-sequelize.sync();
+//---- setup the DB
+models(sequelize);
 
 module.exports = {
     connect : connect,
