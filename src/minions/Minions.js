@@ -5,7 +5,6 @@ var crypto = require('crypto');
 var fs = require('fs');
 
 var SECRET_FILE = 'session_secret';
-var EVESSO_CREDENTIALS = 'evesso.json';
 var SECRET_LENGTH = 20;
 
 function randomString(howMany, chars) {
@@ -42,16 +41,6 @@ module.exports = {
             }
         }
         return secret;
-    },
-    getEveSSOCredentials : function(){
-        var credentials;
-        try{
-            credentials = fs.readFileSync(EVESSO_CREDENTIALS).toString();
-            credentials = JSON.parse(credentials);
-        }catch (e1){
-            throw new Error('Please provide Eve SSO oauth credentials in "' + EVESSO_CREDENTIALS + '" file.',e1);
-        }
-        return credentials;
     },
     deleteSessionSecret : function(){
         try{

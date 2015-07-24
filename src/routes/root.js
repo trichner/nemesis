@@ -2,7 +2,7 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
-var api = require('./routes/api');
+var api = require('./api');
 
 var app = express();
 

@@ -18,7 +18,6 @@ var unirest = require('unirest');
  allianceName: '',
  factionID: '0',
  factionName: '' }
-
  */
 var client = new neow.EveClient();
 

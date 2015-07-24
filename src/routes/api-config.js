@@ -7,12 +7,11 @@ var FileStore = require('session-file-store')(session);
 var minions = require('./../minions/Minions');
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
-var service = require('./../minions/service');
-var authenticator = require('./authenticator');
+var service = require('./../services/service');
+var credentials = require(__dirname + '/../config/evesso.json');
 
 function setupMiddleware(app){
     // API Middleware
-    var credentials = minions.getEveSSOCredentials();
     passport.serializeUser(function(pilot, done) {
         console.log('SERIALIZING' + pilot.id)
         done(null, pilot.id);
@@ -52,6 +51,7 @@ function setupMiddleware(app){
         }
     ));
 
+
     app.use(cookieParser());
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false, type: 'application/x-www-form-urlencoded' }));
@@ -60,6 +60,7 @@ function setupMiddleware(app){
         secret: minions.getSessionSecret(),
         store: new FileStore()
     }))
+
     app.use(passport.initialize());
     app.use(passport.session());
 

@@ -1,4 +1,4 @@
-var service = require('./../minions/service');
+var service = require('./../services/service');
 var apiConfig = require('./api-config');
 var Q = require('q');
 var express = require('express');

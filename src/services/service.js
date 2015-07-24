@@ -1,7 +1,7 @@
 var dao = require('./dao');
 var api = require('./crest');
 var Q = require('q');
-var Mapper = require('./mapper');
+var Mapper = require('./../minions/mapper');
 
 module.exports = {
     verifyPilot : verifyPilot,
