@@ -3,47 +3,26 @@
 <head>
 	<link rel="stylesheet" type="text/css" href="style/angular-ui-notification.min.css" />
 	<link rel="stylesheet" type="text/css" href="style/index.css" />
+	<link rel="icon" type="image/png" href="img/ivy_logo_4.png">
 
     <meta charset="utf-8">
     <title>Nemesis: an EVE Online Waitlist Management Tool</title>
-    <script src="js/angular.js"></script>
+	<script src="js/raphael-2.1.2/raphael-min.js"></script>
+    <script src="js/angular-1.2.9/angular.js"></script>
+	<script src="js/angular-1.2.9/angular-cookies.js"></script>
 	<script src="js/angular-ui-notification.min.js"></script>
-    <script src="js/controllers.js"></script>
+    <script src="js/home.js"></script>
 	<script src="js/API.js"></script>
 	<script src="js/Minions.js"></script>
 	<script src="js/EveIGB.js"></script>
 </head>
-<body onload='CCPEVE.requestTrust(location.protocol + "//" + location.host + "/*")' ng-controller="wt-list">
+<body onload='CCPEVE.requestTrust(location.protocol + "//" + location.host + "/*")' ng-controller="home">
 <span>Hello {{me.characterName ? me.characterName : 'Pilot'}}!</span>
-<div ng-class="{remove: !waitlistVO}">
-	<h2>WL Manager: {{waitlistVO.ownerName}}</h2>
-	<div id="wlurl-box" class="float-container">
-		<div>
-			<img width="32px" height="32px"	 src="img/url.png"/>
-		</div>
-		<div>
-			<a id="waitlist-link" href="{{window.location.href}}">{{window.location.href}}</a>
-		</div>
-	</div>
-	<div>
-		<a href="howto.html">How To X-up</a>
-	</div>
-</div>
 
-<div ng-class="{remove: waitlistVO || !authenticated}">
-	<h2>Your previous waitlists:</h2>
-	<ul>
-		<li ng-repeat="list in waitlists">
-			<p>
-				<a id="waitlists-link" href="{{window.location.href + '?waitlistId=' + list.waitlistId}}" target="_self">{{list.waitlistId}}</a>
-			</p>
-		</li>
-	</ul>
-</div>
-
+<h2>Home: All Open Waitlists</h2>
 <div id="container">
 	<div id="sidebar">
-		<div ng-class="{remove: authenticated}">
+		<div ng-class="{remove: authenticated}" class="actions">
 			Please log in via EVE Single-Sing-On. <!-- Typo totally intended -->
 			<a href="api/auth">
 				<img title="EVE SSO" src="img/EVESSO_SBLACK.png"/>
@@ -52,65 +31,47 @@
 			<span>remember me</span>
 		</div>
 		<div ng-class="{remove: !authenticated}" class="actions">
-			Logged in.
+			Logged in as {{me.characterName}}.
 			<button ng-click="logout()">logout</button>
 		</div>
 		<div ng-class="{remove: ((!authenticated) || (waitlistVO))}" class="actions">
 			<button ng-click="newWaitlist()">Create new waitlist</button>
 		</div>
-		<div id="xup" ng-class="{remove: ((!authenticated) || (!waitlistVO))}" class="actions">
-			<input type="text" name="fitting" placeholder="paste ship fitting here" ng-model="shipDNA"
-				   required onclick="this.focus();this.select()">
-			<select ng-model="mRole"
-					ng-options="role.name group by role.type for role in roles">
-			</select>
-			<button ng-click="postFit()">x up!</button>
-		</div>
-		<div id="asciiList-container" class="actions" ng-class="{remove: ((!authenticated) || (!waitlistVO))}">
-			<textarea placeholder="waitlist header" id="asciiHead" ng-model="asciiHead" class="asciiTextarea"></textarea>
-			<textarea placeholder="waitlist in text format" readonly id="asciiList" class="asciiTextarea"
-					  onclick="this.focus();this.select()" ng-model="waitlistTxt"></textarea>
-			<textarea placeholder="waitlist footer" id="asciiFoot" class="asciiTextarea" ng-model="asciiFoot"></textarea>
-		</div>
 	</div>
-	<div id="list" ng-class="{hidden: ((!authenticated) || (!waitlistVO))}">
-		<p>Waitlist: {{stats}}</p>
+	<div id="list" ng-class="{hidden: ((!authenticated))}">
 		<ol>
-			<li ng-repeat="item in waitlistVO.waitlist">
+			<li ng-repeat="list in waitlists track by list.waitlistId">
+				<p>
+					<a id="waitlists-link" href="{{getWaitlistUrl(list)}}" target="_self">{{list.waitlistName
+						|| list.owner
+						.characterName}}</a>
+				</p>
 				<div id="wrapper" class="float-container">
 					<div>
-						<img title="{{item.characterName}}" src="https://image.eveonline.com/Character/{{item.characterId}}_64.jpg" ng-click="showCharInfo(item)"/>
+						<img title="{{list.owner.characterName}}"
+							 src="https://image.eveonline.com/Character/{{list.owner.characterId}}_64.jpg"
+							 ng-click="showCharInfo(list.owner)"/>
 					</div>
 					<div>
 						<div>
-							<img title="{{item.corporationName}}"
-								 src="https://image.eveonline.com/Corporation/{{item.corporationId}}_32.png"
-								 ng-click="showCorporation(item)"/>
+							<img title="{{list.owner.corporationName}}"
+								 src="https://image.eveonline.com/Corporation/{{list.owner.corporationId}}_32.png"
+								 ng-click="showCorporation(list.owner)"/>
 						</div>
 						<div  style="width: 32px;height: 32px">
-							<img ng-class="{hidden: !item.allianceId}" title="{{item.allianceName}}"
-								 src="https://image.eveonline.com/Alliance/{{item.allianceId}}_32.png"
-								 ng-click="showAlliance(item)"/>
+							<img ng-class="{hidden: !list.owner.allianceId}" title="{{list.owner.allianceName}}"
+								 src="https://image.eveonline.com/Alliance/{{list.owner.allianceId}}_32.png"
+								 ng-click="showAlliance(list.owner)"/>
 						</div>
 					</div>
 
-					<div class="float-container">
-						<div ng-repeat="fitting in item.fittings" class="textover">
-							<img title="{{fitting.shipName}}" src="https://image.eveonline.com/Render/{{fitting.shipType}}_64.png" ng-click="showFitting(fitting)"/>
-							<p>{{fitting.role ? fitting.role : ''}}</p>
-						</div>
+					<div class="timer" n1b-timer start-date="list.lastActivityAt">
 					</div>
-					<div ng-class="{hidden: !canRemove(item.characterId)}">
-						<img title="remove from list" src="img/close.png" width="64" ng-click="removeItem(item)"/>
-					</div>
-					<div ng-class="{hidden: !isOwner()}">
-						<img title="make boss" src="img/star.png" width="64" ng-click="makeBoss(item)"/>
-					</div>
-					<div ng-class="{hidden: !isIGB}">
-						<img title="send fleetinvite" src="img/add-user.png" width="64" ng-click="fleetInvite(item)"/>
+					<div ng-class="{remove: !isIGB}">
+						<img title="start conversation" src="img/start-conversation.png" height="64"
+							 ng-click="startConversation(item.owner)"/>
 					</div>
 				</div>
-				<p>{{item.characterName}}</p>
 			</li>
 		</ol>
 	</div>

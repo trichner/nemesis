@@ -11,7 +11,9 @@ var app = express();
 app.use(logger('dev'));
 
 // PUBLIC
+app.use('/img', express.static(path.resolve(__dirname, '../../public/img'),{ maxAge: 31557600000 }));
 app.use('/', express.static(path.resolve(__dirname, '../../public')));
+
 
 // API
 app.use('/api', api);

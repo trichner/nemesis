@@ -1,5 +1,5 @@
-var app = angular.module('evewt', ['ui-notification']);
-app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','API','EveIGB','Notification','Minions',function ($scope,$http,$location,$interval,$window,API,EveIGB,Notification,Minions) {
+var app = angular.module('evewt', ['ui-notification','ngCookies',"xeditable"]);
+app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','API','EveIGB','Notification','Minions','$cookieStore',function ($scope,$http,$location,$interval,$window,API,EveIGB,Notification,Minions,$cookieStore) {
 
     //=== Vars
     $scope.waitlistVO = null;
@@ -25,6 +25,11 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
         OGB : 'OGB'
     }
 
+    var eveMail = {
+        "subject" : "Bad Fitting",
+        "body" : "Your fit is bad and you should feel bad!"
+    };
+
     $scope.roles = [
         {name: 'DD',     type: 'Damage Dealer', id:RoleID.DD},
         {name: 'Logi4',  type: 'Logistics' , id:RoleID.L4},
@@ -44,6 +49,11 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
 
     $scope.getWaitlistId = function () {
         var waitlistId = Minions.getQueryParam('waitlistId');
+        if(waitlistId){
+            $cookieStore.put('waitlistId',waitlistId);
+        }else{
+            waitlistId = $cookieStore.get('waitlistId');
+        }
         return waitlistId;
     }
 
@@ -73,13 +83,22 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
     $scope.newWaitlist = function () {
         return API.newWaitlist()
             .then(function (waitlist) {
-                waitlist.waitlistId;
                 $scope.updateWL(waitlist);
                 Notification.success("Successfully created waitlist")
             }, function () {
                 Notification.error("Cannot create waitlist, logged in?")
             })
     };
+
+    $scope.leaveWaitlist = function () {
+        $cookieStore.remove('waitlistId');
+        var url = location.protocol + "//" + location.host + '/nemesis/index.html';
+        window.open(url,'_self');
+    };
+
+    function stripQueryFromUrl(url){
+        return url.substring(0,url.indexOf('?'))
+    }
 
     //=== Functions
     $scope.updateWL = function(waitlistVO){
@@ -96,8 +115,8 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
             })
     };
 
-    $scope.showCharInfo = function(item){
-        EveIGB.showInfo(1377, item.characterId);
+    $scope.showCharInfo = function(characterId){
+        EveIGB.showInfo(1377, characterId);
     };
 
     $scope.showFitting = function(item){
@@ -114,6 +133,16 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
     $scope.fleetInvite = function(item){
         EveIGB.inviteToFleet(item.characterId)
         Notification.success("Invited " + item.characterName + " to fleet")
+    };
+
+    $scope.startConversation = function(item){
+        EveIGB.startConversation(item.characterId)
+        Notification.success("Invited " + item.characterName + " to conversation")
+    };
+
+    $scope.sendMail = function(item){
+        EveIGB.sendMail(item.characterId,eveMail.subject,eveMail.body)
+        Notification.success("Sent " + item.characterName + " an email")
     };
 
     $scope.makeBoss = function(item){
@@ -150,7 +179,38 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
         return ($scope.isOwner() || characterId==$scope.me.characterId);
     }
 
+    $scope.getWaitlistUrl = function () {
+        var waitlistId = $scope.getWaitlistId();
+        var url;
+        if(waitlistId && waitlistId.length){
+            url = location.protocol + "//" + location.host + location.pathname + '?waitlistId=' + waitlistId;
+        }else{
+            url = '';
+        }
+        return url;
+    }
+
+    $scope.updateName = function(name){
+        API.updateName($scope.waitlistVO.waitlistId,name)
+            .then(function (data) {
+                $scope.updateWL(data);
+                Notification.success("Updated name")
+                return false;
+            })
+            .then(null,function () {
+                Notification.error('failed to update name :(');
+                return false;
+            })
+    }
+
+
+    $scope.createTimer = function(item){
+        Minions.createTimer(this, new Date());
+    }
+
     //=== Fetch data
+    // fetch it so the link is stored even if we are not logged in
+    $scope.getWaitlistId();
 
     API.getMe()
         .then(function (data) {
@@ -164,7 +224,6 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
                         Notification.success('Joined waitlist');
                     })
                     .then(null,function () {
-                        $location.hash('');
                         Notification.error('Failed to fetch waitlist :(');
                     })
             }else{

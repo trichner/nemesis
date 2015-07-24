@@ -18,7 +18,9 @@ module.exports = {
     findItemByOrder : findItemByOrder,
     findAllWaitlists : findAllWaitlists,
     findWaitlistsByOwner : findWaitlistsByOwner,
-    findItemByPilot : findItemByPilot
+    findItemByPilot : findItemByPilot,
+    updateWatilistLastActivityByExternalId : updateWatilistLastActivityByExternalId,
+    findAllWaitlistsSince : findAllWaitlistsSince
 }
 
 function findItemByOrder(order){
@@ -74,6 +76,9 @@ function addToWaitlist(pilotId,externalId,shipId,shipType,shipDNA,shipName,role)
                             return waitlist.addItem(item)
                         })
                         .then(function () {
+                            return waitlist.updateAttributes({lastActivityAt: sequelize.fn('NOW')});
+                        })
+                        .then(function () {
                             return item;
                         });
                 })
@@ -111,18 +116,35 @@ function findAllWaitlists(){
         .then(assertObject);
 }
 
+// Eager load entire list
+function findAllWaitlistsSince(newerThan){
+    return Waitlist.findAll({
+        include: [{ model: WaitlistItem, as: 'items' }],
+        order: [ [ WaitlistItem, 'order' ] ],
+        lastActivityAt: {$gt:newerThan}})
+        .then(assertObject);
+}
+
 function createWaitlist(pilotId){
     return findPilotById(pilotId)
         .then(function (pilot) {
             var externalId = minions.randomAlphanumericString(EXTERNAL_ID_LENGTH);
             var name = pilot.name + '`s waitlist';
-            return Q.all([models.Waitlist.create({externalId:externalId, name:name}), Q.fulfill(pilot)]);
+            return Q.all([models.Waitlist.create({externalId:externalId, name:name,lastActivityAt:new Date()}), Q.fulfill(pilot)]);
+
         })
         .spread(function (waitlist,pilot) {
             return waitlist.setOwner(pilot)
                 .then(function () {
                     return findWaitlistByExternalId(waitlist.externalId);
                 })
+        })
+}
+
+function updateWatilistLastActivityByExternalId(waitlistId){
+    return findWaitlistByExternalId(waitlistId)
+        .then(function (waitlist) {
+            return waitlist.updateAttributes({lastActivityAt: sequelize.fn('NOW')});
         })
 }
 
@@ -161,4 +183,16 @@ function findOrCreatePilot(pilot){
             return pilot;
         })
     })
+}
+
+function removeWaitlistsOlderThan(date){
+    return Waitlist.findAll({
+        include: [{ model: WaitlistItem, as: 'items' }],
+        where : {} })
+        .then(function (waitlists) {
+            var promises = [];
+            waitlists.forEach(function (waitlist) {
+
+            })
+        });
 }

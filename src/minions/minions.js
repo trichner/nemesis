@@ -14,7 +14,7 @@ function randomString(howMany, chars) {
         , len = chars.length;
 
     for (var i = 0; i < howMany; i++) {
-        value[i] = chars[rnd[i] % len]
+        value.push(chars[rnd[i] % len])
     };
 
     return value.join('');
@@ -32,12 +32,15 @@ module.exports = {
         var secret;
         try{
             secret = fs.readFileSync(SECRET_FILE).toString();
+            if(secret.length<SECRET_LENGTH){
+                throw new Error("Stored secret is too short")
+            }
         }catch (e1){
             secret = randomAlphanumericString(SECRET_LENGTH);
             try{
                 fs.writeFileSync(SECRET_FILE,secret);
             }catch(e){
-                console.log('Cannot write secret to disk: '+e);
+                console.log('WARN: Cannot write secret to disk: '+e);
             }
         }
         return secret;

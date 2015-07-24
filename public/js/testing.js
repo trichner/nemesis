@@ -1,4 +1,4 @@
-var app = angular.module('evewt', ['ui-notification']);
+var app = angular.module('testapp', ['ui-notification']);
 app.controller('testing',[ '$scope','$http','$location','$interval','$window','API','EveIGB','Notification','Minions',function ($scope,$http,$location,$interval,$window,API,EveIGB,Notification,Minions) {
 
     $scope.isIGB = (typeof CCPEVE !== 'undefined');
@@ -6,12 +6,19 @@ app.controller('testing',[ '$scope','$http','$location','$interval','$window','A
 
     $scope.window = $window;
 
+    $scope.fittings = [
+        {role:'DD',shipType:17736,startDate:1234},
+        {role:'L4',shipType:17736,startDate:6544},
+        {role:'SH',shipType:17736,startDate:7854},
+        ]
+
+    var now = new Date();
     $scope.list = [
-        {id:'1'},
-        {id:'2'},
-        {id:'3'},
-        {id:'4'},
-        {id:'5'}
+        {id:'1',startDate:new Date(now-4312)},
+        {id:'2',startDate:new Date(now-65344)},
+        {id:'3',startDate:new Date(now-7854)},
+        {id:'4',startDate:new Date(now-18554)},
+        {id:'5',startDate:new Date() - 88885}
     ]
 
     $scope.onItemClick = function (item) {
@@ -37,5 +44,8 @@ app.controller('testing',[ '$scope','$http','$location','$interval','$window','A
             safety = false;
         }
     }();
+
+    $scope.startDate = new Date();
+    //Minions.createTimer('timer',new Date())
 
 }]);

@@ -1,9 +1,6 @@
 /**
  * Created by Thomas on 16.04.2015.
  */
-/**
- * Created by Thomas on 11.04.2015.
- */
 var neow = require('neow');
 var Q    = require('q');
 var unirest = require('unirest');
@@ -35,7 +32,7 @@ function getCharacterId(accessToken){
         .header('Accept', 'application/json')
         .header('Authorization', 'Bearer ' + accessToken)
         .end(function (res){
-            console.log('Verify Body' + JSON.stringify(res.body))
+            //console.log('Verify Body' + JSON.stringify(res.body))
             deferred.resolve(res.body.CharacterID);
         });
     return deferred.promise;

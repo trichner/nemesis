@@ -27,14 +27,21 @@ module.exports = {
 
 function mapWaitlistDBVO(waitlist){
     var mapped = {};
-    mapped.ownerId = waitlist.ownerId;
-    mapped.waitlistId = waitlist.externalId;
-    mapped.ownerName = waitlist.owner ? waitlist.owner.name : '';
+    mapped.ownerId      = waitlist.ownerId;
+    mapped.createdAt    = (new Date(waitlist.createdAt)).getTime();
+    mapped.lastActivityAt    = (new Date(waitlist.lastActivityAt)).getTime();
+    mapped.waitlistId   = waitlist.externalId;
     mapped.waitlistName = waitlist.name;
+
     var items = waitlist.items ? waitlist.items.map(mapWaitlistItemDBVO) : [];
     return Q.all(items)
         .then(function (mappedItems) {
             mapped.waitlist = mappedItems;
+            return waitlist.getOwner();
+        })
+        .then(mapPilotDBVO)
+        .then(function (mappedPilot) {
+            mapped.owner = mappedPilot;
             return mapped;
         })
 }
@@ -66,7 +73,8 @@ function mapWaitlistItemDBVO(item){
             return mapPilotDBVO(pilot)
         })
         .then(function (mapped) {
-            mapped.itemId   = item.order;
+            mapped.itemId    = item.order;
+            mapped.createdAt = (new Date(item.createdAt)).getTime();
             return item.getFittings()
                 .then(function (fittings) {
                     return fittings.map(mapShipFitting)
