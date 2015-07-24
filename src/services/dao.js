@@ -3,7 +3,7 @@
  */
 
 var Q = require('q');
-var minions = require('./../minions/Minions');
+var minions = require('./../minions/minions');
 var models  = require('../models/index');
 
 var EXTERNAL_ID_LENGTH = 32;

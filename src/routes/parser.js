@@ -2,7 +2,7 @@
 var session = require('express-session');
 var eveHeader = require('eve-header');
 var FileStore = require('session-file-store')(session);
-var minions = require('./../minions/Minions');
+var minions = require('./../minions/minions');
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
 

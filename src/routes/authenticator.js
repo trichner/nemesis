@@ -5,6 +5,10 @@ var session = require('express-session');
 var service = require('./../services/service');
 var credentials = require(__dirname + '/../config/evesso.json');
 
+var env       = process.env.NODE_ENV || "development";
+var config    = require(__dirname + '/../config/config.json')[env];
+var authRequired = config.authRequired !== undefined ? config.authRequired : true;
+
 var router = require('express').Router();
 
 passport.serializeUser(function(pilot, done) {
@@ -44,9 +48,12 @@ passport.use(new OAuth2Strategy({
 router.use(passport.initialize());
 router.use(passport.session());
 
-router.get('/auth', passport.authenticate('oauth2'));
+router.get('/auth', passport.authenticate('oauth2',{
+    callbackURL: "http://localhost:3000/nemesis/api/auth/callback"
+}));
 router.get('/auth/callback',
     passport.authenticate('oauth2',{
+        callbackURL: "http://localhost:3000/nemesis/api/auth/callback",
         successRedirect : '/nemesis/',
         failureRedirect : '/nemesis/'
     }));
