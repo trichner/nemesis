@@ -1,15 +1,15 @@
 var service = require('./../services/service');
-var apiConfig = require('./api-config');
+var parser = require('./parser')
+var authenticator = require('./authenticator');
 var Q = require('q');
-var express = require('express');
 
-var app = express();
+var app = require('express')();
 
-apiConfig.setupMiddleware(app);
+app.use('/',parser);
+app.use(authenticator);
 
 /* GET all owned lists*/
 app.get('/waitlist', function(req, res, next) {
-  //res.send('respond with a resource');
     var pilotId = req.session.pilotId;
     service.getLists(pilotId)
         .then(function (lists){
@@ -19,7 +19,6 @@ app.get('/waitlist', function(req, res, next) {
 
 /* GET waitlist by id*/
 app.get('/waitlist/:id.json', function(req, res, next) {
-    //res.send('respond with a resource');
     var externalId = req.params.id;
     service.getList(externalId).
         then(function (list) {
@@ -32,7 +31,6 @@ app.get('/waitlist/:id.json', function(req, res, next) {
 
 /* GET waitlist by id*/
 app.get('/waitlist/:id', function(req, res, next) {
-  //res.send('respond with a resource');
   var externalId = req.params.id;
   service.getList(externalId).
       then(function (list) {
@@ -73,7 +71,6 @@ app.post('/waitlist/:id', function(req, res, next) {
 
 /* POST chang owner*/
 app.post('/waitlist/:id/owner', function(req, res, next) {
-    //res.send('respond with a resource');
     var externalId = req.params.id;
     var pilotId = req.session.pilotId;
     var ownerId   = req.body.ownerId;
@@ -101,7 +98,6 @@ app.get('/me', function(req, res, next) {
 
 /* POST add entry to waitlist*/
 app.delete('/waitlist/:id', function(req, res, next) {
-    //res.send('respond with a resource');
     var externalId = req.params.id;
     var pilotId = req.session.pilotId;
     var order = req.body.itemId;
