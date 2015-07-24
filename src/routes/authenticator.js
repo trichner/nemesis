@@ -8,7 +8,6 @@ var credentials = require(__dirname + '/../config/evesso.json');
 var router = require('express').Router();
 
 passport.serializeUser(function(pilot, done) {
-    console.log('SERIALIZING' + pilot.id)
     done(null, pilot.id);
 });
 passport.deserializeUser(function(pilotId, done) {
@@ -30,16 +29,12 @@ passport.use(new OAuth2Strategy({
         passReqToCallback: true
     },
     function(req,accessToken, refreshToken, profile, done) {
-        console.log('Session:' + JSON.stringify(req.session))
-        console.log("ACCESSTOKEN: " + accessToken);
         service.createPilot(accessToken)
             .then(function (pilot) {
-                console.log('Pilot:' + JSON.stringify(pilot))
                 req.session.verified = true;
                 req.session.pilotId = pilot.id;
                 done(null, pilot);
             }, function (err) {
-                console.log('FAIL: ' + err)
                 done(err, null);
             })
     }
@@ -72,8 +67,6 @@ router.delete('/auth', function(req, res, next) {
 
 router.get('/auth/test',
     function(req, res) {
-        // Successful authentication, redirect home.
-        console.log("SUCCESS AUTH");
         res.redirect('/nemesis/');
     });
 
