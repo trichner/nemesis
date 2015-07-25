@@ -29,8 +29,8 @@ passport.use(new OAuth2Strategy({
         tokenURL: 'https://login.eveonline.com/oauth/token',
         clientID: credentials.clientID,
         clientSecret: credentials.clientSecret,
-        //callbackURL: "https://k42.ch/nemesis/api/auth/callback",
-        callbackURL: "http://localhost:3000/nemesis/api/auth/callback",
+        callbackURL: "https://k42.ch/nemesis/api/auth/callback",
+        //callbackURL: "http://localhost:3000/nemesis/api/auth/callback",
         passReqToCallback: true
     },
     function(req,accessToken, refreshToken, profile, done) {
@@ -39,7 +39,6 @@ passport.use(new OAuth2Strategy({
                 req.session.verified = true;
                 req.session.pilotId = pilot.id;
                 req.session.verified = true;
-                //req.session.pilotId = pilotId; // implicitly authenticated
                 req.session.cookie.maxAge = 3600000*24*365; // a year
                 done(null, pilot);
             }, function (err) {
