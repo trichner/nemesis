@@ -38,7 +38,7 @@ function findItemByPilot(waitlistId,pilotId){
 function addToItem(item,shipId,shipType,shipDNA,shipName,role){
     return createFitting(shipId,shipName,shipDNA,shipType,role)
         .then(function (fitting) {
-            return item.addFitting(fitting);
+            return item.addShipFitting(fitting);
         })
 }
 
@@ -67,16 +67,16 @@ function addToWaitlist(pilotId,externalId,shipId,shipType,shipDNA,shipName,role)
                 .then(function (item) {
                     return createFitting(shipId,shipName,shipDNA,shipType,role)
                         .then(function (fitting) {
-                            return item.addFitting(fitting)
+                            return item.addShipFitting(fitting)
                         })
                         .then(function () {
                             return item.setWaitlist(waitlist)
                         })
                         .then(function () {
-                            return waitlist.addItem(item)
+                            return waitlist.addWaitlistItem(item)
                         })
                         .then(function () {
-                            return waitlist.updateAttributes({lastActivityAt: sequelize.fn('NOW')});
+                            return waitlist.updateAttributes({lastActivityAt: models.sequelize.fn('NOW')});
                         })
                         .then(function () {
                             return item;
@@ -144,7 +144,7 @@ function createWaitlist(pilotId){
 function updateWatilistLastActivityByExternalId(waitlistId){
     return findWaitlistByExternalId(waitlistId)
         .then(function (waitlist) {
-            return waitlist.updateAttributes({lastActivityAt: sequelize.fn('NOW')});
+            return waitlist.updateAttributes({lastActivityAt: models.sequelize.fn('NOW')});
         })
 }
 
@@ -186,8 +186,8 @@ function findOrCreatePilot(pilot){
 }
 
 function removeWaitlistsOlderThan(date){
-    return Waitlist.findAll({
-        include: [{ model: WaitlistItem}],
+    return models.Waitlist.findAll({
+        include: [{ model: models.WaitlistItem}],
         where : {} })
         .then(function (waitlists) {
             var promises = [];

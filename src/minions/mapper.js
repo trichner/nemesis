@@ -75,7 +75,7 @@ function mapWaitlistItemDBVO(item){
         .then(function (mapped) {
             mapped.itemId    = item.order;
             mapped.createdAt = (new Date(item.createdAt)).getTime();
-            return item.getFittings()
+            return item.getShipFittings()
                 .then(function (fittings) {
                     return fittings.map(mapShipFitting)
                 })
