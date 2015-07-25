@@ -17,6 +17,7 @@ module.exports = [
             name: 'nemesis.sid',
             proxy: true,
             resave: true,
+            rolling: true,
             saveUninitialized: true
         })
     ];

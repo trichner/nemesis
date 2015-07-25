@@ -38,6 +38,9 @@ passport.use(new OAuth2Strategy({
             .then(function (pilot) {
                 req.session.verified = true;
                 req.session.pilotId = pilot.id;
+                req.session.verified = true;
+                //req.session.pilotId = pilotId; // implicitly authenticated
+                req.session.cookie.maxAge = 3600000*24*365; // a year
                 done(null, pilot);
             }, function (err) {
                 done(err, null);
