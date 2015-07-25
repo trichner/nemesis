@@ -7,7 +7,8 @@
     "dialect": "mysql",
     "dialec2t": "sqlite",
     "storage2": "./db.development.sqlite",
-    "authRequired" : false
+    "authRequired" : false,
+    "eveSsoCallback": "http://localhost:3000/nemesis/api/auth/callback"
   },
   "test": {
     "username": "root",
@@ -21,6 +22,7 @@
     "password": "1234",
     "database": "nemesis",
     "host": "localhost",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "eveSsoCallback" :  "https://k42.ch/nemesis/api/auth/callback"
   }
 }

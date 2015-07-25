@@ -8,6 +8,7 @@ var credentials = require(__dirname + '/../config/evesso.json');
 var env       = process.env.NODE_ENV || "development";
 var config    = require(__dirname + '/../config/config.json')[env];
 var authRequired = config.authRequired !== undefined ? config.authRequired : true;
+var callbackURL = config.eveSsoCallback || "http://localhost:3000/nemesis/api/auth/callback";
 
 var router = require('express').Router();
 
@@ -29,8 +30,7 @@ passport.use(new OAuth2Strategy({
         tokenURL: 'https://login.eveonline.com/oauth/token',
         clientID: credentials.clientID,
         clientSecret: credentials.clientSecret,
-        callbackURL: "https://k42.ch/nemesis/api/auth/callback",
-        //callbackURL: "http://localhost:3000/nemesis/api/auth/callback",
+        callbackURL: callbackURL,
         passReqToCallback: true
     },
     function(req,accessToken, refreshToken, profile, done) {
