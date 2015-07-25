@@ -14,6 +14,7 @@ module.exports = [
         session({
             secret: minions.getSessionSecret(),
             store: new FileStore(),
+            name: 'nemesis.sid',
             proxy: true,
             resave: true,
             saveUninitialized: true
