@@ -1,7 +1,12 @@
 {
   "development": {
-    "dialect": "sqlite",
-    "storage": "./db.development.sqlite",
+    "username": "nemesis",
+    "password": "1234",
+    "database": "nemesis",
+    "host": "localhost",
+    "dialect": "mysql",
+    "dialec2t": "sqlite",
+    "storage2": "./db.development.sqlite",
     "authRequired" : false
   },
   "test": {

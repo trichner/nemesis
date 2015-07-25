@@ -33,7 +33,7 @@ function mapWaitlistDBVO(waitlist){
     mapped.waitlistId   = waitlist.externalId;
     mapped.waitlistName = waitlist.name;
 
-    var items = waitlist.items ? waitlist.items.map(mapWaitlistItemDBVO) : [];
+    var items = waitlist.WaitlistItems ? waitlist.WaitlistItems.map(mapWaitlistItemDBVO) : [];
     return Q.all(items)
         .then(function (mappedItems) {
             mapped.waitlist = mappedItems;

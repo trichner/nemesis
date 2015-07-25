@@ -98,7 +98,7 @@ function createFitting(shipId,name,dna,type,role){
 // Eager load entire list
 function findWaitlistByExternalId(externalId){
     return models.Waitlist.find({ where: {externalId: externalId},
-        include: [{ model: models.WaitlistItem, as: 'items', include: [{model: models.Pilot}]},{ model: models.Pilot, as:'owner'}],
+        include: [{ model: models.WaitlistItem, include: [{model: models.Pilot}]},{ model: models.Pilot, as:'owner'}],
         order: [ [ models.WaitlistItem, 'order' ] ]})
         .then(assertObject);
 }
@@ -111,16 +111,16 @@ function findWaitlistsByOwner(pilotId){
 // Eager load entire list
 function findAllWaitlists(){
     return models.Waitlist.findAll({
-        include: [{ model: models.WaitlistItem, as: 'items' }],
+        include: [{ model: models.WaitlistItem }],
         order: [ [ models.WaitlistItem, 'order' ] ]})
         .then(assertObject);
 }
 
 // Eager load entire list
 function findAllWaitlistsSince(newerThan){
-    return Waitlist.findAll({
-        include: [{ model: WaitlistItem, as: 'items' }],
-        order: [ [ WaitlistItem, 'order' ] ],
+    return models.Waitlist.findAll({
+        include: [{ model: models.WaitlistItem}],
+        order: [ [ models.WaitlistItem, 'order' ] ],
         lastActivityAt: {$gt:newerThan}})
         .then(assertObject);
 }
@@ -187,7 +187,7 @@ function findOrCreatePilot(pilot){
 
 function removeWaitlistsOlderThan(date){
     return Waitlist.findAll({
-        include: [{ model: WaitlistItem, as: 'items' }],
+        include: [{ model: WaitlistItem}],
         where : {} })
         .then(function (waitlists) {
             var promises = [];
