@@ -25,10 +25,11 @@ On the other hand it also works perfectly fine in Chrome (great to have it on th
 
 Prerequisites:
 - install `mysql` server e.g. `sudo apt-get install mysql-server`
-- install `nodejs` and `npm`
+- install `nodejs`, `npm` and 'bower'
 
 1. check out this repository
 2. install dependencies with `npm install`
+3. install components `cd public; bower install;`
 3. setup Eve SSO app
   1. Register an Eve SSO application here: https://developers.eveonline.com/resource/single-sign-on
   1. `cp src/config/evesso.example.json  src/config/evesso.json`
