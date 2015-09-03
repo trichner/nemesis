@@ -18,6 +18,31 @@ On the other hand it also works perfectly fine in Chrome (great to have it on th
 - owner can pass on control of his waitlists
 - secure, easy login via Eve SSO. No new passwords or API keys.
 - free and open source
+- 
+
+
+## Getting started
+
+Prerequisites:
+- install `mysql` server e.g. `sudo apt-get install mysql-server`
+- install `nodejs` and `npm`
+
+1. check out this repository
+2. install dependencies with `npm install`
+3. setup Eve SSO app
+  1. Register an Eve SSO application here: https://developers.eveonline.com/resource/single-sign-on
+  1. `cp src/config/evesso.example.json  src/config/evesso.json`
+  2. `nano src/config/evesso.json` and add your key
+  3. edit `src/config/config.json` to reflect your `eveSsoCallback`, it must match your host and should end with `/nemesis/api/auth/callback`
+4. setup the database
+  2. setup a new database e.g. `CREATE SCHEMA nemesis;`
+  3. optional: set up a new db user
+  3. edit `src/config/config.json` to reflect you database configuration
+5. start nemesis
+  1. depending on you `config.json` set the environment variable `NODE_ENV` e.g. `export NODE_ENV=production`
+  2. start the server with `npm start`
+
+Feel free to open a new issue if you run into troubles.
 
 ## Security
 
