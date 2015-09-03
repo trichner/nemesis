@@ -18,7 +18,7 @@ On the other hand it also works perfectly fine in Chrome (great to have it on th
 - owner can pass on control of his waitlists
 - secure, easy login via Eve SSO. No new passwords or API keys.
 - free and open source
-- 
+
 
 
 ## Getting started
