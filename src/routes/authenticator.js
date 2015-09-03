@@ -3,7 +3,7 @@ var passport = require('passport')
 var OAuth2Strategy = require('passport-oauth2').Strategy;
 var session = require('express-session');
 var service = require('./../services/service');
-var credentials = require(__dirname + '/../config/evesso.json');
+var ssoCredentials = require(__dirname + '/../config/evesso.json');
 
 var env       = process.env.NODE_ENV || "development";
 var config    = require(__dirname + '/../config/config.json')[env];
@@ -25,57 +25,57 @@ passport.deserializeUser(function(pilotId, done) {
             }
         })
 });
+
 passport.use(new OAuth2Strategy({
         authorizationURL: 'https://login.eveonline.com/oauth/authorize',
         tokenURL: 'https://login.eveonline.com/oauth/token',
-        clientID: credentials.clientID,
-        clientSecret: credentials.clientSecret,
+        clientID: ssoCredentials.clientID,
+        clientSecret: ssoCredentials.clientSecret,
         callbackURL: callbackURL,
         passReqToCallback: true
     },
-    function(req,accessToken, refreshToken, profile, done) {
+    function (req, accessToken, refreshToken, profile, done) {
         service.createPilot(accessToken)
             .then(function (pilot) {
-                req.session.verified = true;
                 req.session.pilotId = pilot.id;
                 req.session.verified = true;
-                req.session.cookie.maxAge = 3600000*24*365; // a year
+                if(req.session.rememberMe){
+                    req.session.cookie.maxAge = 3600000 * 24 * 365; // a year
+                }
                 done(null, pilot);
-            }, function (err) {
+            })
+            .catch(function (err) {
                 done(err, null);
             })
     }
 ));
 
+
 // authentication
 router.use(passport.initialize());
 router.use(passport.session());
 
-router.get('/auth', passport.authenticate('oauth2'));
-router.get('/auth/callback',
-    passport.authenticate('oauth2',{
-        successRedirect : '/nemesis/',
-        failureRedirect : '/nemesis/'
-    }));
+//--- Login
+router.post('/auth', function (req, res, next) {
+    req.session.rememberMe = req.body.rememberMe === "on";
+    req.session.loginUrl = req.body.currentUrl;
+    next();
+}, passport.authenticate('oauth2'));
 
-
-/* DELETE verify pilots*/
-router.delete('/auth', function(req, res, next) {
-    req.session.destroy(function(err){
-        if(err){
-            var err = new Error('Cannot logout')
-            err.status = 500;
-            next(err);
-        }else{
-            res.status(200).end();
-        }
-    })
+//--- Oauth Callback (needs to be subdir of Login URL)
+router.get('/auth/callback', function(req, res, next) {
+    passport.authenticate('oauth2', function(err, user, info) {
+        if (err) { return next(err); }
+        if (!user) { return res.redirect('/auth'); }
+        // Set up authenticated session
+        req.logIn(user, function(err) {
+            if (err) { return next(err); }
+            // assemble redirect:
+            var redirectUrl = req.session.loginUrl || '/nemesis/';
+            return res.redirect(redirectUrl);
+        });
+    })(req, res, next);
 });
-
-router.get('/auth/test',
-    function(req, res) {
-        res.redirect('/nemesis/');
-    });
 
 router.use(function(req, res, next) {
     if(req.isAuthenticated()){
@@ -86,6 +86,32 @@ router.use(function(req, res, next) {
         return next(err);
     }
 })
+
+/* DEPRECATED, use POST '/deauth' instead*/
+router.delete('/auth', function(req, res, next) {
+    req.session.destroy(function(err){
+        if(err){
+            var err = new Error('Cannot logout')
+            err.status = 500;
+            next(err);
+        }else{
+            res.status(204).end();
+        }
+    })
+});
+
+//--- Logout
+router.post('/deauth', function (req, res, next) {
+    req.session.destroy(function (err) {
+        if (err) {
+            var err = new Error('Cannot logout')
+            err.status = 500;
+            next(err);
+        } else {
+            res.status(204).end(); //TODO hardcoded!
+        }
+    })
+});
 
 
 module.exports = router;

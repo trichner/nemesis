@@ -19,14 +19,10 @@
 </head>
 <body onload='CCPEVE.requestTrust(location.protocol + "//" + location.host + "/*")' ng-controller="wt-list">
 
-<div ng-class="{remove: authenticated}">
-    Please log in via EVE Single-Sing-On. <!-- Typo totally intended -->
-    <a href="api/auth">
-        <img title="EVE SSO" src="img/EVESSO_SBLACK.png"/>
-    </a>
-    <input name="remember me" type="checkbox" ng-model="remeberMe">
-    <span>remember me</span>
+<div ng-hide="authenticated">
+    <ng-include src="'partials/login.html'"></ng-include>
 </div>
+
 <table ng-class="{remove: !waitlistVO}" style="width:100%">
     <tr>
         <td colspan="5">

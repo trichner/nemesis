@@ -1,0 +1,10 @@
+<div class="actions">
+    Please log in via EVE Single-Sing-On. <!-- Typo totally intended -->
+    <form action="api/auth" method="POST" onsubmit="document.getElementById('currentUrl').value = window.location.href;">
+        <input	class="evessoSubmit" type="submit" value="">
+        <br>
+        <input name="rememberMe" type="checkbox">
+        <input type="hidden" id="currentUrl" name="currentUrl" value="" />
+        <span>remember me</span>
+    </form>
+</div>

@@ -22,14 +22,7 @@
 <h2>Home: All Open Waitlists</h2>
 <div id="container">
 	<div id="sidebar">
-		<div ng-class="{remove: authenticated}" class="actions">
-			Please log in via EVE Single-Sing-On. <!-- Typo totally intended -->
-			<a href="api/auth">
-				<img title="EVE SSO" src="img/EVESSO_SBLACK.png"/>
-			</a>
-			<input name="remember me" type="checkbox" ng-model="remeberMe">
-			<span>remember me</span>
-		</div>
+		<ng-include ng-hide="authenticated" src="'partials/login.html'"></ng-include>
 		<div ng-class="{remove: !authenticated}" class="actions">
 			Logged in as {{me.characterName}}.
 			<button ng-click="logout()">logout</button>

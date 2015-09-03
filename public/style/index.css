@@ -141,3 +141,11 @@ img{display:block;}
 .wlcompacttr {
 	white-space: nowrap;
 }
+
+
+.evessoSubmit{
+	border: none;
+	background: url('../img/EVESSO_SBLACK.png') no-repeat top left;
+	width: 195px;
+	height: 30px;
+}
