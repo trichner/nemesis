@@ -56,6 +56,9 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
     }
 
     $scope.isOwner = function () {
+        if(!$scope.waitlistVO){
+            return false;
+        }
         return $scope.waitlistVO.ownerId == $scope.me.characterId;
     }
 
@@ -64,6 +67,9 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
     }
 
     $scope.isItemOwner = function(item) {
+        if(!$scope.waitlistVO){
+            return false;
+        }
         return $scope.waitlistVO.ownerId == item.characterId;
     }
 

@@ -8,14 +8,16 @@
     "dialec2t": "sqlite",
     "storage2": "./db.development.sqlite",
     "authRequired" : false,
-    "eveSsoCallback": "http://localhost:3000/nemesis/api/auth/callback"
+    "eveSsoCallback": "http://localhost:3000/nemesis/api/auth/callback",
+    "logging" : false
   },
   "test": {
     "username": "root",
     "password": null,
     "database": "database_test",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "logging" : false
   },
   "production": {
     "username": "nemesis",
@@ -23,6 +25,7 @@
     "database": "nemesis",
     "host": "localhost",
     "dialect": "mysql",
-    "eveSsoCallback" :  "https://k42.ch/nemesis/api/auth/callback"
+    "eveSsoCallback" :  "https://k42.ch/nemesis/api/auth/callback",
+    "logging" : false
   }
 }

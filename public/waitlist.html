@@ -23,7 +23,7 @@
     <ng-include src="'partials/login.html'"></ng-include>
 </div>
 
-<table ng-class="{remove: !waitlistVO}" style="width:100%">
+<table ng-hide="!waitlistVO" style="width:100%">
     <tr>
         <td colspan="5">
             <div class="float-container">
@@ -37,21 +37,21 @@
                         <img title="Waitlist Share URL" height="32px" src="img/url.png"/>
                     </a>
                 </div>
-                <div ng-class="{remove: !isOwner()}">
+                <div ng-hide="!isOwner()">
                     <span editable-text="waitlistVO.waitlistName"
                           onbeforesave="updateName($data)">{{waitlistVO.waitlistName || 'Waitlist'}}</span>
                 </div>
-                <div ng-class="{remove: isOwner()}">
+                <div ng-hide="isOwner()">
                     <span>{{waitlistVO.waitlistName || ''}}</span>
                 </div>
-                <div ng-class="{remove: !authenticated}">
+                <div ng-hide="!authenticated">
                     <button ng-click="logout()">Logout {{me.characterName}}</button>
                     <button ng-click="leaveWaitlist()">Home</button>
                 </div>
-                <div ng-class="{remove: ((!authenticated) || (waitlistVO))}">
+                <div ng-hide="((!authenticated) || (waitlistVO))">
                     <button ng-click="newWaitlist()">Create Waitlist</button>
                 </div>
-                <div ng-class="{remove: ((!authenticated) || (!waitlistVO))}">
+                <div ng-hide="((!authenticated) || (!waitlistVO))">
                     <input type="text" name="fitting" placeholder="paste ship fitting here" ng-model="shipDNA"
                            required onclick="this.focus();this.select()">
                     <select ng-model="mRole"
@@ -103,19 +103,19 @@
             </div>
         </td>
         <td><div class="float-container">
-            <div ng-class="{remove: !canRemove(item.characterId)}">
+            <div ng-hide="!canRemove(item.characterId)">
                 <img title="remove from list" src="img/close.png" height="32" ng-click="removeItem(item)"/>
             </div>
-            <div ng-class="{remove: !isOwner()}">
+            <div ng-hide="!isOwner()">
                 <img title="make boss" src="img/star.png" height="32" ng-click="makeBoss(item)"/>
             </div>
             <div>
                 {{item.createdAt | date : 'HH:mm'}}
             </div>
-            <div ng-class="{remove: !isIGB || !isOwner()}">
+            <div ng-hide="!isIGB || !isOwner()">
                 <img title="send fleetinvite" src="img/add-user.png" height="32" ng-click="fleetInvite(item)"/>
             </div>
-            <div ng-class="{remove: !isIGB}">
+            <div ng-hide="!isIGB">
                 <img title="start conversation" src="img/start-conversation.png" height="32"
                      ng-click="startConversation(item)"/>
             </div>
@@ -126,7 +126,7 @@
         </div></td>
     </tr>
 </table>
-<div ng-class="{remove: waitlistVO || !authenticated}">
+<div ng-hide="waitlistVO || !authenticated">
     <a href="index.html">Join a waitlist or create a new one</a>
 </div>
 

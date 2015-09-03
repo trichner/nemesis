@@ -23,7 +23,7 @@
 <div id="container">
 	<div id="sidebar">
 		<ng-include ng-hide="authenticated" src="'partials/login.html'"></ng-include>
-		<div ng-class="{remove: !authenticated}" class="actions">
+		<div ng-hide="!authenticated" class="actions">
 			Logged in as {{me.characterName}}.
 			<button ng-click="logout()">logout</button>
 		</div>
