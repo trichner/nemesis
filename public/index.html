@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" id="ng-app" ng-app="evewt">
+<html lang="en" id="ng-app" ng-app="app">
 <head>
 	<link rel="stylesheet" type="text/css" href="style/angular-ui-notification.min.css" />
 	<link rel="stylesheet" type="text/css" href="style/index.css" />
@@ -7,14 +7,17 @@
 
     <meta charset="utf-8">
     <title>Nemesis: an EVE Online Waitlist Management Tool</title>
-	<script src="js/raphael-2.1.2/raphael-min.js"></script>
-    <script src="js/angular-1.2.9/angular.js"></script>
-	<script src="js/angular-1.2.9/angular-cookies.js"></script>
-	<script src="js/angular-ui-notification.min.js"></script>
-    <script src="js/home.js"></script>
-	<script src="js/API.js"></script>
-	<script src="js/Minions.js"></script>
-	<script src="js/EveIGB.js"></script>
+	<script src="components/raphael/raphael-min.js"></script>
+	<script src="components/angular/angular.js"></script>
+	<script src="components/angular-cookies/angular-cookies.min.js"></script>
+	<script src="components/angular-ui-notification/dist/angular-ui-notification.min.js"></script>
+	<script src="components/angular-xeditable/dist/js/xeditable.min.js"></script>
+	<script src="components/angular-eve-igb/eveIGB.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/directives/n1b-timer.js"></script>
+	<script src="js/services/API.js"></script>
+	<script src="js/services/Minions.js"></script>
+	<script src="js/controllers/home.js"></script>
 </head>
 <body onload='CCPEVE.requestTrust(location.protocol + "//" + location.host + "/*")' ng-controller="home">
 <span>Hello {{me.characterName ? me.characterName : 'Pilot'}}!</span>

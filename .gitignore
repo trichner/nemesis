@@ -4,6 +4,7 @@
 
 # Binaries
 node_modules/
+public/components/
 
 # Logfiles
 *.log
@@ -13,3 +14,4 @@ sessions/
 session_secret
 evesso.json
 *.sqlite
+

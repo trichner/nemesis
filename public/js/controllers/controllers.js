@@ -1,4 +1,3 @@
-var app = angular.module('evewt', ['ui-notification','ngCookies',"xeditable"]);
 app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','API','EveIGB','Notification','Minions','$cookieStore',function ($scope,$http,$location,$interval,$window,API,EveIGB,Notification,Minions,$cookieStore) {
 
     //=== Vars
