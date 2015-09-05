@@ -21,7 +21,6 @@
                 </div>
                 <div ng-hide="!authenticated">
                     <button ng-click="logout()">Logout {{me.characterName}}</button>
-                    <button ng-click="leaveWaitlist()">Home</button>
                     <form action="#/waitlists" style="display: inline;">
                         <input type="submit" value="Home">
                     </form>
@@ -71,7 +70,7 @@
         </td>
         <td>
             <div class="float-container">
-                <div ng-repeat="fitting in item.fittings" class="textover" ng-click="showFitting(fitting)">
+                <div ng-repeat="fitting in item.fittings" class="textover" ng-click="EveIGB.showFitting(fitting.shipDNA)">
                     <img title="{{fitting.shipName}}" ng-src="{{EveIMG.imgUrlRender(fitting.shipType,32)}}"/>
                     <p>{{fitting.role ? fitting.role : ''}}</p>
                 </div>

@@ -81,11 +81,6 @@ controllers.controller('WaitlistCtrl',function ($scope,$http,$location,$interval
             })
     };
 
-    $scope.leaveWaitlist = function () {
-        var url = location.protocol + "//" + location.host + '/nemesis/index.html';
-        window.open(url,'_self');
-    };
-
     //=== Functions
     $scope.updateWL = function(waitlistVO){
         $scope.waitlistVO = waitlistVO;
@@ -97,36 +92,6 @@ controllers.controller('WaitlistCtrl',function ($scope,$http,$location,$interval
             .then(function (data) {
                 $scope.updateWL(data);
             })
-    };
-
-    $scope.showCharInfo = function(characterId){
-        EveIGB.showInfo(1377, characterId);
-    };
-
-    $scope.showFitting = function(item){
-        EveIGB.showFitting(item.shipDNA);
-    };
-
-    $scope.showCorporation = function(item){
-        EveIGB.showInfo(2,item.corporationId);
-    };
-    $scope.showAlliance = function(item){
-        EveIGB.showInfo(16159,item.allianceId);
-    };
-
-    $scope.fleetInvite = function(item){
-        EveIGB.inviteToFleet(item.characterId)
-        Notification.success("Invited " + item.characterName + " to fleet")
-    };
-
-    $scope.startConversation = function(item){
-        EveIGB.startConversation(item.characterId)
-        Notification.success("Invited " + item.characterName + " to conversation")
-    };
-
-    $scope.sendMail = function(item){
-        EveIGB.sendMail(item.characterId,eveMail.subject,eveMail.body)
-        Notification.success("Sent " + item.characterName + " an email")
     };
 
     $scope.makeBoss = function(item){
