@@ -1,4 +1,9 @@
-app.controller('WaitlistCtrl',function ($scope,$http,$location,$interval,$window,API,EveIGB,Notification,Minions,$cookieStore) {
+controllers.controller('WaitlistCtrl',function ($scope,$http,$location,$interval,$routeParams,$window,API,EveIGB,EveIMG,Notification,Minions) {
+
+    $scope.EveIGB = EveIGB;
+    $scope.EveIMG = EveIMG;
+
+    $scope.waitlistId = $routeParams.waitlistId;
 
     //=== Vars
     $scope.waitlistVO = null;
@@ -36,16 +41,6 @@ app.controller('WaitlistCtrl',function ($scope,$http,$location,$interval,$window
     $scope.isIGB = (typeof CCPEVE !== 'undefined');
     console.log('You are' + ($scope.isIGB ? '' : ' not') + ' in Eve IGB')
     $scope.window = $window;
-
-    $scope.getWaitlistId = function () {
-        var waitlistId = Minions.getQueryParam('waitlistId');
-        if(waitlistId){
-            $cookieStore.put('waitlistId',waitlistId);
-        }else{
-            waitlistId = $cookieStore.get('waitlistId');
-        }
-        return waitlistId;
-    }
 
     $scope.isOwner = function () {
         if(!$scope.waitlistVO){
@@ -86,12 +81,6 @@ app.controller('WaitlistCtrl',function ($scope,$http,$location,$interval,$window
             })
     };
 
-    $scope.leaveWaitlist = function () {
-        $cookieStore.remove('waitlistId');
-        var url = location.protocol + "//" + location.host + '/nemesis/index.html';
-        window.open(url,'_self');
-    };
-
     //=== Functions
     $scope.updateWL = function(waitlistVO){
         $scope.waitlistVO = waitlistVO;
@@ -103,36 +92,6 @@ app.controller('WaitlistCtrl',function ($scope,$http,$location,$interval,$window
             .then(function (data) {
                 $scope.updateWL(data);
             })
-    };
-
-    $scope.showCharInfo = function(characterId){
-        EveIGB.showInfo(1377, characterId);
-    };
-
-    $scope.showFitting = function(item){
-        EveIGB.showFitting(item.shipDNA);
-    };
-
-    $scope.showCorporation = function(item){
-        EveIGB.showInfo(2,item.corporationId);
-    };
-    $scope.showAlliance = function(item){
-        EveIGB.showInfo(16159,item.allianceId);
-    };
-
-    $scope.fleetInvite = function(item){
-        EveIGB.inviteToFleet(item.characterId)
-        Notification.success("Invited " + item.characterName + " to fleet")
-    };
-
-    $scope.startConversation = function(item){
-        EveIGB.startConversation(item.characterId)
-        Notification.success("Invited " + item.characterName + " to conversation")
-    };
-
-    $scope.sendMail = function(item){
-        EveIGB.sendMail(item.characterId,eveMail.subject,eveMail.body)
-        Notification.success("Sent " + item.characterName + " an email")
     };
 
     $scope.makeBoss = function(item){
@@ -170,10 +129,10 @@ app.controller('WaitlistCtrl',function ($scope,$http,$location,$interval,$window
     }
 
     $scope.getWaitlistUrl = function () {
-        var waitlistId = $scope.getWaitlistId();
+        var waitlistId = $scope.waitlistId;
         var url;
         if(waitlistId && waitlistId.length){
-            url = location.protocol + "//" + location.host + location.pathname + '?waitlistId=' + waitlistId;
+            url = '#/waitlists/' + waitlistId;
         }else{
             url = '';
         }
@@ -200,13 +159,12 @@ app.controller('WaitlistCtrl',function ($scope,$http,$location,$interval,$window
 
     //=== Fetch data
     // fetch it so the link is stored even if we are not logged in
-    $scope.getWaitlistId();
 
     API.getMe()
         .then(function (data) {
             $scope.me = data;
             $scope.authenticated = true;
-            return $scope.getWaitlistId();
+            return $scope.waitlistId;
         })
         .then(function (waitlistId) {
             if(waitlistId && waitlistId.length>0){

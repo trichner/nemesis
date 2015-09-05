@@ -10,6 +10,7 @@ app.use(logger('dev'));
 
 // static content
 app.use('/img', express.static(path.resolve(__dirname, '../../public/img'),{ maxAge: 31557600000 }));
+app.use('/components', express.static(path.resolve(__dirname, '../../public/components'),{ maxAge: 31557600000 }));
 app.use('/', express.static(path.resolve(__dirname, '../../public')));
 
 // API

@@ -7,7 +7,7 @@
 var debug = require('debug')('nemesis:server');
 var http = require('http');
 
-var app = require('./routes/root');
+var app = require('./routes');
 var root = require('express')();
 
 var models = require("./models");

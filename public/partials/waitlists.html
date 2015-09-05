@@ -1,0 +1,37 @@
+<div id="list" ng-class="{hidden: ((!authenticated))}">
+    <ol>
+        <li ng-repeat="list in waitlists track by list.waitlistId">
+            <p>
+                <a id="waitlists-link" href="#/waitlists/{{list.waitlistId}}" target="_self">{{list.waitlistName
+                    || list.owner
+                    .characterName}}</a>
+            </p>
+            <div id="wrapper" class="float-container">
+                <div>
+                    <img title="{{list.owner.characterName}}"
+                         ng-src="{{EveIMG.imgUrlCharacter(list.owner.characterId,64)}}"
+                         ng-click="EveIGB.showCharacter(list.owner.characterId)"/>
+                </div>
+                <div>
+                    <div>
+                        <img title="{{list.owner.corporationName}}"
+                             ng-src="{{EveIMG.imgUrlCorporation(list.owner.corporationId,32)}}"
+                             ng-click="EveIGB.showCorporation(list.owner.corporationId)"/>
+                    </div>
+                    <div  style="width: 32px;height: 32px">
+                        <img ng-class="{hidden: !list.owner.allianceId}" title="{{list.owner.allianceName}}"
+                             ng-src="{{EveIMG.imgUrlAlliance(list.owner.allianceId,32)}}"
+                             ng-click="EveIGB.showAlliance(list.owner.allianceId)"/>
+                    </div>
+                </div>
+
+                <div class="timer" n1b-timer start-date="list.lastActivityAt">
+                </div>
+                <div ng-class="{remove: !isIGB}">
+                    <img title="start conversation" src="img/start-conversation.png" height="64"
+                         ng-click="EveIGB.startConversation(item.owner.characterId)"/>
+                </div>
+            </div>
+        </li>
+    </ol>
+</div>

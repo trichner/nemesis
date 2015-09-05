@@ -1,7 +1,7 @@
 body {
 	margin: 20px;
 	background: rgb(22, 71, 97) url(../img/nebula.jpg);
-	font-family: BankGothic, Arial, sans-serif !important;
+	font-family: Helvetica Neue, Helvetica, Arial, sans-serif !important;
 	color: white;
 }
 
@@ -148,4 +148,9 @@ img{display:block;}
 	background: url('../img/EVESSO_SBLACK.png') no-repeat top left;
 	width: 195px;
 	height: 30px;
+}
+
+.waitlistTitle{
+	margin: 0 10px;
+	font-weight: bold;
 }
