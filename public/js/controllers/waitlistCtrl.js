@@ -132,7 +132,7 @@ controllers.controller('WaitlistCtrl',function ($scope,$http,$location,$interval
         var waitlistId = $scope.waitlistId;
         var url;
         if(waitlistId && waitlistId.length){
-            url = location.protocol + "//" + location.host + location.pathname + '?waitlistId=' + waitlistId;
+            url = '#/waitlists/' + waitlistId;
         }else{
             url = '';
         }
