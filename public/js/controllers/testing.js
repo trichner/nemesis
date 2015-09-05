@@ -1,5 +1,5 @@
 var app = angular.module('testapp', ['ui-notification']);
-app.controller('testing',[ '$scope','$http','$location','$interval','$window','API','EveIGB','Notification','Minions',function ($scope,$http,$location,$interval,$window,API,EveIGB,Notification,Minions) {
+app.controller('TestCtrl',function ($scope,$http,$location,$interval,$window,API,EveIGB,Notification,Minions) {
 
     $scope.isIGB = (typeof CCPEVE !== 'undefined');
     console.log('You are' + ($scope.isIGB ? '' : ' not') + ' in Eve IGB')
@@ -48,4 +48,4 @@ app.controller('testing',[ '$scope','$http','$location','$interval','$window','A
     $scope.startDate = new Date();
     //Minions.createTimer('timer',new Date())
 
-}]);
+});

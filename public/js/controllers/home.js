@@ -1,4 +1,4 @@
-app.controller('home',[ '$scope','$http','$location','$interval','$window','API','EveIGB','Notification','Minions','$cookieStore',function ($scope,$http,$location,$interval,$window,API,EveIGB,Notification,Minions,$cookieStore) {
+app.controller('HomeCtrl',function ($scope,$http,$location,$interval,$window,API,EveIGB,Notification,Minions,$cookieStore) {
 
     //=== Vars
     $scope.waitlists = {waitlists:[]};
@@ -101,4 +101,4 @@ app.controller('home',[ '$scope','$http','$location','$interval','$window','API'
 
     updateWaitlists();
 
-}]);
+});

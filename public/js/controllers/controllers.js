@@ -1,4 +1,4 @@
-app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','API','EveIGB','Notification','Minions','$cookieStore',function ($scope,$http,$location,$interval,$window,API,EveIGB,Notification,Minions,$cookieStore) {
+app.controller('WaitlistCtrl',function ($scope,$http,$location,$interval,$window,API,EveIGB,Notification,Minions,$cookieStore) {
 
     //=== Vars
     $scope.waitlistVO = null;
@@ -245,9 +245,8 @@ app.controller('wt-list',[ '$scope','$http','$location','$interval','$window','A
             $scope.waitlists = waitlists;
         })
 
-    //update every 10s, veeery inefficient
+    //update every 10s, kinda inefficient
     $interval(function(){
         $scope.refreshWL();
     }, 10000);
-    //
-}]);
+});
