@@ -1,5 +1,4 @@
-var app = angular.module('testapp', ['ui-notification']);
-app.controller('TestCtrl',function ($scope,$http,$location,$interval,$window,API,EveIGB,Notification,Minions) {
+controllers.controller('TestCtrl',function ($scope,$http,$location,$interval,$window,API,EveIGB,Notification,Minions) {
 
     $scope.isIGB = (typeof CCPEVE !== 'undefined');
     console.log('You are' + ($scope.isIGB ? '' : ' not') + ' in Eve IGB')

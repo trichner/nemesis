@@ -1,6 +1,9 @@
-app.controller('HomeCtrl',function ($scope,$http,$location,$interval,$window,API,EveIGB,Notification,Minions,$cookieStore) {
+controllers.controller('WaitlistsCtrl',function ($scope,$http,$location,$interval,$window,API,EveIGB,EveIMG,Notification,Minions,$cookieStore) {
 
     //=== Vars
+    $scope.EveIGB = EveIGB;
+    $scope.EveIMG = EveIMG;
+
     $scope.waitlists = {waitlists:[]};
 
     $scope.me = null;
@@ -41,22 +44,6 @@ app.controller('HomeCtrl',function ($scope,$http,$location,$interval,$window,API
             }, function () {
                 Notification.error("Cannot create waitlist, logged in?")
             })
-    };
-
-    $scope.showCharInfo = function(item){
-        EveIGB.showInfo(1377, item.characterId);
-    };
-
-    $scope.showCorporation = function(item){
-        EveIGB.showInfo(2,item.corporationId);
-    };
-    $scope.showAlliance = function(item){
-        EveIGB.showInfo(16159,item.allianceId);
-    };
-
-    $scope.startConversation = function(item){
-        EveIGB.startConversation(item.characterId)
-        Notification.success("Invited " + item.characterName + " to conversation")
     };
 
     $scope.logout = function () {

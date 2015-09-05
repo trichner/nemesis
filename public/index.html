@@ -1,79 +1,43 @@
 <!doctype html>
-<html lang="en" id="ng-app" ng-app="app">
+<html lang="en" ng-app="app">
 <head>
-	<link rel="stylesheet" type="text/css" href="style/angular-ui-notification.min.css" />
-	<link rel="stylesheet" type="text/css" href="style/index.css" />
-	<link rel="icon" type="image/png" href="img/ivy_logo_4.png">
+    <link rel="stylesheet" type="text/css" href="style/angular-ui-notification.min.css" />
+    <link rel="stylesheet" type="text/css" href="style/index.css" />
+    <link rel="icon" type="image/png" href="img/ivy_logo_4.png">
 
     <meta charset="utf-8">
     <title>Nemesis: an EVE Online Waitlist Management Tool</title>
-	<script src="components/raphael/raphael-min.js"></script>
-	<script src="components/angular/angular.js"></script>
-	<script src="components/angular-cookies/angular-cookies.min.js"></script>
-	<script src="components/angular-ui-notification/dist/angular-ui-notification.min.js"></script>
-	<script src="components/angular-xeditable/dist/js/xeditable.min.js"></script>
-	<script src="components/angular-eve-igb/eveIGB.js"></script>
-	<script src="js/app.js"></script>
-	<script src="js/directives/n1b-timer.js"></script>
-	<script src="js/services/API.js"></script>
-	<script src="js/services/Minions.js"></script>
-	<script src="js/controllers/homeCtrl.js"></script>
+
+    <script defer src="components/raphael/raphael-min.js"></script>
+    <script defer src="components/angular/angular.js"></script>
+    <script defer src="components/angular-route/angular-route.js"></script>
+    <script defer src="components/angular-cookies/angular-cookies.min.js"></script>
+    <script defer src="components/angular-ui-notification/dist/angular-ui-notification.min.js"></script>
+    <script defer src="components/angular-xeditable/dist/js/xeditable.min.js"></script>
+    <script defer src="components/angular-eve-igb/eveIGB.js"></script>
+    <script defer src="components/angular-eve-img/eveIMG.js"></script>
+    <script defer src="js/app.js"></script>
+    <script defer src="js/controllers/controllers.js"></script>
+    <script defer src="js/controllers/mainCtrl.js"></script>
+    <script defer src="js/controllers/homeCtrl.js"></script>
+    <script defer src="js/controllers/waitlistCtrl.js"></script>
+    <script defer src="js/directives/n1b-timer.js"></script>
+    <script defer src="js/services/API.js"></script>
+    <script defer src="js/services/Minions.js"></script>
 </head>
-<body onload='CCPEVE.requestTrust(location.protocol + "//" + location.host + "/*")' ng-controller="HomeCtrl">
-<span>Hello {{me.characterName ? me.characterName : 'Pilot'}}!</span>
+<body ng-controller="MainCtrl">
 
-<h2>Home: All Open Waitlists</h2>
-<div id="container">
-	<div id="sidebar">
-		<ng-include ng-hide="authenticated" src="'partials/login.html'"></ng-include>
-		<div ng-hide="!authenticated" class="actions">
-			Logged in as {{me.characterName}}.
-			<button ng-click="logout()">logout</button>
-		</div>
-		<div ng-class="{remove: ((!authenticated) || (waitlistVO))}" class="actions">
-			<button ng-click="newWaitlist()">Create new waitlist</button>
-		</div>
-	</div>
-	<div id="list" ng-class="{hidden: ((!authenticated))}">
-		<ol>
-			<li ng-repeat="list in waitlists track by list.waitlistId">
-				<p>
-					<a id="waitlists-link" href="{{getWaitlistUrl(list)}}" target="_self">{{list.waitlistName
-						|| list.owner
-						.characterName}}</a>
-				</p>
-				<div id="wrapper" class="float-container">
-					<div>
-						<img title="{{list.owner.characterName}}"
-							 src="https://image.eveonline.com/Character/{{list.owner.characterId}}_64.jpg"
-							 ng-click="showCharInfo(list.owner)"/>
-					</div>
-					<div>
-						<div>
-							<img title="{{list.owner.corporationName}}"
-								 src="https://image.eveonline.com/Corporation/{{list.owner.corporationId}}_32.png"
-								 ng-click="showCorporation(list.owner)"/>
-						</div>
-						<div  style="width: 32px;height: 32px">
-							<img ng-class="{hidden: !list.owner.allianceId}" title="{{list.owner.allianceName}}"
-								 src="https://image.eveonline.com/Alliance/{{list.owner.allianceId}}_32.png"
-								 ng-click="showAlliance(list.owner)"/>
-						</div>
-					</div>
-
-					<div class="timer" n1b-timer start-date="list.lastActivityAt">
-					</div>
-					<div ng-class="{remove: !isIGB}">
-						<img title="start conversation" src="img/start-conversation.png" height="64"
-							 ng-click="startConversation(item.owner)"/>
-					</div>
-				</div>
-			</li>
-		</ol>
-	</div>
+<!-- login -->
+<div ng-hide="authenticated">
+    <ng-include src="'partials/login.html'"></ng-include>
 </div>
+
+<!-- body/template -->
+<div ng-view></div>
+
+<!-- footer -->
 <div id="footer">
-	Nemesis: an EVE Online Waitlist Management Tool by Thomion, thanks to Titus Tallang for some css magic.
+    Nemesis: an EVE Online Waitlist Management Tool by Thomion.
 </div>
 </body>
 </html>
