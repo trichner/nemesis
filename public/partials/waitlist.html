@@ -13,7 +13,7 @@
                     </a>
                 </div>
                 <div ng-hide="!isOwner()">
-                    <span editable-text="waitlistVO.waitlistName"
+                    <span editable-text="waitlistVO.waitlistName" class="waitlistTitle"
                           onbeforesave="updateName($data)">{{waitlistVO.waitlistName || 'Waitlist'}}</span>
                 </div>
                 <div ng-hide="isOwner()">
