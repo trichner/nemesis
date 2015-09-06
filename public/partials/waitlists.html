@@ -1,3 +1,6 @@
+<div ng-hide="(!authenticated)">
+    <button ng-click="newWaitlist()">Create Waitlist</button>
+</div>
 <div id="list" ng-class="{hidden: ((!authenticated))}">
     <ol>
         <li ng-repeat="list in waitlists track by list.waitlistId">

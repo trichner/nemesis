@@ -25,7 +25,7 @@
                         <input type="submit" value="Home">
                     </form>
                 </div>
-                <div ng-hide="((!authenticated) || (waitlistVO))">
+                <div ng-hide="(!authenticated)">
                     <button ng-click="newWaitlist()">Create Waitlist</button>
                 </div>
                 <div ng-hide="((!authenticated) || (!waitlistVO))">
