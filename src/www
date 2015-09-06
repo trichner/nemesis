@@ -103,5 +103,5 @@ function onListening() {
         ? 'pipe ' + addr
         : 'port ' + addr.port;
     debug('Listening on ' + bind);
-    console.log('Capsuleers may dock on ' + bind + 'with prefix ' + config.prefix)
+    console.log('Capsuleers may dock on ' + bind + ' with prefix ' + config.prefix)
 }
