@@ -8,7 +8,7 @@
     "authRequired" : false,
     "eveSsoCallback": "http://localhost:3000/nemesis/api/auth/callback",
     "logging" : false,
-    "prefix" : "trolo",
+    "prefix" : "nemesis",
     "listenPort" : 3000
   },
   "test": {

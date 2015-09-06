@@ -56,11 +56,6 @@ controllers.controller('WaitlistsCtrl',function ($scope,$http,$location,$interva
             })
     }
 
-    $scope.getWaitlistUrl = function (list) {
-        var url = location.protocol + "//" + location.host + '/nemesis/waitlist.html?waitlistId=' + list.waitlistId;
-        return url;
-    }
-
     function updateWaitlists(){
         API.getWaitlists()
             .then(function (waitlists) {

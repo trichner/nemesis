@@ -12,13 +12,15 @@ var root = require('express')();
 
 var models = require("./models");
 
+var config    = require('./config');
+
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(config.listenPort || process.env.PORT || '3000');
 root.set('port', port);
-root.use('/nemesis', app);
+root.use('/' + config.prefix, app);
 /**
  * Create HTTP server.
  */
@@ -101,5 +103,5 @@ function onListening() {
         ? 'pipe ' + addr
         : 'port ' + addr.port;
     debug('Listening on ' + bind);
-    console.log('Capsuleers may dock on ' + bind)
+    console.log('Capsuleers may dock on ' + bind + ' with prefix ' + config.prefix)
 }

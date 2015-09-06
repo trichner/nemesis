@@ -5,10 +5,9 @@ var session = require('express-session');
 var service = require('./../services/service');
 var ssoCredentials = require(__dirname + '/../config/evesso.json');
 
-var env       = process.env.NODE_ENV || "development";
-var config    = require(__dirname + '/../config/config.json')[env];
+var config    = require('./../config');
 var authRequired = config.authRequired !== undefined ? config.authRequired : true;
-var callbackURL = config.eveSsoCallback || "http://localhost:3000/nemesis/api/auth/callback";
+var callbackURL = config.eveSsoCallback || "http://localhost:3000/" + config.prefix + "/api/auth/callback";
 
 var router = require('express').Router();
 
@@ -71,7 +70,7 @@ router.get('/auth/callback', function(req, res, next) {
         req.logIn(user, function(err) {
             if (err) { return next(err); }
             // assemble redirect:
-            var redirectUrl = req.session.loginUrl || '/nemesis/';
+            var redirectUrl = req.session.loginUrl || '/' + config.prefix + '/';
             return res.redirect(redirectUrl);
         });
     })(req, res, next);

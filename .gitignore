@@ -14,4 +14,4 @@ sessions/
 session_secret
 evesso.json
 *.sqlite
-
+config.json
