@@ -6,7 +6,7 @@ if(!fileExists(configFile)){
     console.error("Config file not found! Was looking for: " + configFile);
 }
 
-module.exports = require(__dirname + '/config.json')[env];
+module.exports = require(configFile)[env];
 
 function fileExists(file){
     try {
