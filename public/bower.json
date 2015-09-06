@@ -24,6 +24,7 @@
     "angular": "1.2.9",
     "angular-cookies": "1.2.9",
     "angular-eve-igb": "~0.1.0",
+    "angular-eve-img": "~0.1.0",
     "angular-route": "1.2.9",
     "angular-ui-notification": "~0.0.14",
     "angular-xeditable": "~0.1.9",
