@@ -5,13 +5,11 @@
     "database": "nemesis",
     "host": "localhost",
     "dialect": "mysql",
-    "dialec2t": "sqlite",
-    "storage2": "./db.development.sqlite",
     "authRequired" : false,
     "eveSsoCallback": "http://localhost:3000/nemesis/api/auth/callback",
     "logging" : false,
-    "prefix" : "nemesis",
-    "port" : 3000
+    "prefix" : "trolo",
+    "listenPort" : 3000
   },
   "test": {
     "username": "root",
@@ -21,7 +19,7 @@
     "dialect": "mysql",
     "logging" : false,
     "prefix" : "nemesis",
-    "port" : 3000
+    "listenPort" : 3000
   },
   "production": {
     "username": "nemesis",
@@ -32,6 +30,6 @@
     "eveSsoCallback" :  "https://k42.ch/nemesis/api/auth/callback",
     "logging" : false,
     "prefix" : "nemesis",
-    "port" : 3000
+    "listenPort" : 3000
   }
 }
