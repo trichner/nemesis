@@ -2,7 +2,7 @@
   "name": "nemesis-static",
   "version": "0.0.0",
   "authors": [
-    "Thomas Richner <thomasrichner+github@gmail.com>"
+    "Thomas Richner <mail@trichner.ch>"
   ],
   "keywords": [
     "nemesis",
@@ -22,12 +22,14 @@
   ],
   "dependencies": {
     "angular": "1.2.9",
+    "angular-bootstrap": "~0.13.4",
     "angular-cookies": "1.2.9",
     "angular-eve-igb": "~0.1.0",
     "angular-eve-img": "~0.1.0",
     "angular-route": "1.2.9",
     "angular-ui-notification": "~0.0.14",
     "angular-xeditable": "~0.1.9",
+    "bootstrap": "~3.3.5",
     "raphael": "~2.1.4"
   }
 }
